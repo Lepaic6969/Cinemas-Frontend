@@ -1,6 +1,6 @@
 <template>
     <n-space vertical>
-      <n-steps vertical :current="(current )" :status="currentStatus">
+      <n-steps vertical :current="(current )" :status="currentStatus" class="my-n-steps">
         <n-step
           title="Total de la Compra:"
           description="Observe su total de compra e introduzca un cupón de descuento si lo tiene."
@@ -66,8 +66,8 @@
   });
   </script>
 
-  <style scoped>
-   .n-steps .n-step-indicator{
-    background-color: aqua;
-}
+  <style >
+    .n-step--process-status{
+      --n-indicator-color:blue !important;
+    }
   </style>

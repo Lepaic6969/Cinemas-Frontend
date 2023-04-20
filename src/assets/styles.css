@@ -1,1 +1,14 @@
 /* Poner aquí los estilos que se requieran generales en la aplicación */
+
+
+.n-step--process-status{
+    --n-indicator-color:#007bff ;
+    --n-indicator-border-color:#007bff ;
+}
+.n-step--finish-status{
+    --n-indicator-border-color:#007bff!important;
+    --n-indicator-text-color:#007bff !important;
+}
+.n-step--finish-status .n-step-splitor{
+ --n-splitor-color:#007bff;
+}
