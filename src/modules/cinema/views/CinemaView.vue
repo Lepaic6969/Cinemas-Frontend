@@ -1,9 +1,14 @@
 <template>
-  <h1>Cinema</h1>
+  <RowComponent />
 </template>
 
 <script>
-export default {};
+import { defineAsyncComponent } from "vue";
+export default {
+  components: {
+    RowComponent: defineAsyncComponent(() => import("../components/RowComponent.vue")),
+  },
+};
 </script>
 
-<style></style>
+<style scoped></style>
