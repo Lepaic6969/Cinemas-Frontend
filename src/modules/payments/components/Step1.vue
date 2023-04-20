@@ -5,13 +5,12 @@
     <div >
         <p class="fw-bold">Valor: ${{format(total)}}</p>
         <p class="fw-bold">Precio del Envío: ${{format(shippingPrice)}}</p>
-        <div class="form-check form-switch mb-3">
+        <!-- <div class="form-check form-switch mb-3">
             <label class="form-check-label fw-bold" for="flexSwitchCheckChecked">{{(!couponEnabled)?'Aplicar cupón':'Sin cupón'}}</label>
             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" @click="enableCoupon">
-        </div>
-        <!-- <button class="btn btn-success mb-3" @click="enableCoupon">{{(!couponEnabled)?'Aplicar cupón:':'Sin cupón'}}</button> -->
-        <div class="mb-3  w-100  " v-if="couponEnabled">
-              <!-- <label for="coupons" class="form-label fw-bold">Aplicar cupón:</label> -->
+        </div> -->
+        <!-- Esto es lo del cipón -->
+        <!-- <div class="mb-3  w-100  " v-if="couponEnabled">
               <div class="d-flex">
                 <input
                   type="text"
@@ -24,7 +23,7 @@
               <div  class=" text-danger fw-normal" v-if="!couponOk">El cupón ingresado no es válido.</div>
               <p class="fw-bold mt-2" v-if="discount!==0 && couponOk">Descuento: ${{format(discount)}}</p>
               
-        </div>
+        </div> -->
         
         <p class="fw-bold">Total a Pagar: ${{format(total+shippingPrice-discount)}}</p>
         <button class="btn btn-dark w-100" @click="nextStep">Siguiente</button>

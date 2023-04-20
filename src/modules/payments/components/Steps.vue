@@ -20,43 +20,7 @@
         />
      
       </n-steps>
-      <n-space>
-        <!-- <n-button-group>
-          <n-button @click="prev">
-            <template #icon>
-              <n-icon>
-                <md-arrow-round-back />
-              </n-icon>
-            </template>
-          </n-button>
-          <n-button @click="next">
-            <template #icon>
-              <n-icon>
-                <md-arrow-round-forward />
-              </n-icon>
-            </template>
-          </n-button>
-        </n-button-group> -->
-        <!-- <n-radio-group
-          v-model:value="currentStatus"
-          size="medium"
-          name="vertical"
-        >
-          <n-radio-button value="error">
-            Error
-          </n-radio-button>
-          <n-radio-button value="process">
-            Process
-          </n-radio-button>
-          <n-radio-button value="wait">
-            Wait
-          </n-radio-button>
-          <n-radio-button value="finish">
-            Finish
-          </n-radio-button>
-        </n-radio-group> -->
-        
-      </n-space>
+    
     </n-space>
   </template>
   
@@ -101,3 +65,9 @@
     }
   });
   </script>
+
+  <style scoped>
+   .n-steps .n-step-indicator{
+    background-color: aqua;
+}
+  </style>
