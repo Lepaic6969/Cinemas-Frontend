@@ -1,13 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('../modules/home/views/HomeView.vue')
+      path: "/",
+      name: "home",
+      component: () => import("../modules/home/views/HomeView.vue"),
     },
     {
       path: "/user/payment",
@@ -38,8 +37,12 @@ const router = createRouter({
         },
       ],
     },
- 
-  ]
-})
+    {
+      path: "/cinema",
+      name: "cinema",
+      component: () => import("../modules/cinema/views/CinemaView.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;
