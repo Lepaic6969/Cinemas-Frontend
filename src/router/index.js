@@ -38,6 +38,24 @@ const router = createRouter({
         },
       ],
     },
+
+    // ruta admin
+    {
+      path: "/admin",
+      name: "admin", 
+      component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
+      children: [
+        
+        {
+            path: "",
+            name: "admin-cinemas",
+            component: () => import("../modules/admin/cinemas/views/CinemaView.vue"),
+          },
+           
+         
+      ],
+    },
+
  
   ]
 })
