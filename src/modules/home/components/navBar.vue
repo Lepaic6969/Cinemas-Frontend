@@ -1,6 +1,6 @@
 <template>
   <n-nav>
-    <n-image src="./src/assets/a.png" alt="Logo de mi sitio web" class="logo" />
+    <n-avatar src="./src/assets/a.png" alt="Logo de mi sitio web" class="logo" @click="handleLogoClick" />
       <n-nav-item @click="toggleRegisterModal"
         >Registrarse
         <n-icon>
@@ -45,6 +45,9 @@ export default {
     toggleLoginModal() {
       this.showLoginModal = !this.showLoginModal;
     },
+    handleLogoClick() {
+    window.location.href = '../';
+}
   },
 };
 </script>
@@ -67,10 +70,12 @@ n-nav {
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 110px;
+  height: 6vh;
+  background: transparent;
   margin-right: auto;
   animation: moveUpDown 4s infinite;
+  cursor: pointer;
 }
 
 

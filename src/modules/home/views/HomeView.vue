@@ -6,54 +6,36 @@
       <n-card
         class="text-center"
         :title="movie.title"
-        @click="showModal(movie)"
       >
         <div class="card-image">
           <img :src="getImage(movie.poster_path)" />
           <div class="card-text">
-            <n-button  type="success">3D</n-button>
-            <n-button type="warning">Infantil</n-button>
+            <n-button  type="success" @click="showTrailer(movie)">Trailer</n-button>
             <n-button type="info">Comprar</n-button>
           </div>
         </div>
       </n-card>
     </n-col>
   </n-row>
-
-  <n-modal
-    v-if="selectedMovie"
-    :title="selectedMovie.title"
-    @close="selectedMovie = null"
-  >
-    <p>{{ selectedMovie.overview }}</p>
-    <template
-      v-if="
-        selectedMovie.genres.map((genre) => genre.name).includes('Thriller')
-      "
-    >
-      <p>
-        Thriller:
-        {{ selectedMovie.genres.map((genre) => genre.name).join(", ") }}
-      </p>
-    </template>
-  </n-modal>
+<Footer/>
 </template>
 
 <script>
 import Nav from "../components/navBar.vue";
 import axios from "axios";
+import Footer from "../components/Footer.vue"
 
 export default {
   name: "MovieCards",
   components: {
     Nav,
+    Footer
   },
   data() {
     return {
       movies: [],
       apiKey: "f40d327254d74aec7e161062db22582b",
-      selectedMovie: null,
-      showRegisterModal: false,
+  
     };
   },
   mounted() {
@@ -70,16 +52,8 @@ export default {
     getImage(path) {
       return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
     },
-    showModal(movie) {
-      this.selectedMovie = movie;
-    },
-    toggleRegisterModal() {
-      this.showRegisterModal = !this.showRegisterModal;
-    },
-    toggleLoginModal() {
-      this.showLoginModal = !this.showLoginModal;
-    },
-  },
+    
+  }
 };
 </script>
 
@@ -108,8 +82,8 @@ export default {
   transition: opacity 0.3s ease-in-out;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8%;
+  margin-top: 15px auto;
   width: 80%;
 }
 
@@ -121,7 +95,7 @@ export default {
 }
 
 .n-col {
-  margin: 25px;
+  margin: 2%;
 }
 
 .n-button {
@@ -133,11 +107,14 @@ export default {
 .card-image img {
   border-radius: 8px;
   width: 100%;
-  height: 400px; /* ajusta el valor de altura a tu gusto */
+  height: 60vh; /* ajusta el valor de altura a tu gusto */
   object-fit: cover; /* para asegurarte de que la imagen se ajuste al tamaño especificado sin deformarse */
   box-shadow: 4px 14px 14px #888888;
 }
 
+.n-card{
+    height: 100%;
+}
 @keyframes moveUpDown {
   0% {
     transform: translateY(0);
