@@ -23,23 +23,34 @@
 </template> -->
 
 <template>
-  <div class="container main my-5">
+  <div class="container main">
     <div class="row justify-content-md-center">
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid col-12 screen" />
-      <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
-          <SeatComponet v-for="seat in 30" />
+      <div class="d-flex flex-md-row flex-column gap-5">
+        <!-- 1ra -->
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start conten-box"
+        >
+          <SeatComponet v-for="seat in 20" />
         </div>
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
-          <SeatComponet v-for="seat in 15" />
+
+        <!-- 2da -->
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start conten-box"
+        >
+          <SeatComponet v-for="seat in 20" />
         </div>
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
-          <SeatComponet v-for="seat in 35" />
+
+        <!-- 3ra -->
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start conten-box"
+        >
+          <SeatComponet v-for="seat in 10" />
         </div>
       </div>
     </div>
     <div class="container max-auto text-center exit">
-      <img src="../assets/images/exit.png" alt="exit" class="img-fluid" />
+      <img src="../assets/images/exit.png" alt="exit" class="img-fluid w-50" />
     </div>
   </div>
 </template>
@@ -58,14 +69,8 @@ export default {
   white-space: nowrap;
 }
 
-/* .grip-fluid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  text-align: center;
-} */
-
 .screen {
-  filter: drop-shadow(0px 30px 50px #e3e4e5);
+  filter: drop-shadow(0rem 1rem 2rem #e3e4e5);
 }
 
 .main {
@@ -78,7 +83,7 @@ export default {
 
 .main .exit {
   position: absolute;
-  top: 90%;
+  top: 94%;
   left: 0;
   margin: 0 auto !important;
   padding: 0 !important;
@@ -87,5 +92,60 @@ export default {
 .exit > img {
   margin: 0 auto !important;
   padding: 0 !important;
+}
+
+.conten-box {
+  position: relative;
+  padding: 1.25rem;
+}
+
+.conten-box:nth-child(3) {
+  border-style: solid;
+  border-image: linear-gradient(
+      -72deg,
+      #dedeff,
+      #ffffff 16%,
+      #dedeff 21%,
+      #ffffff 24%,
+      #555564 27%,
+      #dedeff 36%,
+      #ffffff 45%,
+      #ffffff 60%,
+      #dedeff 72%,
+      #ffffff 80%,
+      #dedeff 84%,
+      #555564
+    )
+    1;
+}
+
+.conten-box:nth-child(3) > * {
+  width: 3rem;
+  height: 3rem;
+}
+
+.conten-box:nth-child(1) {
+  border: 1px solid #545454;
+  border-radius: 1rem;
+}
+.conten-box:nth-child(2) {
+  border: 1px solid #bbbbbb;
+  border-radius: 1rem;
+}
+
+@media (max-width: 991px) {
+  .main .exit {
+    top: 97%;
+  }
+}
+
+@media (max-width: 560px) {
+  .main .exit {
+    top: 98.5%;
+  }
+
+  .screen {
+    filter: drop-shadow(0rem 1rem 1rem #e3e4e5);
+  }
 }
 </style>

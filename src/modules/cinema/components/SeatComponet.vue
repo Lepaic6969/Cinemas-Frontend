@@ -22,6 +22,8 @@ export default {
   padding: 0.5rem;
   text-align: center;
   width: 2.5rem;
+  user-select: none;
+  transition: transform 0.3s ease-in-out;
 }
 
 .seat:hover {
