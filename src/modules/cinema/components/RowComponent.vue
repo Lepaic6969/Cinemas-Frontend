@@ -27,13 +27,19 @@
     <div class="row justify-content-md-center">
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid col-12 screen" />
       <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start"
+        >
           <SeatComponet v-for="seat in 30" />
         </div>
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start"
+        >
           <SeatComponet v-for="seat in 15" />
         </div>
-        <div class="container d-flex flex-wrap justify-content-center align-items-start gap-1">
+        <div
+          class="container d-flex flex-wrap justify-content-between align-items-start gap-1 align-content-start"
+        >
           <SeatComponet v-for="seat in 35" />
         </div>
       </div>
