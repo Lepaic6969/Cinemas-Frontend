@@ -1,5 +1,5 @@
 <template>
-  <Nav />
+  <Nav/>
 
   <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
