@@ -21,6 +21,7 @@ const fetchDataImg = async (
     console.log("petición correcta");
     return response;
   } catch (error) {
+    console.log(error)
     Swal.fire("Error", `${error}`, "error");
   }
 };

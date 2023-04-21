@@ -20,8 +20,8 @@
         <tbody>
             <tr v-for="element in elements" :key="element" >
                 <td>
-                    <img src="../../../../assets/img/logo.png" style="width: 6vh;"> 
-                </td> 
+                    <img :src="element.logo.secure_url" style="width: 6vw;" crossorigin="anonymous" > 
+                </td>   
                 <td>{{ element.name }}</td>
                 <td>{{element.city}}</td>
                 <td>{{element.address}}</td>
@@ -91,7 +91,9 @@
     const {elements} = storeToRefs(useCinema)
     const {getElements, deleteElement} = useCinema
 
- 
+    onMounted(() => {
+        getElements();
+    });
   </script>
   
   <style></style>

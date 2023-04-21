@@ -20,7 +20,7 @@
             </div>
             <div class="form-group mb-2">
                 <label for="name " >Teléfono:</label>
-                <input type="text" class="form-control mt-2" id="phone" placeholder="Ingrese el Teléfono" v-model="phone"> 
+                <input type="number" class="form-control mt-2" id="phone" placeholder="Ingrese el Teléfono" v-model="phone"> 
             </div> 
             <div class="form-group mb-2 mt-5">
                 <button type="submit" class="btn btn-outline-warning btn-lg w-100" data-bs-dismiss="offcanvas"
@@ -53,25 +53,30 @@
     const phone= ref('');
     const logo= ref('');
 
-    //Funcionalidad del formulario.
+    //función del ormulario  => crear / editar
     const processForm=()=>{
-        if(noEmpty()){
-            if(create.value){
-                createItem();
-            }else{
-                updateItem();
-            }
+        if(noEmpty()){ 
+            (create.value)?createItem():updateItem();   updateItem(); 
         }else{
-            console.log("campo vacio")
+            console.log("formulario tiene campo vacio")
         }
     }
+
+    //file select
+    const onFileSelected=(e)=>{
+            console.log("Entró a cargar el archivo...")
+            logo.value = e.target.files[0];
+            console.log("archivo cargado");
+            console.log(image.value);
+        }
 
     //verifica que los campos estén llenos
     const noEmpty = () =>{
         if(name.value === "" ||
             city.value === "" ||
             address.value === "" ||
-            phone.value === "" ){
+            phone.value === ""||
+            logo.value === "" ){
             return false
             //campos incompletos
         }
@@ -83,20 +88,21 @@
         name.value = ''
         city.value = ''
         address.value = ''
-        phone.value= ''
+        phone.value = ''
+        logo.value = ''
     }
-    const createItem=()=>{
-             
+    const createItem=()=>{ 
         const element={ 
             name:name.value, 
             city: city.value , 
             address: address.value , 
             phone: phone.value,
+            logo: logo.value,
         }
 
         addElement(element);
-        resetInputs()
-         
+        resetInputs() 
+        console.log(element)
     }
 
     const updateItem=()=>{
@@ -106,14 +112,13 @@
             city: city.value , 
             address: address.value , 
             phone: phone.value,
-        }
-        console.log(newElement)
+            logo: logo.value,
+        } 
         updateElement(id.value,newElement);
         resetInputs()
     }
-        
-
-    //Este es el watch en composition API.
+      
+    //Asignar los datos en el form de editar
     watch(title, ()=>{
         
         let item=getElementById(id.value)
@@ -122,12 +127,9 @@
             city.value  = item.city
             address.value = item.address
             phone.value = item.phone
-            console.log(name.value)
+            logo.value = item.phone 
         }else{
-            name.value='1'
-            city.value = '2'
-            address.value = '3'
-            phone.value = '4'
+            resetInputs()
         }
     })
 

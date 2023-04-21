@@ -1,4 +1,4 @@
-emplate>
+<template>
     <div
       class="offcanvas offcanvas-start bg-dark z-2 show"
       data-bs-scroll="true"
