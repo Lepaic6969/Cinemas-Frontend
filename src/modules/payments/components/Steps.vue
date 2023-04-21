@@ -3,7 +3,7 @@
       <n-steps vertical :current="(current )" :status="currentStatus" class="my-n-steps">
         <n-step
           title="Total de la Compra:"
-          description="Observe su total de compra e introduzca un cupón de descuento si lo tiene."
+          description="Observe su total de compra, la película, sala y los asientos asignados."
         />
         <n-step
           title="Forma de Pago:"
@@ -67,7 +67,5 @@
   </script>
 
   <style >
-    .n-step--process-status{
-      --n-indicator-color:blue !important;
-    }
+  
   </style>

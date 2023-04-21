@@ -13,6 +13,7 @@
           <option selected disabled>--Modo de pago--</option>
           <option value="card" ><span>&#x1F4B3;</span> Tarjeta de crédito/debito</option>
           <option value="paypal"  ><span>&#x1F4B5;</span>  Paypal</option>
+          <option value="QR"  ><span>📲</span> Generar Código QR</option>
         </select>
         
       </div>
@@ -27,7 +28,7 @@
           
         </p>
       </div>
-      <div v-if="paymentMethod==='card'" class="mt-5">
+      <div v-if="paymentMethod==='card'" class="mt-1">
           <div class="mb-3">
               <label for="cardName" class="form-label fw-bold">Nombre de la tarjeta</label>
               <input type="text" class="form-control" id="cardName" placeholder="Nombre en la tarjeta" v-model="cardName">
@@ -53,7 +54,10 @@
             </div>
            
       </div>
-      <div class="mb-3 mt-3 w-100">
+      <div v-if="paymentMethod==='QR'" class="mt-5">
+        <h3>Estamos desarrollando esta forma de pago actualmente</h3>
+      </div>
+      <div class="mt-3 w-100">
               <input type="submit" value="Pagar" class="btn btn-dark w-100" v-if="paymentMethod!==''">
       </div>
     </form>
