@@ -3,32 +3,29 @@ import {defineStore} from 'pinia';
 import fetchData from  '../../../../helpers/fetchData' 
 
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/cinemas';
-export const  useCinemaStore=defineStore('cinemas',{
+export const  useMovieStore=defineStore('movie',{
     state:()=>({
         elements:[
             {   
                 id: 0,
-                name: "cine 1",
-                address: "address 1",
-                city: "city 1",
-                phone: "123123",
-                logo:"../../../assets/img/logo.png" ,
+                name: "movie 1",
+                duration: "1 1",
+                trailer: "trailer 1",
+                image:  "../../../assets/img/logo.png" ,
             },
             {   
-                id: 1,
-                name: "cine 2",
-                address: "address 2",
-                city: "city 2",
-                phone: "2341234",
-                logo:"../../../assets/img/logo.png" ,
+                id: 1, 
+                name: "movie 2",
+                duration: "1 1",
+                trailer: "trailer 2",
+                image:  "../../../assets/img/logo.png" ,
             },
             {   
-                id: 2,
-                name: "cine 3",
-                address: "address 3",
-                city: "city 3",
-                phone: "345345",
-                logo:"../../../assets/img/logo.png" ,
+                id: 2, 
+                name: "movie 3",
+                duration: "1 1",
+                trailer: "trailer 3",
+                image:  "../../../assets/img/logo.png" ,
             },
         ],
     }),

@@ -44,15 +44,28 @@ const router = createRouter({
       path: "/admin",
       name: "admin", 
       component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
-      children: [
-        
+      children: [ 
         {
-            path: "",
-            name: "admin-cinemas",
-            component: () => import("../modules/admin/cinemas/views/CinemaView.vue"),
-          },
-           
-         
+          path: "",
+          name: "admin-cinemas",
+          component: () => import("../modules/admin/cinemas/views/CinemaView.vue"),
+        },
+        {
+          path: "salas",
+          name: "admin-salas",
+          component: () => import("../modules/admin/rooms/views/RoomView.vue"),
+        },
+        {
+          path: "peliculas",
+          name: "admin-peliculas",
+          component: () => import("../modules/admin/movies/views/MovieView.vue"),
+        },
+        {
+          path: "funciones",
+          name: "admin-show",
+          component: () => import("../modules/admin/shows/views/ShowView.vue"),
+        },
+            
       ],
     },
 

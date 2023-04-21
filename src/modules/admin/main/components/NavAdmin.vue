@@ -13,9 +13,9 @@
             <div class="collapse navbar-collapse p-0 m-0" id="navbarToggleExternalContent"> 
                 <div class="navbar-nav mr-auto"> 
                   <router-link :to="{name: 'admin-cinemas'}" class="nav-item nav-link ">Cinemas</router-link>
-                  <router-link to="{name: 'admin-salas'}" class="nav-link nav-link ">Salas</router-link>
-                  <router-link to="{name: 'admin-peliculas'}" class="nav-link nav-link ">Peliculas</router-link>
-                  <router-link to="{name: 'admin-show'}" class="nav-link nav-link ">Funciones</router-link>
+                  <router-link :to="{name: 'admin-salas'}" class="nav-link nav-link ">Salas</router-link>
+                  <router-link :to="{name: 'admin-peliculas'}" class="nav-link nav-link ">Peliculas</router-link>
+                  <router-link :to="{name: 'admin-show'}" class="nav-link nav-link ">Funciones</router-link>
                 </div>  
             </div>
             <div class="exit">
