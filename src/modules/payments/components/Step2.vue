@@ -54,9 +54,8 @@
             </div>
            
       </div>
-      <div v-if="paymentMethod==='QR'" class="mt-5">
-        <h3>Estamos desarrollando esta forma de pago actualmente</h3>
-      </div>
+      <QRComponent v-if="paymentMethod==='QR'"/>
+     
       <div class="mt-3 w-100">
               <input type="submit" value="Pagar" class="btn btn-dark w-100" v-if="paymentMethod!==''">
       </div>
@@ -67,7 +66,7 @@
 
 <script setup >
   import { useRouter } from 'vue-router';
-
+  import QRComponent from './QRComponent.vue';
   import {ref,onMounted} from 'vue';
   import {useStepsStore} from '../store/steps.js'
   const useSteps=useStepsStore();
@@ -162,6 +161,9 @@
       (paymentMethod.value==='card')?makePaymentCard():makePaymentPaypal()
     };
 
+   
+    
+
     onMounted(()=>{
       stepByNumber(2);
        total.value=Number(localStorage.getItem("total"));
@@ -175,6 +177,5 @@
     padding: 50px;
     border-radius: 10px;
   }
-  
 
 </style>

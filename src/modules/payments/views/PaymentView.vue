@@ -34,7 +34,7 @@
     .template-styles{
         background-color: #2b2b2b;
         width: 100%;
-        height: 100vh;
+        height: 150vh;
        
     }
 
