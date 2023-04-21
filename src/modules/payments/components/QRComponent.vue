@@ -10,7 +10,7 @@
     const getQR=()=>{
         const containerQR=document.getElementById("containerQR");
         if(containerQR!==null){
-            new QRCode(containerQR,'https://www.nequi.com.co/');
+            new QRCode(containerQR,'https://transacciones.nequi.com/bdigital/login.jsp');
         }
     }
     onMounted(()=>{

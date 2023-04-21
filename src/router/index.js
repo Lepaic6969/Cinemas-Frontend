@@ -38,6 +38,11 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/user/poster',
+      name: 'poster-films',
+      component: () => import('../modules/poster/views/PosterView.vue'),
+    }
  
   ]
 })
