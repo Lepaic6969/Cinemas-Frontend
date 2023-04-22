@@ -33,12 +33,12 @@
           <SeatComponet v-for="seat in 36" :key="seat" />
         </div>
         <div
-          class="container d-flex flex-wrap justify-content-start align-items-start gap-1 align-content-start content-box vip"
+          class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
         >
           <SeatComponet v-for="seat in 10" :key="seat" />
         </div>
         <div
-          class="container d-flex flex-wrap justify-content-start align-items-start gap-1 align-content-start content-box prefe"
+          class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box prefe"
         >
           <SeatComponet v-for="seat in 25" :key="seat" />
         </div>
@@ -94,7 +94,7 @@ export default {
   position: absolute;
   bottom: -40%;
   left: 50%;
-  width: 90%;
+  width: 100%;
   border-radius: 1rem;
   height: 1.5rem;
   transform: translate(-50%);
