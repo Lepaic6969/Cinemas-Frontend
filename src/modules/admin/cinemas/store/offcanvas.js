@@ -19,12 +19,12 @@ export  const  useOffCanvasStore = defineStore('offcanvas',{
             this.address=address
             this.city=city
             this.phone=phone
-            this.logo=logo 
+            this.logo=logo  
         },
         createAction(){
             this.create=true
             this.id=null
-           
+        
         },
     },
     getters:{

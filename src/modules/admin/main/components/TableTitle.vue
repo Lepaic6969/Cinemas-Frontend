@@ -30,6 +30,10 @@
       type: String,
       required: true,
     },
+    createAction:{
+      type: Function,
+      required:false
+    }
   });
   </script>
   

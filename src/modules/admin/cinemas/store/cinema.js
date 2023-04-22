@@ -43,12 +43,13 @@ export const  useCinemaStore=defineStore('cinemas',{
         },
         
         getElementById(id){
-            const index=this.elements.map((item, index)=>{
+            console.log(id)
+            this.elements.map(item=>{ 
                 if(item.id===id){
-                    console.log(id, this.elements[index])
-                    console.log(this.elements)
-                    return this.elements[id]; 
+                    console.log("store",item) 
+                    return item; 
                 }
+                console.log("item: ", item)
             }) 
         },
         

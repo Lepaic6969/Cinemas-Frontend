@@ -43,8 +43,9 @@
 
     //variables y metodos de las store's
     const {addElement, getElementById, updateElement} = useCinema
-
+    
     const {create,id,title,buttonText}=storeToRefs(useOffCanvas);
+    const {elements}=storeToRefs(useCinema);
 
     //variables reactivas
     const name= ref('');
@@ -55,8 +56,12 @@
 
     //función del ormulario  => crear / editar
     const processForm=()=>{
-        if(noEmpty()){ 
-            (create.value)?createItem():updateItem();   updateItem(); 
+        if(noEmpty()){  
+            if(create.value && logo.value !==""){
+                createItem()
+            }else{
+                updateItem()
+            } 
         }else{
             console.log("formulario tiene campo vacio")
         }
@@ -75,8 +80,8 @@
         if(name.value === "" ||
             city.value === "" ||
             address.value === "" ||
-            phone.value === ""||
-            logo.value === "" ){
+            phone.value === "")
+            {
             return false
             //campos incompletos
         }
@@ -119,18 +124,18 @@
     }
       
     //Asignar los datos en el form de editar
-    watch(title, ()=>{
-        
-        let item=getElementById(id.value)
-        if(item){
-            name.value=item.name
-            city.value  = item.city
-            address.value = item.address
-            phone.value = item.phone
-            logo.value = item.phone 
-        }else{
-            resetInputs()
-        }
+    watch(title, ()=>{ 
+        resetInputs()
+        elements.value.map(item=>{ 
+            if(item.id===id.value){ 
+                name.value= item.name
+                city.value  = item.city
+                address.value = item.address
+                phone.value = item.phone
+                logo.value = item.phone    
+            }
+        }) 
+         
     })
 
 </script>

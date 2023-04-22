@@ -51,7 +51,7 @@ const router = createRouter({
           component: () => import("../modules/admin/cinemas/views/CinemaView.vue"),
         },
         {
-          path: "salas",
+          path: "salas/:id",
           name: "admin-salas",
           component: () => import("../modules/admin/rooms/views/RoomView.vue"),
         },

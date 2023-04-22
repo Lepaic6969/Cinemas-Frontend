@@ -1,6 +1,6 @@
 <template>
     <div class="container-md container-fluid mt-5 table-responsive">
-      <TableTitle title="Cinemas" id="offcanvasTypes" />
+      <TableTitle title="Cinemas" id="offcanvasTypes" :createAction="createAction" />
       
       <table
         class="table bg-white bg-opacity-75 mt-3 w-100 text-center"
@@ -30,7 +30,7 @@
                 <td>
                     <router-link
                         class="btn d-flex justify-content-start align-items-center"
-                        :to="{ name: 'admin-salas' }"
+                        :to=" `admin/salas/${element.id}`"
                     >
                     <n-button strong   size="large"  round  color="#039be5">
                             <n-icon size="30" style="margin-top: -6px">
@@ -91,7 +91,7 @@
     const useCinema = useCinemaStore()
 
     //usar variables y metodos
-    const {updateAction} = useOffCanvas;
+    const {updateAction, createAction} = useOffCanvas;
 
     const {elements} = storeToRefs(useCinema)
     const {getElements, deleteElement} = useCinema
