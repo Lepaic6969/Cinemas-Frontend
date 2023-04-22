@@ -94,7 +94,7 @@ export default {
   position: absolute;
   bottom: -40%;
   left: 50%;
-  width: 90%;
+  width: 100%;
   border-radius: 1rem;
   height: 1.5rem;
   transform: translate(-50%);
