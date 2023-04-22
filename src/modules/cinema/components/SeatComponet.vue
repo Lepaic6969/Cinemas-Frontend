@@ -17,18 +17,35 @@ export default {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 500;
-  height: 2.5rem;
+  height: 2.813rem;
   overflow: hidden;
   padding: 0.5rem;
   text-align: center;
   width: 2.5rem;
   user-select: none;
   transition: transform 0.3s ease-in-out;
+  width: 2.813rem;
+  position: relative;
 }
 
 .seat:hover {
-  transform: scale(1.2);
-  filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(1000%);
-  filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(90deg) saturate(1000%);
+  transform: scale(1.1);
+  filter: brightness(80%);
+}
+
+@media (max-width: 768px) {
+  .seat {
+    width: 2.125rem;
+    height: 2.125rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .seat {
+    width: 1.438rem;
+    height: 1.438rem;
+    padding: 0.188rem;
+    font-size: 0.6rem;
+  }
 }
 </style>
