@@ -22,6 +22,7 @@ export default {
   padding: 0.5rem;
   text-align: center;
   width: 2.813rem;
+  position: relative;
 }
 
 .seat:hover {
