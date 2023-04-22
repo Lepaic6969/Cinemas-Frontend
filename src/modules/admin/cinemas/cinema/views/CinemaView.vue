@@ -28,17 +28,12 @@
                 <td>{{element.phone}}</td>
 
                 <td>
-                    <router-link
-                        class="btn d-flex justify-content-start align-items-center"
-                        :to="{ name: 'admin-salas' }"
-                    >
                     <n-button strong   size="large"  round  color="#039be5">
-                            <n-icon size="30" style="margin-top: -6px">
-                                <Film />
-                            </n-icon>
-                            <span style="margin-top: 5px; margin-left: 4px">Administrar</span>
-                        </n-button> 
-                    </router-link>
+                        <n-icon size="30" style="margin-top: -6px">
+                            <Film />
+                        </n-icon>
+                        <span style="margin-top: 5px; margin-left: 4px">Administrar</span>
+                    </n-button> 
                 </td>
                 <td >
                     <n-button strong   size="large"  round  color="#949494"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTypes"
@@ -78,9 +73,9 @@
     import { onMounted } from "vue";
     
     //components
-    import TableTitle from "../../main/components/TableTitle.vue";
-    import formCanvas from "../../main/components/FormCanvas.vue";
-    import cinemaOffCanvas from "../components/cinemaOffCanvas.vue"
+    import TableTitle from "../../../main/components/TableTitle.vue";
+    import formCanvas from "../../../main/components/FormCanvas.vue";
+    import cinemaOffCanvas from "../components/cinemaOffCanvas.vue";
     
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';

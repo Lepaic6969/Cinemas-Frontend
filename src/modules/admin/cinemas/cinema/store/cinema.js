@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia';
 //Importamos los helpers de las peticiones HTTP.
-import fetchData from  '../../../../helpers/fetchData' 
-import fetchDataImg from '../../../../helpers/fetchDataImg';
+import fetchData from  '../../../../../helpers/fetchData' 
+import fetchDataImg from '../../../../../helpers/fetchDataImg';
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/cinemas';
 export const  useCinemaStore=defineStore('cinemas',{
     state:()=>({
@@ -43,13 +43,11 @@ export const  useCinemaStore=defineStore('cinemas',{
         },
         
         getElementById(id){
-            const index=this.elements.map((item, index)=>{
-                if(item.id===id){
-                    console.log(id, this.elements[index])
-                    console.log(this.elements)
-                    return this.elements[id]; 
-                }
-            }) 
+            const index=this.elements.map(el=>el._id).indexOf(id);
+            //console.log(index, this.elements[index])
+            //console.log(id, this.elements[id])
+            //return this.elements[index]; 
+            return this.elements[index]; 
         },
         
         async addElement(cinema){
@@ -67,8 +65,9 @@ export const  useCinemaStore=defineStore('cinemas',{
             for (const key in data) {
                 formData.append(key, data[key]);
             } 
-            await fetchDataImg(URL, 'post', formData);  
-            this.getElements()
+            await fetchDataImg(URL, 'post', formData);
+            console.log("--------------------post-----------------")  
+            //this.getElements()
         },
         async updateElement(id,newCinema){ 
             //const index=this.elements.map(el=>el._id).indexOf(id); //El índice que debo alterar.
@@ -90,7 +89,7 @@ export const  useCinemaStore=defineStore('cinemas',{
                 formData.append(key, data[key]);
             } 
 
-            await fetchData(url,'put',data); ///PUT
+            await fetchDataImg(url,'put',data); ///PUT
            
             this.getElements()
         },

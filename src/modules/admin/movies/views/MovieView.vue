@@ -1,4 +1,5 @@
 <template>
+    <BottonOffCanvas/>
     <div class="container-md container-fluid mt-5 table-responsive">
       <TableTitle title="Peliculas" id="offcanvasTypes" />
       
@@ -47,9 +48,9 @@
     </table>
 
     <formCanvas> 
-        <movieOffCanvas/>
-    
+        <movieOffCanvas/> 
     </formCanvas>
+    <OffCanvasMovies/>
     </div>
   </template>
   
@@ -64,7 +65,8 @@
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
     import movieOffCanvas from "../components/movieOffCanvas.vue"
-    
+    import OffCanvasMovies from "../../main/components/OffCanvasMovies.vue"
+    import BottonOffCanvas from "../../main/components/BottonOffCanvas.vue";
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';
     import {useMovieStore} from '../store/movie' 

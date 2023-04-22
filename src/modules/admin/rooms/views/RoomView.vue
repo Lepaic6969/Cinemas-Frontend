@@ -1,4 +1,6 @@
 <template>
+    <BottonOffCanvas/>
+     
     <div class="container-md container-fluid mt-5 table-responsive">
       <TableTitle title="Salas" id="offcanvasTypes" />
       
@@ -43,9 +45,10 @@
     </table>
 
     <formCanvas> 
-        <roomOffCanvas/>
-    
+        <roomOffCanvas/> 
     </formCanvas>
+
+    <OffCanvasCinemas/>
     </div>
   </template>
   
@@ -60,11 +63,12 @@
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
     import roomOffCanvas from "../components/roomOffCanvas.vue"
-    
+    import OffCanvasCinemas from "../../main/components/OffCanvasCinemas.vue"
+    import BottonOffCanvas from "../../main/components/BottonOffCanvas.vue";
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';
     import {useRoomStore} from '../store/room' 
-    
+
     //instanciar store
     const useOffCanvas = useOffCanvasStore();
     const useRoom = useRoomStore()
@@ -78,4 +82,5 @@
  
   </script>
   
-  <style></style>
+<style scoped> 
+</style>
