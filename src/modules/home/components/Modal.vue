@@ -5,7 +5,7 @@
         {{ title }}
       </h2>
       <div class="modal-content">
-        <div v-if="title === 'Registrarse'">
+        <div v-if="title === 'Registrarse' || isRegisterModal">
           <n-avatar
             src="./src/assets/logo.png"
             alt="Logo de mi sitio web"
@@ -14,15 +14,23 @@
           <n-form ref="formRegisterRef">
             <n-space vertical>
               <n-label>Nombre:</n-label>
-              <input placeholder="Ingrese el nombre" />
+              <input placeholder="Ingrese el nombre" v-model="nombre" />
               <n-label>Apellido:</n-label>
-              <input placeholder="Ingrese el apellido" />
+              <input placeholder="Ingrese el apellido" v-model="apellido" />
               <n-label>Correo:</n-label>
-              <input placeholder="Ingrese el correo" />
+              <input placeholder="Ingrese el correo" v-model="correo" />
               <n-label>Contraseña:</n-label>
-              <input placeholder="Ingrese contraseña" type="password" />
+              <input
+                placeholder="Ingrese contraseña"
+                type="password"
+                v-model="contrasena"
+              />
               <n-label>Teléfono:</n-label>
-              <input placeholder="Ingrese su teléfono" type="number" />
+              <input
+                placeholder="Ingrese su teléfono"
+                type="number"
+                v-model="telefono"
+              />
             </n-space>
             <n-space>
               <button class="buttons" @click="checkRegister()">
@@ -34,12 +42,8 @@
             </n-space>
           </n-form>
         </div>
-        <div v-if="title === 'Iniciar sesión'">
-          <n-avatar
-            src="./src/assets/logo.png"
-            alt="Logo de mi sitio web"
-            class="logo"
-          />
+        <div v-if="title === 'Iniciar sesión' && !isRegisterModal">
+          <n-avatar src="./src/assets/logo.png" alt="Logo" class="logo" />
           <n-form ref="formLoginRef">
             <n-space vertical>
               <n-label>Correo:</n-label>
@@ -81,6 +85,9 @@ export default {
   data() {
     return {
       show: true,
+      nombre:"",
+      apellido:"",
+      telefono:"",
       correo: "",
       contrasena: "",
       users: [
@@ -88,24 +95,22 @@ export default {
         { correo: "usuario2@ejemplo.com", contrasena: "contrasena2" },
         { correo: "usuario3@ejemplo.com", contrasena: "contrasena3" },
       ],
+      isRegisterModal: false,
     };
   },
   methods: {
-    openRegistrationModal() {
-      this.title === "Registrarse";
-      this.toggleModal();
+    showRegisterModal() {
+      this.isRegisterModal = true;
+      this.title = "Registrarse";
     },
     toggleModal() {
       this.show = !this.show;
     },
     checkUser() {
-      console.log("correo:", this.correo);
-      console.log("contrasena:", this.contrasena);
       const userFound = this.users.find(
         (user) =>
           user.correo === this.correo && user.contrasena === this.contrasena
       );
-      console.log("userFound:", userFound);
       if (userFound !== undefined) {
         Swal.fire({
           icon: "success",
@@ -131,14 +136,67 @@ export default {
           confirmButtonText: "Sí",
         }).then((result) => {
           if (result.isConfirmed) {
-            this.openRegistrationModal();
+            this.showRegisterModal();
           }
         });
       }
     },
-    checkRegister(){
-      
-    }
+
+    checkRegister() {
+      if (!this.nombre || !this.apellido || !this.correo || !this.contrasena || !this.telefono) {
+        Swal.fire({
+          title: "Campos incompletos",
+          text: "Por favor, ingrese todos los campos requeridos.",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+      const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!correoRegex.test(this.correo)) {
+        Swal.fire({
+          title: "Correo inválido",
+          text: "Por favor, ingrese un correo válido.",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+
+      if (this.contrasena.length < 6) {
+        Swal.fire({
+          title: "Contraseña inválida",
+          text: "Por favor, ingrese una contraseña con al menos 6 caracteres.",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+      const telefonoRegex = /^\d{10}$/;
+      if (!telefonoRegex.test(this.telefono)) {
+        Swal.fire({
+          title: "Teléfono inválido",
+          text: "Por favor, ingrese un teléfono válido (10 dígitos sin espacios ni guiones).",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Registro exitoso",
+        text: "¡Gracias por registrarte!",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+      }).then(() => {
+        this.toggleModal();
+      });
+    },
   },
 };
 </script>
