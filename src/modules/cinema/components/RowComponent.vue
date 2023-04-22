@@ -85,7 +85,7 @@ export default {
 
 .vip > *,
 .prefe > * {
-  overflow: visible;
+  overflow: visible !important;
   margin-bottom: 10%;
 }
 
