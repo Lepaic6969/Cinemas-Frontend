@@ -29,6 +29,7 @@ export const  useGenderStore=defineStore('cinemas',{
             /*  
             const data=await fetchData(URL);
             this.elements=data.body; 
+            this.elements.reverse()
             */
             //localStoragee 
             const data = JSON.parse(localStorage.getItem('generos'))
@@ -93,11 +94,11 @@ export const  useGenderStore=defineStore('cinemas',{
 
         async deleteElement(id){
             //endpoint
-            /*
+             
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
             this.getElements()
-             */
+              
 
             //localStoragee
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.

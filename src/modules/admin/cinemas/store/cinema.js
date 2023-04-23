@@ -36,16 +36,18 @@ export const  useCinemaStore=defineStore('cinemas',{
     actions:{
         async getElements(){
             //endpoint
-            /*
+            
             const data=await fetchData(URL);
             this.elements=data.body; 
-            */
+            
             //localStoragee
+            /* 
              const data = JSON.parse(localStorage.getItem('cinemas'))  
             if(data){
                 this.elements=data 
                 this.elements.reverse()
             }
+            */
            
         },
         
@@ -62,7 +64,7 @@ export const  useCinemaStore=defineStore('cinemas',{
         
         async addElement(element){
             //endpoint
-            /*
+            
             const data={
                 name:element.name, 
                 city: element.city,
@@ -77,8 +79,9 @@ export const  useCinemaStore=defineStore('cinemas',{
             } 
             await fetchDataImg(URL, 'post', formData);  
             this.getElements()
-            */
+            
             //localStorage
+            /*
             const data={
                 id:this.elements.length,
                 name:element.name, 
@@ -90,11 +93,11 @@ export const  useCinemaStore=defineStore('cinemas',{
             this.elements.push(data);
             this.setData()//
             console.log("add: ", data)
+            */
         },
 
         async updateElement(id,newElement){ 
-            //endpoint
-            /* 
+            //endpoint 
             const url=`${URL}/${id}`;
             const data={
                 name:newElement.name, 
@@ -111,30 +114,33 @@ export const  useCinemaStore=defineStore('cinemas',{
             
             await fetchData(url,'put',data); ///PUT
             
-            this.getElements()
-            */ 
+            this.getElements() 
 
             //localStoragee
+            /*
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
             this.setData()
+            */
         },
         
         async deleteElement(id){
             //endpoint
-            /*
+             
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
             this.getElements()
-             */
+              
 
             //localStoragee
+            /*
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
             this.setData()
+            */
         }, 
         
         setData(){

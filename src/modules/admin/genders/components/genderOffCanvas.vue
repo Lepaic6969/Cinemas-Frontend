@@ -47,9 +47,7 @@
             console.log("formulario tiene campo vacio")
         }
     }
-
-    
-
+ 
     //verifica que los campos estén llenos
     const noEmpty = () =>{
         if(name.value === "") {
@@ -66,8 +64,7 @@
     }
     const createItem=()=>{ 
         const element={ 
-            name:name.value, 
-            
+            name:name.value,  
         }
 
         addElement(element);
@@ -77,7 +74,7 @@
 
     const updateItem=()=>{
         const newElement={
-            _id:id.value, 
+            id:id.value, 
             name:name.value, 
             
         } 

@@ -5,32 +5,7 @@ import fetchDataImg from '../../../../../helpers/fetchDataImg';
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/cinemas';
 export const  useCinemaStore=defineStore('cinemas',{
     state:()=>({
-        elements:[
-            /*
-            {   
-                id: 0,
-                name: "cine 1",
-                address: "address 1",
-                city: "city 1",
-                phone: "123123",
-                logo:"../../../assets/img/logo.png" ,
-            },
-            {   
-                id: 1,
-                name: "cine 2",
-                address: "address 2",
-                city: "city 2",
-                phone: "2341234",
-                logo:"../../../assets/img/logo.png" ,
-            },
-            {   
-                id: 2,
-                name: "cine 3",
-                address: "address 3",
-                city: "city 3",
-                phone: "345345",
-                logo:"../../../assets/img/logo.png" ,
-            },*/
+        elements:[ 
         ],
     }),
     actions:{
