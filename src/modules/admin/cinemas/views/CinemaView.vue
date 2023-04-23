@@ -2,7 +2,9 @@
     <div class="container-md container-fluid mt-5 table-responsive">
       <TableTitle title="Cinemas" id="offcanvasTypes" :createAction="createAction" />
       
-      <table
+      <LoadingSpinner v-if="cargando"/>
+      <EmptyElements title="Cinemas" v-if="elements.length<=0 && !cargando"/>
+      <table  v-if="elements.length>0 && !cargando"
         class="table bg-white bg-opacity-75 mt-3 w-100 text-center"
         >
         <!--v-if="references.length!==0"-->
@@ -16,55 +18,60 @@
                 <th scope="col">Visualizar</th>
                 <th scope="col">Opciones</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr v-for="element in elements" :key="element" >
-                <td>
-                    <img :src="element.logo.secure_url" style="width: 6vw;" crossorigin="anonymous" > 
-                </td>   
-                <td>{{ element.name }}</td>
-                <td>{{element.city}}</td>
-                <td>{{element.address}}</td>
-                <td>{{element.phone}}</td>
-
-                <td>
-                    <router-link
-                        class="btn d-flex justify-content-start align-items-center"
-                        :to=" `admin/salas/${element.id}`"
-                    >
-                    <n-button strong   size="large"  round  color="#039be5">
+        </thead>  
+        
+        <tbody > 
+                <tr v-for="element in elements" :key="element" >
+                    <td>
+                        <img :src="element.logo.secure_url" style="width: 6vw;" crossorigin="anonymous" > 
+                    </td>   
+                    <td>{{ element.name }}</td>
+                    <td>{{element.city}}</td>
+                    <td>{{element.address}}</td>
+                    <td>{{element.phone}}</td>
+    
+                    <td>
+                        <router-link
+                            class="btn d-flex justify-content-start align-items-center"
+                            :to=" `admin/salas/${element.id}`"
+                        >
+                        <n-button strong   size="large"  round  color="#039be5">
+                                <n-icon size="30" style="margin-top: -6px">
+                                    <Film />
+                                </n-icon>
+                                <span style="margin-top: 5px; margin-left: 4px">Administrar</span>
+                            </n-button> 
+                        </router-link>
+                    </td>
+                    <td >
+                        <n-button strong   size="large"  round  color="#949494"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTypes"
+                         @click="updateAction(element.id, element.name , element.address, element.city, element.phone, element.logo)"
+                        >
                             <n-icon size="30" style="margin-top: -6px">
-                                <Film />
+                                <Create />
                             </n-icon>
-                            <span style="margin-top: 5px; margin-left: 4px">Administrar</span>
+                            <span style="margin-top: 5px; margin-left: 4px ">Actualizar</span>
                         </n-button> 
-                    </router-link>
-                </td>
-                <td >
-                    <n-button strong   size="large"  round  color="#949494"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTypes"
-                     @click="updateAction(element.id, element.name , element.address, element.city, element.phone, element.logo)"
-                    >
-                        <n-icon size="30" style="margin-top: -6px">
-                            <Create />
-                        </n-icon>
-                        <span style="margin-top: 5px; margin-left: 4px ">Actualizar</span>
-                    </n-button> 
-
-                    <n-button class="mx-2" strong   size="large" round   color="#DF0505"  
-                    @click="deleteElement(element.id)"
-                    >
-                        <n-icon size="30" style="margin-top: -6px">
-                            <TrashSharp />
-                        </n-icon>
-                        <span style="margin-top: 5px; margin-left: 4px">Borrar</span>
-                    </n-button> 
-                </td>
-            </tr>
+    
+                        <n-button class="mx-2" strong   size="large" round   color="#DF0505"  
+                        @click="deleteElement(element.id)"
+                        >
+                            <n-icon size="30" style="margin-top: -6px">
+                                <TrashSharp />
+                            </n-icon>
+                            <span style="margin-top: 5px; margin-left: 4px">Borrar</span>
+                        </n-button> 
+                    </td>
+                </tr>
+ 
         </tbody>
+        
+        
+         
     </table>
 
     <formCanvas> 
-        <cinemaOffCanvas/>
+        <cinemaOffCanvas title="Cinemas"/>
     
     </formCanvas>
     </div>
@@ -81,10 +88,12 @@
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
     import cinemaOffCanvas from "../components/cinemaOffCanvas.vue"
-    
+    import LoadingSpinner from "../../main/components/LoadingSpinner.vue"
+    import EmptyElements from "../../main/components/EmptyElements.vue"
+
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';
-    import {useCinemaStore} from '../store/cinema' 
+    import {useCinemaStore} from '../store/cinema'  
     
     //instanciar store
     const useOffCanvas = useOffCanvasStore();
@@ -93,7 +102,7 @@
     //usar variables y metodos
     const {updateAction, createAction} = useOffCanvas;
 
-    const {elements} = storeToRefs(useCinema)
+    const {elements, cargando} = storeToRefs(useCinema)
     const {getElements, deleteElement} = useCinema
 
     onMounted(() => {

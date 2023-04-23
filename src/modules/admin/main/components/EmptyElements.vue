@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex align-items-center justify-content-center  ">
-            <div class="text-center">
+            <div class="text-center text-dark">
                 <h2  >No hay {{title}} registrados</h2> 
                 <p class="lead">
                     Por favor agregar un nuevo elemento

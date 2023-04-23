@@ -32,14 +32,20 @@ export const  useCinemaStore=defineStore('cinemas',{
                 logo:"../../../assets/img/logo.png" ,
             },*/
         ],
+        cargando:true
     }),
     actions:{
         async getElements(){
-            //endpoint
-            
-            const data=await fetchData(URL);
-            this.elements=data.body; 
-            
+            //endpoint 
+            this.cargando= true
+            try {
+                const data=await fetchData(URL);
+                this.elements=data.body; 
+                this.cargando= false
+            } catch (error) {
+                this.cargando= false
+            }
+            console.log(this.cargando)
             //localStoragee
             /* 
              const data = JSON.parse(localStorage.getItem('cinemas'))  
@@ -64,7 +70,7 @@ export const  useCinemaStore=defineStore('cinemas',{
         
         async addElement(element){
             //endpoint
-            
+            this.cargando= true
             const data={
                 name:element.name, 
                 city: element.city,
@@ -98,6 +104,7 @@ export const  useCinemaStore=defineStore('cinemas',{
 
         async updateElement(id,newElement){ 
             //endpoint 
+            this.cargando= true
             const url=`${URL}/${id}`;
             const data={
                 name:newElement.name, 
@@ -128,7 +135,7 @@ export const  useCinemaStore=defineStore('cinemas',{
         
         async deleteElement(id){
             //endpoint
-             
+            this.cargando= true 
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
             this.getElements()
