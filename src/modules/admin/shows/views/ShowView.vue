@@ -10,8 +10,8 @@
         <thead>
             <tr>
                 <th scope="col">Pelicula</th>
-                <th scope="col">Fecha de Inicio</th>
-                <th scope="col">Fecha de Fin</th> 
+                <th scope="col">Sala</th>
+                <th scope="col">Fechas</th> 
                 <th scope="col">Hora</th> 
                 <th scope="col">Opciones</th>
             </tr>
@@ -19,9 +19,9 @@
         <tbody>
             <tr v-for="element in elements" :key="element" >
                  
-                <td>{{element.movie_id.name}}</td>
-                <td>{{ element.start_date }}</td>
-                <td>{{element.end_date}}</td>
+                <td>{{element.movie_id}}</td>
+                <td>{{element.room_id}}</td>
+                <td>{{ element.start_date }} al  {{element.end_date}}</td>
                 <td>{{element.hour}}</td>
  
                 <td >
@@ -50,7 +50,7 @@
     <formCanvas> 
         <showOffCanvas/> 
     </formCanvas>
-    <OffCanvasCinemas/>
+    <OffCanvasCinemas :id="id"/>
     </div>
   </template>
   
@@ -59,8 +59,9 @@
     import { TrashSharp} from "@vicons/ionicons5";
     import { Create, Film} from "@vicons/ionicons5";
     import { storeToRefs } from "pinia";
-    import { onMounted } from "vue";
-    
+    import { onMounted } from "vue"; 
+    import { useRoute } from 'vue-router';//id
+
     //components
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
@@ -82,7 +83,13 @@
     const {elements} = storeToRefs(useShow)
     const {getElements, deleteElement} = useShow
 
- 
+    //params
+    const route = useRoute();
+    const id = route.params.id; 
+
+    onMounted(() => {
+        getElements(id);
+    });
   </script>
   
   <style></style>

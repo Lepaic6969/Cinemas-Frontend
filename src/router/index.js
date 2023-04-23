@@ -54,6 +54,11 @@ const router = createRouter({
           path: "salas/:id",
           name: "admin-salas",
           component: () => import("../modules/admin/rooms/views/RoomView.vue"),
+        }, 
+        {
+          path: "funciones/:id",
+          name: "admin-show",
+          component: () => import("../modules/admin/shows/views/ShowView.vue"),
         },
         {
           path: "peliculas",
@@ -61,9 +66,9 @@ const router = createRouter({
           component: () => import("../modules/admin/movies/views/MovieView.vue"),
         },
         {
-          path: "funciones",
-          name: "admin-show",
-          component: () => import("../modules/admin/shows/views/ShowView.vue"),
+          path: "generos",
+          name: "admin-generos",
+          component: () => import("../modules/admin/genders/views/GenderView.vue"),
         },
             
       ],

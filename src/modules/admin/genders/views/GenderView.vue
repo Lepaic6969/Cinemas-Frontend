@@ -1,8 +1,7 @@
 <template>
     <BottonOffCanvas/>
-     
-    <div class="container-md container-fluid mt-5 table-responsive">
-      <TableTitle title="Salas" id="offcanvasTypes" />
+   <div class="container-md container-fluid mt-5 table-responsive">
+      <TableTitle title="Géneros" id="offcanvasTypes" :createAction="createAction" />
       
       <table
         class="table bg-white bg-opacity-75 mt-3 w-100 text-center"
@@ -10,17 +9,13 @@
         <!--v-if="references.length!==0"-->
         <thead>
             <tr> 
-                <th scope="col">Nombre</th>
-                <th scope="col">Capacidad</th> 
-                <th scope="col">Estado</th>
+                <th scope="col">Nombre</th> 
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="element in elements" :key="element" > 
-                <td>{{ element.name }}</td>
-                <td>{{element.capacity}}</td>
-                <td>{{element.status}}</td> 
+            <tr v-for="element in elements" :key="element" >    
+                <td>{{ element.name }}</td> 
                 <td >
                     <n-button strong   size="large"  round  color="#949494"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTypes"
                      @click="updateAction(element.id, element.name , element.address, element.city, element.phone, element.logo)"
@@ -45,10 +40,9 @@
     </table>
 
     <formCanvas> 
-        <roomOffCanvas/> 
+        <genderOffCanvas/> 
     </formCanvas>
-
-    <OffCanvasCinemas :id="id"/>
+    <OffCanvasMovies/>
     </div>
   </template>
   
@@ -57,38 +51,32 @@
     import { TrashSharp} from "@vicons/ionicons5";
     import { Create, Film} from "@vicons/ionicons5";
     import { storeToRefs } from "pinia";
-    import { onMounted } from "vue"; 
-    import { useRoute } from 'vue-router';//id
+    import { onMounted } from "vue";
     
-
     //components
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
-    import roomOffCanvas from "../components/roomOffCanvas.vue"
-    import OffCanvasCinemas from "../../main/components/OffCanvasCinemas.vue"
+    import genderOffCanvas from "../components/genderOffCanvas.vue"
+    import OffCanvasMovies from "../../main/components/OffCanvasMovies.vue"
     import BottonOffCanvas from "../../main/components/BottonOffCanvas.vue";
-   
+    
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';
-    import {useRoomStore} from '../store/room' 
-
+    import {useGenderStore} from '../store/gender' 
+    
     //instanciar store
     const useOffCanvas = useOffCanvasStore();
-    const useRoom = useRoomStore()
+    const useGender = useGenderStore()
 
     //usar variables y metodos
-    const {updateAction} = useOffCanvas;
+    const {updateAction, createAction} = useOffCanvas;
 
-    const {elements} = storeToRefs(useRoom)
-    const {getElements, deleteElement} = useRoom
+    const {elements} = storeToRefs(useGender)
+    const {getElements, deleteElement} = useGender
 
-    //params
-    const route = useRoute();
-    const id = route.params.id; 
     onMounted(() => {
-        getElements(id);
+        getElements();
     });
   </script>
   
-<style scoped> 
-</style>
+  <style></style>

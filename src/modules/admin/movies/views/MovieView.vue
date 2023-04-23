@@ -12,7 +12,7 @@
                 <th scope="col">Imagen</th> 
                 <th scope="col">Nombre</th>
                 <th scope="col">Duración</th>
-                <th scope="col">Trailer</th>
+                <th scope="col">Genero(s)</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
@@ -23,7 +23,11 @@
                 </td> 
                 <td>{{ element.name }}</td>
                 <td>{{element.duration}}</td>
-                <td>{{element.trailer}}</td>  
+                <td>
+                    <div v-for="gender in element.genders" :key="gender" >
+                        {{ gender.name }}
+                    </div>
+                </td>  
                 <td >
                     <n-button strong   size="large"  round  color="#949494"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasTypes"
                      @click="updateAction(element.id, element.name , element.address, element.city, element.phone, element.logo)"
@@ -67,6 +71,7 @@
     import movieOffCanvas from "../components/movieOffCanvas.vue"
     import OffCanvasMovies from "../../main/components/OffCanvasMovies.vue"
     import BottonOffCanvas from "../../main/components/BottonOffCanvas.vue";
+    
     //import store
     import {useOffCanvasStore} from '../store/offcanvas.js';
     import {useMovieStore} from '../store/movie' 
@@ -81,6 +86,9 @@
     const {elements} = storeToRefs(useMovie)
     const {getElements, deleteElement} = useMovie
 
+    onMounted(() => {
+        getElements()
+    })
  
   </script>
   

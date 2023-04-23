@@ -8,11 +8,16 @@
             </div>
             <div class="form-group mb-2">
                 <label for="name " >Capacidad:</label>
-                <input type="text" class="form-control mt-2" id="name" placeholder="Ingrese la Capacidad Total" v-model="capacity"> 
+                <input type="number" class="form-control mt-2" id="name" placeholder="Ingrese la Capacidad Total" v-model="capacity"> 
             </div>
             <div class="form-group mb-2">
                 <label for="name " >Estado:</label>
-                <input type="text" class="form-control mt-2" id="phone" placeholder="Ingrese el Estado" v-model="state"> 
+                <select name="select" class="form-select" aria-label="Default select example"  v-model="status">
+                    <option value="libre" selected>Libre </option>
+                    <option value="ocupado" >Ocupado </option>
+                    <option value="inhabilitado">Inhabilitado </option>
+                    <option value="habilitado">Habilitado </option>
+                </select>
             </div> 
             <div class="form-group mb-2 mt-5">
                 <button type="submit" class="btn btn-outline-warning btn-lg w-100" data-bs-dismiss="offcanvas"
@@ -25,6 +30,7 @@
 <script setup>
     import {ref,watch} from 'vue' 
     import { storeToRefs } from 'pinia'; 
+    import { useRoute } from 'vue-router';//id
     //import store's
     import {useRoomStore} from '../store/room' 
     import {useOffCanvasStore} from '../store/offcanvas' 
@@ -36,12 +42,13 @@
     //variables y metodos de las store's
     const {addElement, getElementById, updateElement} = useRoom
     const {create,id,title,buttonText}=storeToRefs(useOffCanvas);
-
+    const {elements}=storeToRefs(useRoom);
     //variables reactivas
     const name= ref('');
     const capacity= ref('');
-     
-    const state= ref('');
+    const status= ref('');
+    const route = useRoute();
+    const cinemaId = route.params.id; 
 
     //Funcionalidad del formulario.
     const processForm=()=>{
@@ -60,7 +67,7 @@
     const noEmpty = () =>{
         if(name.value === "" ||
             capacity.value === "" || 
-            state.value === "" 
+            status.value === "" 
             ){
             return false
             //campos incompletos
@@ -72,14 +79,15 @@
     const resetInputs = () => {
         name.value = ''
         capacity.value = '' 
-        state.value= ''
+        status.value= ''
     }
     const createItem=()=>{
              
         const element={ 
+            cinemaId:cinemaId,
             name:name.value, 
             capacity: capacity.value ,  
-            state: state.value,
+            status: status.value,
         }
 
         addElement(element);
@@ -89,10 +97,10 @@
 
     const updateItem=()=>{
         const newElement={
-            _id:id.value, 
+            cinemaId:cinemaId,
             name:name.value, 
             capacity: capacity.value ,  
-            state: state.value,
+            status: status.value,
         }
         console.log(newElement)
         updateElement(id.value,newElement);
@@ -102,12 +110,14 @@
 
     //Este es el watch en composition API.
     watch(title, ()=>{
-        
-        let item=getElementById(id.value)
+        resetInputs()
+        const index=elements.value.findIndex(obj => obj.id === id.value); //El índice que debo alterar.
+        const item = elements.value[index]
+        console.log(item)
         if(item){
             name.value=item.name
             capacity.value  = item.capacity 
-            state.value = item.state
+            status.value = item.status
             console.log(name.value)
         }else{
             name.value=''

@@ -112,7 +112,7 @@
 
     const updateItem=()=>{
         const newElement={
-            _id:id.value, 
+            id:id.value, 
             name:name.value, 
             city: city.value , 
             address: address.value , 
@@ -126,16 +126,15 @@
     //Asignar los datos en el form de editar
     watch(title, ()=>{ 
         resetInputs()
-        elements.value.map(item=>{ 
-            if(item.id===id.value){ 
-                name.value= item.name
+        const index=elements.value.findIndex(obj => obj.id === id.value); //El índice que debo alterar.
+        const item = elements.value[index]
+        if(item){
+            name.value= item.name
                 city.value  = item.city
                 address.value = item.address
                 phone.value = item.phone
                 logo.value = item.phone    
-            }
-        }) 
-         
+        } 
     })
 
 </script>

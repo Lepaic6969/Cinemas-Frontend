@@ -34,17 +34,17 @@
           :to="{ name: 'admin-peliculas' }"
         >
           <n-icon size="30" style="margin-top: -6px">
-            <TvSharp />
+            <Videocam />
           </n-icon>
           <span class="material-symbols-outlined"> Peliculas</span></router-link
         >
         <router-link
           class="btn d-flex justify-content-start align-items-center"
-          :to="{ name: 'admin-show' }"
+          :to="{ name: 'admin-generos' }"
         >
         
           <n-icon size="30" style="margin-top: -6px">
-            <TicketSharp />
+            <LogoStackoverflow />
           </n-icon>
           <span class="material-symbols-outlined"> Géneros </span>
           </router-link
@@ -56,7 +56,7 @@
 
 <script setup>
   import {NIcon} from "naive-ui";
-  import { TvSharp, TicketSharp,CloseOutline} from "@vicons/ionicons5";
+  import { Videocam, LogoStackoverflow,CloseOutline} from "@vicons/ionicons5";
     
 </script>
 

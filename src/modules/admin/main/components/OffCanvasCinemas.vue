@@ -31,7 +31,7 @@
       <div class="offcanvas-body text-white text-center open-sans-bold">
         <router-link
           class="btn d-flex justify-content-start align-items-center"
-          :to="{ name: 'admin-salas' }"
+          :to="`/admin/salas/${id}`"
         >
           <n-icon size="30" style="margin-top: -6px">
             <TvSharp />
@@ -40,7 +40,7 @@
         >
         <router-link
           class="btn d-flex justify-content-start align-items-center"
-          :to="{ name: 'admin-show' }"
+          :to="`/admin/funciones/${id}`"
         >
         
           <n-icon size="30" style="margin-top: -6px">
@@ -57,7 +57,13 @@
 <script setup>
   import {NIcon} from "naive-ui";
   import { TvSharp, TicketSharp,CloseOutline} from "@vicons/ionicons5";
-    
+  
+  const props = defineProps({
+    id: {
+      tipe: Number,
+      required: true,
+    }
+  })
 </script>
 
 <style scoped>

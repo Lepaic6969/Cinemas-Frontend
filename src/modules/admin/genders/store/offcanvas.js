@@ -5,22 +5,19 @@ export  const  useOffCanvasStore = defineStore('offcanvas',{
         create:true,
         id:null,
         name:'',
-        capacity:'', 
-        state: '',
+         
         
     }),
     actions:{
-        updateAction(id,name , capacity, state){
+        updateAction(id,name){
             this.create=false
             this.id=id
-            this.name=name
-            this.capacity=capacity 
-            this.state=state 
+            this.name=name 
         },
         createAction(){
             this.create=true
             this.id=null
-           
+        
         },
     },
     getters:{
