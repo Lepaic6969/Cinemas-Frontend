@@ -1,19 +1,25 @@
 <template>
-  <span class="seat">{{ seatNumber }}</span>
+  <span class="seat" @click="toggleReservation">{{ seatNumber }}</span>
 </template>
 
 <script>
 export default {
   props: {
-    props: {
-      seatNumber: {
-        type: Number,
-        required: true,
-      },
-      reserved: {
-        type: Boolean,
-        required: true,
-      },
+    seatNumber: {
+      type: String,
+      required: true,
+    },
+    reserved: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
+  methods: {
+    toggleReservation() {
+      this.reserved = !this.reserved;
+      this.$emit(this.reserved ? "unreserve" : "reserve", this.seatNumber);
+      console.log(this.seatNumber);
     },
   },
 };
@@ -45,10 +51,14 @@ export default {
   filter: contrast(130%);
 }
 
+.reserved {
+}
+
 @media (max-width: 768px) {
   .seat {
     width: 2.125rem;
     height: 2.125rem;
+    font-size: 0.65rem;
   }
 }
 

@@ -4,19 +4,19 @@
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid w-100 screen" />
       <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
         <div
-          class="container d-flex flex-wrap justify-content-start align-items-start gap-1 align-content-start content-box"
+          class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box"
         >
-          <SeatComponet v-for="seat in 36" :key="seat" />
+          <SeatComponet v-for="seatG in general" :key="seatG" :seatNumber="seatG" />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
         >
-          <SeatComponet v-for="seat in 10" :key="seat" />
+          <SeatComponet v-for="seatV in vip" :key="seatV" :seatNumber="seatV" />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box prefe"
         >
-          <SeatComponet v-for="seat in 25" :key="seat" />
+          <SeatComponet v-for="seatP in preferential" :key="seatP" :seatNumber="seatP" />
         </div>
       </div>
     </div>
@@ -28,6 +28,61 @@ import { defineAsyncComponent } from "vue";
 export default {
   components: {
     SeatComponet: defineAsyncComponent(() => import("../components/SeatComponet.vue")),
+  },
+
+  data() {
+    return {
+      general: [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G14",
+        "G15",
+        "G16",
+        "G17",
+        "G18",
+        "G19",
+        "G20",
+        "G21",
+        "G22",
+        "G23",
+        "G24",
+        "G25",
+        "G26",
+        "G27",
+        "G28",
+        "G29",
+        "G30",
+      ],
+      vip: ["V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10"],
+      preferential: [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+      ],
+    };
   },
 };
 </script>
@@ -143,10 +198,6 @@ export default {
   .vip > *::after {
     font-size: 0.7rem;
     bottom: -60%;
-  }
-
-  .main {
-    transform: rotate(90deg);
   }
 }
 
