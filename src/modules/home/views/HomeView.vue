@@ -24,12 +24,13 @@
 import Nav from "../components/navBar.vue";
 import axios from "axios";
 import Footer from "../components/Footer.vue"
+import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",
   components: {
     Nav,
-    Footer
+    Footer,
   },
   data() {
     return {
@@ -39,6 +40,7 @@ export default {
     };
   },
   mounted() {
+    this.makeRequest();
     axios
       .get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=es-MX&page=1`
@@ -52,6 +54,16 @@ export default {
     getImage(path) {
       return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
     },
+    
+    
+    async makeRequest(objectData) {
+      try {
+        const { data } = await fetchData("users", "get", objectData);
+      console.log("cine",data)
+      } catch (err) {
+          console.log(err);
+      }
+    }
     
   }
 };
