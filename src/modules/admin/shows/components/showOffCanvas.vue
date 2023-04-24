@@ -46,6 +46,7 @@
     import {ref,watch, computed} from 'vue' 
     import { storeToRefs } from 'pinia'; 
     import { useRoute } from 'vue-router';//id
+    import Swal from "sweetalert2";
  
     //import store's
     import {useShowStore} from '../store/show' 
@@ -82,7 +83,11 @@
                 updateItem();
             }
         }else{
-            console.log("campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
 
@@ -122,7 +127,11 @@
             addElement(element);
             resetInputs()  
         }else{
-            console.log("sala ocupada")
+            Swal.fire(
+            '¡Sala Ocupada!',
+            'Elija otro horario',
+            'error'
+            )
         }
     }
 
@@ -140,7 +149,11 @@
              updateElement(id.value,newElement);
              resetInputs()
         }else{
-            console.log("sala ocupada")
+            Swal.fire(
+            '¡Sala Ocupada!',
+            'Elija otro horario',
+            'error'
+            )
         }
     }
         

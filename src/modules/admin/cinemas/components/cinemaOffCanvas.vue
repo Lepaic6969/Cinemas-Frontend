@@ -33,6 +33,8 @@
 <script setup>
     import {ref,watch} from 'vue' 
     import { storeToRefs } from 'pinia'; 
+    import Swal from "sweetalert2";
+
     //import store's
     import {useCinemaStore} from '../store/cinema' 
     import {useOffCanvasStore} from '../store/offcanvas' 
@@ -63,15 +65,19 @@
                 updateItem()
             } 
         }else{
-            console.log("formulario tiene campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
 
     //file select
     const onFileSelected=(e)=>{
-            console.log("Entró a cargar el archivo...")
+            //console.log("Entró a cargar el archivo...")
             logo.value = e.target.files[0];
-            console.log("archivo cargado");
+            //console.log("archivo cargado");
             console.log(image.value);
         }
 
@@ -106,7 +112,7 @@
         }
 
         addElement(element);
-        resetInputs() 
+       
         console.log(element)
     }
 

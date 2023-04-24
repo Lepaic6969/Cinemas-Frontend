@@ -58,7 +58,11 @@
         if(noEmpty()){ 
             (create.value)?createItem():updateItem();   updateItem(); 
         }else{
-            console.log("formulario tiene campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
 

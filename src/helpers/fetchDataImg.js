@@ -7,7 +7,7 @@ const fetchDataImg = async (
   data = {},
   headers = {
     "Content-Type": "multipart/form-data",
-    "x-access-token": `${localStorage.getItem("token") || ""}`,
+    "x-access-token":  `${localStorage.getItem("token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJlbWFpbCI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODIzMTYyMzcsImV4cCI6MTY4MjMxOTgzN30.1qoFRt3_5ZmF90MEvP3oMNGblQRXJhkXWPz26UfJe6E"}`,
   }
 ) => {
   try {

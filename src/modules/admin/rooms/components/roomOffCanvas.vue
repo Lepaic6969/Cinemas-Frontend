@@ -31,6 +31,8 @@
     import {ref,watch} from 'vue' 
     import { storeToRefs } from 'pinia'; 
     import { useRoute } from 'vue-router';//id
+    import Swal from "sweetalert2";
+
     //import store's
     import {useRoomStore} from '../store/room' 
     import {useOffCanvasStore} from '../store/offcanvas' 
@@ -59,7 +61,11 @@
                 updateItem();
             }
         }else{
-            console.log("campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
 

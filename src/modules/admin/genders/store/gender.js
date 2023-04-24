@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia';
+import Swal from "sweetalert2";
 //Importamos los helpers de las peticiones HTTP.
 import fetchData from  '../../../../helpers/fetchData' 
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/genders';
@@ -22,16 +23,27 @@ export const  useGenderStore=defineStore('cinemas',{
                  
             },*/
         ],
+        cargando:true,
     }),
     actions:{
         async getElements(){
            //endpoint
             /*  
-            const data=await fetchData(URL);
-            this.elements=data.body; 
-            this.elements.reverse()
+            try{
+                const data=await fetchData(URL); 
+                console.log(data)
+                if(data){
+                    this.elements=data; 
+                    this.elements.reverse()
+                    this.cargando= false
+                }
+            }catch(error){
+                console.log(error)
+                this.cargando= false
+            }
             */
             //localStoragee 
+            this.cargando=false
             const data = JSON.parse(localStorage.getItem('generos'))
             if(data){
                 this.elements=data 
@@ -53,16 +65,16 @@ export const  useGenderStore=defineStore('cinemas',{
         
         async addElement(element){
             //endpoint
-            /*
+            /*  
+            this.cargando= true
             const data={
                 name:cinema.name,  
-            } 
-            
-            
+            }  
             await fetchData(URL, 'post', data);  
+             this.alert("agregado")
             this.getElements()
             */
-            //localStorage
+            //localStorage 
             const data={
                 id:this.elements.length,
                 name:element.name, 
@@ -70,18 +82,20 @@ export const  useGenderStore=defineStore('cinemas',{
             } 
             this.elements.push(data);
             this.setData()
-            console.log("add: ", data)
+            this.alert("agregado")
+            console.log("add: ", data) 
         },
 
         async updateElement(id,newElement){ 
             //endpoint 
             /*
+            this.cargando= true
             const url=`${URL}/${id}`;
             const data={
                 name:newElement.name,  
             } 
             await fetchData(url,'put',data); ///PUT
-           
+            this.alert("actualizado")
             this.getElements()
             */
             //localStorage
@@ -89,28 +103,41 @@ export const  useGenderStore=defineStore('cinemas',{
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
+            this.alert("actualizado")
             this.setData()
         },
 
         async deleteElement(id){
-            //endpoint
-             
+            //endpoint 
+            /*
+            this.cargando= true
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
+            this.alert("eliminado")
             this.getElements()
+            */
               
 
-            //localStoragee
+            //localStorage 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
-            this.setData()
+            this.alert("eliminado")
+            this.setData() 
         }, 
 
         setData(){
             localStorage.setItem('generos', JSON.stringify(this.elements))
             this.getElements()
         },
+        alert(action){
+            Swal.fire({ 
+                icon: 'success',
+                title: 'Genero '+action,
+                showConfirmButton: false,
+                timer: 1500
+            }) 
+        }
 
     }
     

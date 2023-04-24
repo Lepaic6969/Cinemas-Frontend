@@ -18,6 +18,8 @@
 <script setup>
     import {ref,watch} from 'vue' 
     import { storeToRefs } from 'pinia'; 
+    import Swal from "sweetalert2";
+
     //import store's
     import {useGenderStore} from '../store/gender' 
     import {useOffCanvasStore} from '../store/offcanvas' 
@@ -44,7 +46,11 @@
                 updateItem()
             } 
         }else{
-            console.log("formulario tiene campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
  

@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia';
+import Swal from "sweetalert2";
 //Importamos los helpers de las peticiones HTTP.
 import fetchData from  '../../../../helpers/fetchData' 
 import fetchDataImg from '../../../../helpers/fetchDataImg';
@@ -84,6 +85,7 @@ export const  useCinemaStore=defineStore('cinemas',{
                 formData.append(key, data[key]);
             } 
             await fetchDataImg(URL, 'post', formData);  
+            this.alert("agregado")
             this.getElements()
             
             //localStorage
@@ -97,6 +99,7 @@ export const  useCinemaStore=defineStore('cinemas',{
                 logo: element.logo, 
             } 
             this.elements.push(data);
+            this.alert("eliminado")
             this.setData()//
             console.log("add: ", data)
             */
@@ -121,6 +124,7 @@ export const  useCinemaStore=defineStore('cinemas',{
             
             await fetchData(url,'put',data); ///PUT
             
+            this.alert("actualizado")
             this.getElements() 
 
             //localStoragee
@@ -129,6 +133,7 @@ export const  useCinemaStore=defineStore('cinemas',{
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
+            this.alert("eliminado")
             this.setData()
             */
         },
@@ -137,15 +142,16 @@ export const  useCinemaStore=defineStore('cinemas',{
             //endpoint
             this.cargando= true 
             const url=`${URL}/${id}`;
-            await fetchData(url,'delete'); 
+            await fetchData(url,'delete');  
+            this.alert("eliminado")
             this.getElements()
-              
-
+               
             //localStoragee
             /*
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
+            this.alert("eliminado")
             this.setData()
             */
         }, 
@@ -154,6 +160,15 @@ export const  useCinemaStore=defineStore('cinemas',{
             localStorage.setItem('cinemas', JSON.stringify(this.elements))
             this.getElements()
         },
+
+        alert(action){
+            Swal.fire({ 
+                icon: 'success',
+                title: 'Cinema '+action,
+                showConfirmButton: false,
+                timer: 1500
+            }) 
+        }
     }
     
 });

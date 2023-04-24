@@ -2,6 +2,7 @@ import {defineStore} from 'pinia';
 //Importamos los helpers de las peticiones HTTP.
 import fetchData from  '../../../../helpers/fetchData'  
 import fetchDataImg from '../../../../helpers/fetchDataImg';
+import Swal from "sweetalert2";
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/movies';
 const URL2= 'https://movies-project-production-bb22.up.railway.app/api/v1/genres';
 export const  useMovieStore=defineStore('movie',{
@@ -30,18 +31,29 @@ export const  useMovieStore=defineStore('movie',{
             },
             */
         ],
+        cargando:true,
         generos:[],
     }),
     actions:{
         async getElements(){
-            //endpoint
+            //endpoint 
             /*
-            const data=await fetchData(URL);
-            const data2=await fetchData(URL2)//generos
-            this.elements=data.body; 
-            this.generos=data2.body//generos
+            try {
+                const data=await fetchData(URL);
+                const data2=await fetchData(URL2)//generos
+                this.generos=data2//generos 
+                if(data){
+                    this.elements=data 
+                    this.elements.reverse()
+                }
+                this.cargando=false
+            } catch (error) {
+                this.cargando=false
+            }
             */
+
             //localStoragee
+            this.cargando=false
             const data = JSON.parse(localStorage.getItem('movies'))  
             this.generos = JSON.parse(localStorage.getItem('generos'))  
             
@@ -62,6 +74,7 @@ export const  useMovieStore=defineStore('movie',{
         async addElement(element){ 
             //endpoint
             /*
+            this.cargando=false
             const data={
                 name:element.name,
                 duration:element.duration,
@@ -74,6 +87,7 @@ export const  useMovieStore=defineStore('movie',{
                 formData.append(key, data[key]);
             } 
             await fetchDataImg(URL, 'post', formData);  
+            this.alert("agregada")
             this.getElements()
             */
             //localStorage
@@ -86,6 +100,7 @@ export const  useMovieStore=defineStore('movie',{
                 genders:element.genders
             }
             this.elements.push(data);
+            this.alert("agregada")
             this.setData()//
             console.log("add: ", data)
             
@@ -93,6 +108,7 @@ export const  useMovieStore=defineStore('movie',{
         async updateElement(id,newElement){ 
             //endpoint
             /*
+            this.cargando=false
             const data={
                 name:newElement.name,
                 duration:newElement.duration,
@@ -104,7 +120,8 @@ export const  useMovieStore=defineStore('movie',{
             for (const key in data) {
                 formData.append(key, data[key]);
             } 
-            await fetchDataImg(URL, 'post', formData);  
+            await fetchDataImg(URL, 'post', formData); 
+            this.alert("actualizada") 
             this.getElements()
             */
             //localStorage
@@ -112,20 +129,24 @@ export const  useMovieStore=defineStore('movie',{
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
+            this.alert("actualizada")
             this.setData()
         },
         async deleteElement(id){
             //endpoint
             /*
-                const url=`${URL}/${id}`;
-                await fetchData(url,'delete'); 
-                this.getElements()
+            this.cargando=false
+            const url=`${URL}/${id}`;
+            await fetchData(url,'delete'); 
+            this.alert("eliminada")
+            this.getElements()
             */
 
             //localStoragee
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
+            this.alert("eliminada")
             this.setData()
         }, 
         
@@ -133,6 +154,15 @@ export const  useMovieStore=defineStore('movie',{
             localStorage.setItem('movies', JSON.stringify(this.elements))
             this.getElements()
         },
+        
+        alert(action){
+            Swal.fire({ 
+                icon: 'success',
+                title: 'Pelicula '+action,
+                showConfirmButton: false,
+                timer: 1500
+            }) 
+        }
 
     }
     

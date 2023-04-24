@@ -30,7 +30,7 @@
             </div> 
             <div class="form-group mb-2">
                 <label for="name " >Generos:</label>
-                <input type="text" class="form-control mt-2" id="address" placeholder="Agregar Genero" v-model="search"> 
+                <input type="text" class="form-control mt-2" id="address" placeholder="Buscar Genero" v-model="search"> 
                 
                 <div v-if="buscar.length" class="col-2" style="position: absolute; width: 85%; margin-top: 0rem;">
                     <ul class="list-group "> 
@@ -62,6 +62,8 @@
 <script setup>
     import {ref,watch, computed, onMounted  } from 'vue' 
     import { storeToRefs } from 'pinia'; 
+    import Swal from "sweetalert2";
+
     //import store's
     import {useMovieStore} from '../store/movie' 
     import {useOffCanvasStore} from '../store/offcanvas' 
@@ -96,7 +98,11 @@
                 updateItem();
             }
         }else{
-            console.log("campo vacio")
+            Swal.fire(
+            'Formulario Incompleto',
+            'Asegurese de llenar todos los campos',
+            'error'
+            )
         }
     }
 

@@ -54,7 +54,7 @@
                         </n-button> 
     
                         <n-button class="mx-2" strong   size="large" round   color="#DF0505"  
-                        @click="deleteElement(element.id)"
+                        @click="deleteConfirmed(element.id)"
                         >
                             <n-icon size="30" style="margin-top: -6px">
                                 <TrashSharp />
@@ -83,7 +83,8 @@
     import { Create, Film} from "@vicons/ionicons5";
     import { storeToRefs } from "pinia";
     import { onMounted } from "vue";
-    
+    import Swal from "sweetalert2";
+
     //components
     import TableTitle from "../../main/components/TableTitle.vue";
     import formCanvas from "../../main/components/FormCanvas.vue";
@@ -105,6 +106,21 @@
     const {elements, cargando} = storeToRefs(useCinema)
     const {getElements, deleteElement} = useCinema
 
+    const deleteConfirmed = (id) => {
+        Swal.fire({
+            title: "¿Desea eliminar este elemento?",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            showCancelButton: true, 
+            confirmButtonText: 'Si'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                deleteElement(id) 
+        }
+        })
+    }
+    
     onMounted(() => {
         getElements();
     });
