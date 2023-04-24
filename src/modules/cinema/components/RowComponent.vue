@@ -1,29 +1,5 @@
-<!-- <template>
-  <div class="container bg-dark rounded p-3">
-    <div class="row justify-content-md-center">
-      <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid col-12 screen" />
-      <div class="container col-10">
-        <div class="row grid-fluid justify-content-center align-items-center gap-5">
-          <div class="row justify-content-center align-items-center gap-2">
-            <SeatComponet v-for="seat in 20" />
-          </div>
-          <div class="row justify-content-center align-items-center gap-2">
-            <SeatComponet v-for="seat in 10" />
-          </div>
-          <div class="row justify-content-center align-items-center gap-2">
-            <SeatComponet v-for="seat in 25" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid my-5 text-center">
-      <img src="../assets/images/exit.png" alt="exit" class="img-fluid col-md-6" />
-    </div>
-  </div>
-</template> -->
-
 <template>
-  <div class="container main col-md-9 pb-3 pt-4 bg-dark">
+  <div class="container main col-md-9 pb-3 pt-4">
     <div class="row justify-content-md-center">
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid w-100 screen" />
       <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
@@ -44,9 +20,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="container max-auto text-center exit">
-      <img src="../assets/images/exit.png" alt="exit" class="img-fluid" />
-    </div> -->
   </div>
 </template>
 
@@ -71,12 +44,14 @@ export default {
 } */
 
 .screen {
-  filter: drop-shadow(0rem 1rem 1rem #e3e4e5);
+  filter: drop-shadow(0rem 1rem 1rem #e3e4e5) contrast(120%) brightness(110%);
 }
 
 .main {
-  border-radius: 0.5rem;
   position: relative;
+  /* background-color: #747474; */
+  background-color: #616161;
+  padding: 3rem;
 }
 
 .content-box {
@@ -168,6 +143,10 @@ export default {
   .vip > *::after {
     font-size: 0.7rem;
     bottom: -60%;
+  }
+
+  .main {
+    transform: rotate(90deg);
   }
 }
 

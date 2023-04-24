@@ -1,10 +1,21 @@
 <template>
-  <span class="seat">A1</span>
+  <span class="seat">{{ seatNumber }}</span>
 </template>
 
 <script>
 export default {
-  props: {},
+  props: {
+    props: {
+      seatNumber: {
+        type: Number,
+        required: true,
+      },
+      reserved: {
+        type: Boolean,
+        required: true,
+      },
+    },
+  },
 };
 </script>
 
@@ -23,14 +34,15 @@ export default {
   text-align: center;
   width: 2.5rem;
   user-select: none;
-  transition: transform 0.3s ease-in-out;
   width: 2.813rem;
   position: relative;
+  filter: drop-shadow(2px 1px 10px #312b2b);
+  transition: 0.1s ease-in-out;
 }
 
 .seat:hover {
   transform: scale(1.1);
-  filter: brightness(80%);
+  filter: contrast(130%);
 }
 
 @media (max-width: 768px) {
