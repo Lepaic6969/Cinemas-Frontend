@@ -15,15 +15,7 @@
         </div>
       </n-card>
     </n-col>
-  </n-row>
-
-  <!-- <div v-for="cinema in cinemas" :key="cinema.id">
-  <p>{{ cinema.name }}</p>
-  <p>{{ cinema.address }}</p>
-  <p>{{ cinema.city }}</p>
-  <p>{{ cinema.phone }}</p>
-</div> -->
-  
+  </n-row>  
   <Footer />
 </template>
 
@@ -31,7 +23,6 @@
 import Nav from "../components/navBar.vue";
 import axios from "axios";
 import Footer from "../components/Footer.vue";
-// import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",
@@ -43,18 +34,10 @@ export default {
     return {
       movies: [],
       apiKey: "f40d327254d74aec7e161062db22582b",
-    //   cinemas: [],
-    //   selectedCinema: null,
+  
     };
   },
   async mounted() {
-    // try {
-    //   const data = await fetchData("/cinemas");
-    //   this.cinemas = data.body;
-    //   console.log("Cinemas:", this.cinemas); // Agregado
-    // } catch (error) {
-    //   console.error(error);
-    // }
     axios
       .get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=es-MX&page=1`

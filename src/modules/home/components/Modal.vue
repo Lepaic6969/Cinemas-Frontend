@@ -14,22 +14,22 @@
           <n-form ref="formRegisterRef">
             <n-space vertical>
               <n-label>Nombre:</n-label>
-              <input placeholder="Ingrese el nombre" v-model="nombre" />
+              <input placeholder="Ingrese el nombre" v-model="name" />
               <n-label>Apellido:</n-label>
-              <input placeholder="Ingrese el apellido" v-model="apellido" />
+              <input placeholder="Ingrese el apellido" v-model="lastName" />
               <n-label>Correo:</n-label>
-              <input placeholder="Ingrese el correo" v-model="correo" />
+              <input placeholder="Ingrese el correo" v-model="email" />
               <n-label>Contraseña:</n-label>
               <input
                 placeholder="Ingrese contraseña"
                 type="password"
-                v-model="contrasena"
+                v-model="password"
               />
               <n-label>Teléfono:</n-label>
               <input
                 placeholder="Ingrese su teléfono"
                 type="number"
-                v-model="telefono"
+                v-model="phone"
               />
             </n-space>
             <n-space>
@@ -47,12 +47,12 @@
           <n-form ref="formLoginRef">
             <n-space vertical>
               <n-label>Correo:</n-label>
-              <input placeholder="Ingrese correo" v-model="correo" />
+              <input placeholder="Ingrese correo" v-model="email" />
               <n-label>Contraseña:</n-label>
               <input
                 placeholder="Ingrese contraseña"
                 type="password"
-                v-model="contrasena"
+                v-model="password"
               />
             </n-space>
             <n-space>
@@ -68,13 +68,16 @@
       </div>
     </div>
   </div>
-
-  
 </template>
 
 <script>
 import { CloseCircle, LogIn } from "@vicons/ionicons5";
 import Swal from "sweetalert2";
+import { useUserStore } from "../store/users.js";
+
+const useUser = useUserStore();
+const { users } = storeToRefs(useUser);
+const { getUserById, addUser} = useUser;
 
 export default {
   components: { CloseCircle, LogIn, Swal },
@@ -87,31 +90,18 @@ export default {
   data() {
     return {
       show: true,
-      nombre:"",
-      apellido:"",
-      telefono:"",
-      correo: "",
-      contrasena: "",
-      users: [
-        { correo: "abc@gmail.com", contrasena: "123456" },
-        { correo: "usuario2@ejemplo.com", contrasena: "contrasena2" },
-        { correo: "usuario3@ejemplo.com", contrasena: "contrasena3" },
-      ],
+      name: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      password: "",
       isRegisterModal: false,
     };
   },
   methods: {
-    showRegisterModal() {
-      this.isRegisterModal = true;
-      this.title = "Registrarse";
-    },
-    toggleModal() {
-      this.show = !this.show;
-    },
     checkUser() {
       const userFound = this.users.find(
-        (user) =>
-          user.correo === this.correo && user.contrasena === this.contrasena
+        (user) => user.email === this.email && user.password === this.password
       );
       if (userFound !== undefined) {
         Swal.fire({
@@ -143,9 +133,14 @@ export default {
         });
       }
     },
-
     checkRegister() {
-      if (!this.nombre || !this.apellido || !this.correo || !this.contrasena || !this.telefono) {
+      if (
+        !this.name ||
+        !this.lastName ||
+        !this.email ||
+        !this.password ||
+        !this.phone
+      ) {
         Swal.fire({
           title: "Campos incompletos",
           text: "Por favor, ingrese todos los campos requeridos.",
@@ -156,7 +151,7 @@ export default {
         return;
       }
       const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!correoRegex.test(this.correo)) {
+      if (!correoRegex.test(this.email)) {
         Swal.fire({
           title: "Correo inválido",
           text: "Por favor, ingrese un correo válido.",
@@ -167,7 +162,7 @@ export default {
         return;
       }
 
-      if (this.contrasena.length < 6) {
+      if (this.password.length < 6) {
         Swal.fire({
           title: "Contraseña inválida",
           text: "Por favor, ingrese una contraseña con al menos 6 caracteres.",
@@ -178,7 +173,7 @@ export default {
         return;
       }
       const telefonoRegex = /^\d{10}$/;
-      if (!telefonoRegex.test(this.telefono)) {
+      if (!telefonoRegex.test(this.phone)) {
         Swal.fire({
           title: "Teléfono inválido",
           text: "Por favor, ingrese un teléfono válido (10 dígitos sin espacios ni guiones).",
@@ -199,6 +194,17 @@ export default {
         this.toggleModal();
       });
     },
+    
+    showRegisterModal() {
+      this.isRegisterModal = true;
+      this.title = "Registrarse";
+    },
+    toggleModal() {
+      this.show = !this.show;
+    },
+    
+
+    
   },
 };
 </script>
