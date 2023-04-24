@@ -1,30 +1,37 @@
 <template>
-  <Nav/>
+  <Nav />
 
   <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card
-        class="text-center"
-        :title="movie.title"
-      >
+      <n-card class="text-center" :title="movie.title">
         <div class="card-image">
           <img :src="getImage(movie.poster_path)" />
           <div class="card-text">
-            <n-button  type="success" @click="showTrailer(movie)">Trailer</n-button>
+            <n-button type="success" @click="showTrailer(movie)"
+              >Trailer</n-button
+            >
             <n-button type="info">Comprar</n-button>
           </div>
         </div>
       </n-card>
     </n-col>
   </n-row>
-<Footer/>
+
+  <!-- <div v-for="cinema in cinemas" :key="cinema.id">
+  <p>{{ cinema.name }}</p>
+  <p>{{ cinema.address }}</p>
+  <p>{{ cinema.city }}</p>
+  <p>{{ cinema.phone }}</p>
+</div> -->
+  
+  <Footer />
 </template>
 
 <script>
 import Nav from "../components/navBar.vue";
 import axios from "axios";
-import Footer from "../components/Footer.vue"
-import fetchData from "../../../helpers/fetchData.js";
+import Footer from "../components/Footer.vue";
+// import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",
@@ -36,11 +43,18 @@ export default {
     return {
       movies: [],
       apiKey: "f40d327254d74aec7e161062db22582b",
-  
+    //   cinemas: [],
+    //   selectedCinema: null,
     };
   },
-  mounted() {
-    this.makeRequest();
+  async mounted() {
+    // try {
+    //   const data = await fetchData("/cinemas");
+    //   this.cinemas = data.body;
+    //   console.log("Cinemas:", this.cinemas); // Agregado
+    // } catch (error) {
+    //   console.error(error);
+    // }
     axios
       .get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=es-MX&page=1`
@@ -54,18 +68,7 @@ export default {
     getImage(path) {
       return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
     },
-    
-    
-    async makeRequest(objectData) {
-      try {
-        const { data } = await fetchData("users", "get", objectData);
-      console.log("cine",data)
-      } catch (err) {
-          console.log(err);
-      }
-    }
-    
-  }
+  },
 };
 </script>
 
@@ -81,9 +84,10 @@ export default {
 .card-image {
   position: relative;
 }
-.card-image:hover{
-    animation: moveUpDown 3s infinite;
+.card-image:hover {
+  animation: moveUpDown 3s infinite;
 }
+
 .card-text {
   position: absolute;
   top: 100.5%;
@@ -114,7 +118,6 @@ export default {
   height: 4vh;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
-  
 }
 .card-image img {
   border-radius: 8px;
@@ -124,8 +127,8 @@ export default {
   box-shadow: 4px 14px 14px #888888;
 }
 
-.n-card{
-    height: 100%;
+.n-card {
+  height: 100%;
 }
 @keyframes moveUpDown {
   0% {
