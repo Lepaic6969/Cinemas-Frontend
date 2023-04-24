@@ -19,12 +19,21 @@
                 </div>  
             </div>
             <div class="exit">
-                <a  class="nav-item nav-link  "><span class="bi bi-box-arrow-left"></span></a> 
+                <a  class="nav-item nav-link  ">
+                    <n-icon size="40" style="margin-top: -6px">
+                        <ExitOutline />
+                    </n-icon>
+                </a> 
             </div>
         </nav> 
 
     </div>
 </template>
+
+<script setup> 
+    import {NIcon} from "naive-ui";
+    import { ExitOutline} from "@vicons/ionicons5";
+</script>
 
 
 <style scoped>

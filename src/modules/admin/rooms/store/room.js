@@ -44,6 +44,7 @@ export const  useRoomStore=defineStore('rooms',{
     actions:{
         async getElements(id){
             //endpoint
+            /*  
             this.cargando= true
             try {
                 const {data}=await fetchData(URL);
@@ -58,8 +59,9 @@ export const  useRoomStore=defineStore('rooms',{
                 console.log(error)
                 this.cargando= false
             }
-            //localStorage
-            /*
+            */
+            //localStorage 
+            this.cargando=false
             this.id=id//cinemaId
             this.dataLs = JSON.parse(localStorage.getItem('rooms'))  
             if(this.dataLs){
@@ -67,8 +69,7 @@ export const  useRoomStore=defineStore('rooms',{
                 this.elements.reverse()
             }else{
                 this.dataLs=[]
-            }
-            */
+            }  
             
         },
         
@@ -81,6 +82,7 @@ export const  useRoomStore=defineStore('rooms',{
         
         async addElement(element){
             //endpoint
+            /*  
             this.cargando= true
             const data={
                 name: element.name,
@@ -92,8 +94,8 @@ export const  useRoomStore=defineStore('rooms',{
             await fetchData(URL,'post',data);
             this.alert("agregada")
             this.getElements()
-            //localStorage
-            /**
+            */
+            //localStorage 
             const data={ 
                 id:this.dataLs.length,
                 name: element.name,
@@ -104,11 +106,11 @@ export const  useRoomStore=defineStore('rooms',{
             this.dataLs.push(data) 
             this.alert("agregada")
             this.setData()//
-            console.log("add: ", data)
-             */ 
+            console.log("add: ", data) 
         },
         async updateElement(id,newElement){ 
             //endpoint
+            /*  
             this.cargando= true
             const url=`${URL}/${id}`;
             const data={
@@ -121,30 +123,29 @@ export const  useRoomStore=defineStore('rooms',{
             await fetchData(url,'put',data); ///PUT
             this.alert("actualizada")
             this.getElements() 
-            //localStorage
-            /* 
+            */
+            //localStorage 
             const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             this.dataLs[index]=newElement; 
             this.alert("actualizada")
-            this.setData() 
-            */
+            this.setData()  
         },
         async deleteElement(id){ 
             //endPoint
+            /*  
             this.cargando= true
             const url=`${URL}/${id}`;
             await fetchData(url,'delete');
             this.alert("eliminada")
             this.getElements()
+            */
 
-           //localStoragee
-            /*
+           //localStoragee 
            const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
            this.dataLs.splice(index,1); 
             this.alert("eliminada")
-           this.setData()
-            */
+           this.setData() 
         }, 
         
         setData(){

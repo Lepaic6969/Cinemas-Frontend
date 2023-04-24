@@ -112,6 +112,7 @@
         end_date.value = ''
         hour.value= ''
         movie_id.value= ''
+        search.value=''
     }
     const createItem=()=>{
              

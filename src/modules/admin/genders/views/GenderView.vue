@@ -4,7 +4,7 @@
       <TableTitle title="Géneros" id="offcanvasTypes" :createAction="createAction" />
       
       <LoadingSpinner v-if="cargando"/>
-      <EmptyElements title="Cinemas" v-if="elements.length<=0 && !cargando"/>
+      <EmptyElements title="Géneros" v-if="elements.length<=0 && !cargando"/>
       <table  v-if="elements.length>0 && !cargando"
         class="table bg-white bg-opacity-75 mt-3 w-100 text-center"
         >
