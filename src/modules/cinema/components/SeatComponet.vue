@@ -1,5 +1,5 @@
 <template>
-  <span class="seat" @click="toggleReservation">{{ seatNumber }}</span>
+  <span class="seat" @click="toggleReservation" :class="isReserved">{{ seatNumber }}</span>
 </template>
 
 <script>
@@ -22,6 +22,12 @@ export default {
       console.log(this.seatNumber);
     },
   },
+
+  computed: {
+    isReserved() {
+      return this.reserved ? "seat reserved" : "seat no-reserved";
+    },
+  },
 };
 </script>
 
@@ -30,7 +36,6 @@ export default {
   background-image: url("../assets/images/seat.svg");
   background-repeat: no-repeat;
   background-size: cover;
-  cursor: pointer;
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 500;
@@ -46,12 +51,14 @@ export default {
   transition: 0.1s ease-in-out;
 }
 
-.seat:hover {
+.no-reserved:hover {
+  cursor: pointer;
   transform: scale(1.1);
   filter: contrast(130%);
 }
 
 .reserved {
+  filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(115deg) saturate(1000%);
 }
 
 @media (max-width: 768px) {

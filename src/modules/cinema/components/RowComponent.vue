@@ -6,7 +6,12 @@
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box"
         >
-          <SeatComponet v-for="seatG in general" :key="seatG" :seatNumber="seatG" />
+          <SeatComponet
+            v-for="seatG in general"
+            :key="seatG"
+            :seatNumber="seatG"
+            :reserved="true"
+          />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
