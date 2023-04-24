@@ -1,48 +1,110 @@
 <template>
-   <div class="contenedor">
+  <div class="container-poster" id="container-poster">
         <div class="elemento1">
             <div class="contenedor-logo">
-                <img src="../assets/Daco_4071008 1.png" alt="logo"> <!--***************Logo de la peli************-->
+                <img src="../assets/Daco_4071008 1.png" alt="logo">
                 <div class="texto">
                     <h1>¡DISPONIBLE AHORA!</h1>
-                    <p>Ha llegado el momento de Loki. Una nueva serie original, transmitida exclusivamente en Disney +.</p>
+                    <p>Aquí iría la descripción de nuestra película, transmitida exclusivamente en nuestro cine.</p>
                 </div>
-                <button>IR A DISNEY+</button>
+                <button @click="handleOpen">ENTRADAS</button>
             </div>
         </div>
-        <div class="elemento2">
+        <div class="elemento2" id="container-poster-responsive">
        
         </div>
     </div>
+    <n-loading-bar-provider>
+      <n-message-provider>
+        <n-notification-provider>
+            <n-dialog-provider>
+                <ModalDataMovie/> 
+            </n-dialog-provider>
+        </n-notification-provider>
+      </n-message-provider>
+    </n-loading-bar-provider>
 </template>
 
 <script setup>
+    import { usePosterStore } from "../../../stores/poster.js";
+    import { ref,onMounted,watch} from 'vue';
+    import ModalDataMovie from '../components/ModalDataMovie.vue';
     
+    //Para abrir el modal...
+    const posterStore = usePosterStore();
+    const { handleOpen} = posterStore;
+  
+    const urlPoster='/src/modules/poster/assets/walter.jpg'; /*******Poster que quiero mostrar*******/
+
+    //Contenedores de la vista.
+    let containerPoster;
+    let containerPosterResponsive;
+    //Enlaces a las imágenes, cambian según el tamaño de pantalla -> Reactivas.
+    const url=ref(urlPoster);
+    const urlResponsive=ref('');
+
+    //Responsive al momento de cargar la vista en cualquier pantalla.
+    if (window.matchMedia("(max-width: 1012px)").matches) {
+            url.value='';
+            urlResponsive.value=urlPoster;
+        }else{
+            url.value=urlPoster;
+            urlResponsive.value='';
+    }
+
+  //Media query con js -> Es basicamente para que al inspeccionar la vista y reajustar las diferentes 
+  //tamaños de pantalla, las url de las imágenes trabajen acorde al tamaño de pantalla
+  // que se tiene actualmente (No indispensable).
+    window.addEventListener("resize", ()=> {
+        if (window.matchMedia("(max-width: 1012px)").matches) {
+            url.value='';
+            urlResponsive.value=urlPoster;
+        }else{
+            url.value=urlPoster;
+            urlResponsive.value='';
+        }
+    });
+
+    //Función que pone las imágenes necesarias a los contenedores.
+    const setImages=(containerPoster,containerPosterResponsive)=>{
+        containerPoster.style.backgroundImage=`url('${url.value}')`;
+        containerPosterResponsive.style.backgroundImage=`url('${urlResponsive.value}')`;
+    }
+
+    //Esto es para que cada vez que cambie la Url, se vuelvan a cargar las imágenes a los contenedores.
+    watch(url,(newUrl,oldUrl)=>{
+        setImages(containerPoster,containerPosterResponsive);
+    });
+
+    onMounted(()=>{
+        containerPoster=document.getElementById("container-poster");
+        containerPosterResponsive=document.getElementById("container-poster-responsive");
+        setImages(containerPoster,containerPosterResponsive);
+    });
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 *{
     margin: 0;
     padding: 0;
 }
-.contenedor{
+.container-poster{
     width: 100%;
-    height: auto;
+    height: 768px;
     background:white;
     display: flex;
-    background-image: url(../assets/img.png); /******************* Imagen de Poster**********/
+    /* background-image: url(../assets/img.png); */
     background-position: center center; 
     background-size: cover;
     background-repeat: no-repeat;
     clip-path: polygon(0% 0%,100% 0%,100% 88%,0% 100%);
-  
 }
 
 
 .elemento1{
-    width: 50%;
+    width: 40%;
     height: 100%;
     background-color: #070;
     background-color: rgb(32,32,32);
@@ -53,6 +115,7 @@
     width: 50%;
     height: 100%;
     clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 100%);
+    /* border: 1px solid gray; */
 }
 
 .contenedor-logo{
@@ -86,12 +149,16 @@
     width: 158px;
     height: 51px;
     border-radius: 53px;
+    transition: all 0.5s ease;
+}
+button:hover{
+    transform: scale(1.1);
 }
 /* Estilos para pantalla grande */
 
 @media(max-width:1440px){
    
-    .contenedor{
+    .container-poster{
         background-position: -300px center; 
         height: 1024px;
         
@@ -103,21 +170,21 @@
 }
 
 @media(max-width:1422px){
-    .contenedor{
+    .container-poster{
         background-position: -400px center; 
         height: 1024px;
         
       }
 }
 @media(max-width:1300px){
-    .contenedor{
+    .container-poster{
         background-position: -500px center; 
         height: 1024px;
         
       }
 }
 @media(max-width:1100px){
-    .contenedor{
+    .container-poster{
         background-position: -570px center; 
         height: 1024px;
         
@@ -142,13 +209,13 @@
     .elemento2{
         order:1;
         height: 57%;
-        background-image: url(../img/img.png); /******************* Imagen de Poster**********/
+        /* background-image: url(../assets/img.png);  **********Hay que hacerlo dinámicamente********** */
         background-position: center center;
         background-size: cover;
         background-repeat: no-repeat;
         
     }
-    .contenedor{
+    .container-poster{
       height: 1024px;
        flex-direction: column;
         background: white;
@@ -227,7 +294,7 @@
 /* Estilos para móvil */
 @media(max-width:600px){
   
-    .contenedor{
+    .container-poster{
         height:800px;
         width: 100%;
         background-color: rgb(32,32,32);
@@ -235,7 +302,6 @@
     .elemento2{
        
         height: 42%;
-        background-image: url(../assets/img.png);  /******************* Imagen de Poster**********/
         background-position: center center;
         background-size: cover;
         background-repeat: no-repeat;

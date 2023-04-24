@@ -12,3 +12,9 @@
 .n-step--finish-status .n-step-splitor{
  --n-splitor-color:#039be5;
 }
+
+.n-card > .n-card-header .n-card-header__main {
+    color: #f2f2f2 !important;
+    font-size: 30px;
+    font-weight: 600;
+}
