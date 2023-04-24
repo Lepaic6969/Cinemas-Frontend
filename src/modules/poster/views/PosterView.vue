@@ -81,6 +81,82 @@
         containerPosterResponsive=document.getElementById("container-poster-responsive");
         setImages(containerPoster,containerPosterResponsive);
     });
+    
+    //Función para el responsive según el dispositivo en el que se abra la app.
+    const d=document,
+    n=navigator,
+    ua=n.userAgent; //Este es el que contiene la información.
+    const userDiveceInfo=(id)=>{
+    const $id=d.getElementById(id),
+    //Estos objetos sólo son validaciones para el tipo de dispositivo desde el que ven la aplicación.
+        isMobile={
+            android:()=>ua.match(/android/i),
+            ios:()=>ua.match(/iphone|ipad|ipod/i),
+            windows:()=>ua.match(/windows phone/i),
+            any:function(){
+                return this.android()||this.ios()||this.windows();  //Esta validación es para cualquier dispositivo.
+            },
+        },
+        isDesktop={
+            linux:()=>ua.match(/linux/i),
+            mac:()=>ua.match(/mac os/i),
+            windows:()=>ua.match(/windows nt/i),
+            any:function(){
+                return this.linux() ||this.mac() || this.windows();
+            },
+        },
+    //Este objeto es para las validaciones referentes a cual navegador están usando para visitar mi sitio.
+        isBrowser={
+            chrome:()=>ua.match(/chrome/i),
+            safari:()=>ua.match(/safari/i),
+            firefox:()=>ua.match(/firefox/i),
+            opera:()=>ua.match(/opera|opera mini/i),
+            ie:()=>ua.match(/msie|iemobile/i),
+            edge:()=>ua.match(/edg/i),
+            any:function(){
+                return this.chrome()||this.safari()||this.firefox()||this.opera()||this.ie()||this.edge();
+            }
+        }
+    // console.log(ua);
+    //  console.log(isBrowser.edge());
+
+    $id.innerHTML=`
+        <ul>
+            <li>User Agent: <b>${ua}</b></li>
+            <li>Plataforma: <b>${isMobile.any()?isMobile.any():isDesktop.any()}</b></li>
+            <li>Navegador: <b>${isBrowser.any()}</b></li>
+           
+        </ul>
+    `;
+
+    if(isBrowser.chrome() && !isBrowser.edge()){
+        $id.innerHTML+=`Este contenido sólo se puede ver en chrome`;
+    }
+    if(isBrowser.chrome() && isBrowser.edge()){
+        $id.innerHTML+=`Este contenido sólo se puede ver en edge`;
+    }
+    if(isBrowser.firefox()){
+        $id.innerHTML+=`Este contenido sólo se puede ver en Firefox`;
+    }
+
+    if(isDesktop.windows()){
+        $id.innerHTML+=`<p><mark>Descarga nuestro contenido para Windows</mark></p> `;
+    }
+    if(isDesktop.linux()){
+        $id.innerHTML+=`<p><mark>Descarga nuestro contenido para Linux</mark></p> `;
+    }
+    if(isDesktop.mac()){
+        $id.innerHTML+=`<p><mark>Descarga nuestro contenido para Mac</mark></p> `;
+    }
+
+
+    //Redirecciones (Esto es para mostrar una versión de la página dependiendo desde donde se la visite).
+    //Redirije a la página de Jonathan Mircha.
+    if(isMobile.android()){
+        // location.href="https://jonmircha.com"
+    }
+
+}
 </script>
 
 <style scoped>
