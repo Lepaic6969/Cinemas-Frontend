@@ -1,5 +1,5 @@
 <template>
-  <span class="seat" @click="toggleReservation" :class="isReserved">{{ seatNumber }}</span>
+  <span class="seat" @click="toggleReservation" :class="isReservedColor">{{ seatNumber }}</span>
 </template>
 
 <script>
@@ -11,21 +11,28 @@ export default {
     },
     reserved: {
       type: Boolean,
-      required: true,
+      default: false,
     },
+  },
+
+  data() {
+    return {
+      isReserved: false,
+    };
   },
 
   methods: {
     toggleReservation() {
-      this.reserved = !this.reserved;
-      this.$emit(this.reserved ? "unreserve" : "reserve", this.seatNumber);
-      console.log(this.seatNumber);
+      console.log(this.seatNumber, this.reserved);
+      // this.reserved = !this.reserved;
+      this.isReserved = !this.isReserved;
+      this.$emit(this.reserved ? "reserve" : "unreserve", this.seatNumber);
     },
   },
 
   computed: {
-    isReserved() {
-      return this.reserved ? "seat reserved" : "seat no-reserved";
+    isReservedColor() {
+      return this.isReserved ? "seat reserved" : "seat no-reserved";
     },
   },
 };
@@ -58,7 +65,7 @@ export default {
 }
 
 .reserved {
-  filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(115deg) saturate(1000%);
+  filter: grayscale(100%) brightness(50%) sepia(100%) hue-rotate(-600deg) saturate(1000%);
 }
 
 @media (max-width: 768px) {
