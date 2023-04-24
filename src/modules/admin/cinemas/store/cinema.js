@@ -51,7 +51,7 @@ export const  useCinemaStore=defineStore('cinemas',{
             console.log(this.cargando)
             //localStoragee
              const data = JSON.parse(localStorage.getItem('cinemas'))  
-             //this.cargando= false
+             this.cargando= false
              if(data){
                 this.elements=data 
                 this.elements.reverse()
