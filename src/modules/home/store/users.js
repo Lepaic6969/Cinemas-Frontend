@@ -3,6 +3,7 @@ import {defineStore} from 'pinia';
 import fetchData from '../../../helpers/fetchData.js';
 
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/users';
+
 export const  useUserStore=defineStore('users',{
     state:()=>({
         users:[],

@@ -28,7 +28,6 @@
               <n-label>Teléfono:</n-label>
               <input
                 placeholder="Ingrese su teléfono"
-                type="number"
                 v-model="phone"
               />
             </n-space>
@@ -73,11 +72,7 @@
 <script>
 import { CloseCircle, LogIn } from "@vicons/ionicons5";
 import Swal from "sweetalert2";
-import { useUserStore } from "../store/users.js";
-
-const useUser = useUserStore();
-const { users } = storeToRefs(useUser);
-const { getUserById, addUser} = useUser;
+import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   components: { CloseCircle, LogIn, Swal },
@@ -95,45 +90,12 @@ export default {
       phone: "",
       email: "",
       password: "",
+      role:"client",
       isRegisterModal: false,
     };
   },
   methods: {
-    checkUser() {
-      const userFound = this.users.find(
-        (user) => user.email === this.email && user.password === this.password
-      );
-      if (userFound !== undefined) {
-        Swal.fire({
-          icon: "success",
-          title: "¡Bienvenido/a!",
-          timer: 1500,
-          showConfirmButton: false,
-          showClass: {
-            popup: "animate__animated animate__fadeInDown",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-        });
-        this.show = false;
-      } else {
-        Swal.fire({
-          title: "No estas registrado",
-          text: "¿Deseas registrarse?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sí",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.showRegisterModal();
-          }
-        });
-      }
-    },
-    checkRegister() {
+    async checkRegister() {
       if (
         !this.name ||
         !this.lastName ||
@@ -150,6 +112,7 @@ export default {
         });
         return;
       }
+
       const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!correoRegex.test(this.email)) {
         Swal.fire({
@@ -172,6 +135,7 @@ export default {
         });
         return;
       }
+
       const telefonoRegex = /^\d{10}$/;
       if (!telefonoRegex.test(this.phone)) {
         Swal.fire({
@@ -184,17 +148,97 @@ export default {
         return;
       }
 
-      Swal.fire({
-        icon: "success",
-        title: "Registro exitoso",
-        text: "¡Gracias por registrarte!",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-      }).then(() => {
-        this.toggleModal();
-      });
+      const data = {
+        name: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        phone: this.phone.toString(),
+        role:this.role
+      };
+
+      try {      
+       
+        const response = await fetchData("/users","post",data);
+        const result = response.data;
+        console.log(response);
+        ;
+        Swal.fire({
+          icon: "success",
+          title: "Registro exitoso",
+          text: "¡Gracias por registrarte!",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        }).then(() => {
+          this.toggleModal();
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text:
+            "Ha ocurrido un error, por favor intente de nuevo más tarde",
+          icon: "error",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+      }
     },
-    
+
+    async checkUser() {
+      if (
+        !this.email ||
+        !this.password 
+      ) {
+        Swal.fire({
+          title: "Campos incompletos",
+          text: "Por favor, ingrese todos los campos requeridos.",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+      try {
+        const response = await fetchData("/users/login", "post", {
+          email: this.email,
+          password: this.password,
+        });
+        if(!response){
+          throw error
+        }
+        const dataUser = response.data
+        localStorage("token", dataUser.token)
+        Swal.fire({
+          icon: "success",
+          title: "¡Bienvenido/a!",
+          timer: 1500,
+          showConfirmButton: false,
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        this.show = false;
+      } catch (error) {
+        // If there was an error, show a message and give the option to register
+        Swal.fire({
+          title: "No estas registrado",
+          text: "¿Deseas registrarse?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.showRegisterModal();
+          }
+        });
+      }
+    },
+
     showRegisterModal() {
       this.isRegisterModal = true;
       this.title = "Registrarse";
@@ -202,9 +246,6 @@ export default {
     toggleModal() {
       this.show = !this.show;
     },
-    
-
-    
   },
 };
 </script>
