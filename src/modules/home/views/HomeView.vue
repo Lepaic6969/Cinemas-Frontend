@@ -3,23 +3,39 @@
 
   <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center" :title="movie.title">
+      <n-card class="text-center" :title="movie.name">
         <div class="card-image">
-          <img :src="getImage(movie.poster_path)" />
+               <img
+      :src="
+        movie.image
+          ? movie.image.secure_url
+          : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+      "
+      class="card-img-top"
+      :alt="movie.name"
+    />
           <div class="card-text">
             <n-button type="success">Trailer</n-button>
-            <n-button type="info" @click="buy()">Comprar</n-button>
+            <n-button type="info" @click="buy()">Ver más</n-button>
           </div>
         </div>
       </n-card>
     </n-col>
   </n-row>  
 
-    <n-row>
-    <n-col v-for="movie in cinemas" :key="movie.id" :span="5">
+    <!-- <n-row>
+    <n-col v-for="movie in movies" :key="movie.id" :span="5">
       <n-card class="text-center" :title="movie.name">
         <div class="card-image">
-          <img :src="getImage(movie.poster_path)" />
+           <img
+      :src="
+        movie.image
+          ? movie.image.secure_url
+          : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+      "
+      class="card-img-top"
+      :alt="movie.name"
+    />
           <div class="card-text">
             <n-button type="success">Trailer</n-button>
             <n-button type="info" @click="buy()">Comprar</n-button>
@@ -27,7 +43,7 @@
         </div>
       </n-card>
     </n-col>
-  </n-row>  
+  </n-row>   -->
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
@@ -36,7 +52,6 @@
 
 <script>
 import Nav from "../components/navBar.vue";
-import axios from "axios";
 import Footer from "../components/Footer.vue";
 import Modal from "../components/Modal.vue";
 import fetchData from "../../../helpers/fetchData.js";
@@ -51,15 +66,10 @@ export default {
   data() {
     return {
       movies: [],
-      apiKey: "f40d327254d74aec7e161062db22582b",
       showLoginModal: false,
-      cinemas:[]
     };
   },
     methods: {
-    getImage(path) {
-      return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
-    },
     
     buy(){
       this.showLoginModal = !this.showLoginModal;
@@ -69,19 +79,11 @@ export default {
   async mounted() {
      try {
       const data = await fetchData("/movies");
-      this.cinemas = data.body;
-      console.log("Peliculas:", this.cinemas); // Agregado
+      this.movies = data.body;
+      console.log("Peliculas:", this.movies); // Agregado
     } catch (error) {
       console.error(error);
     }
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=es-MX&page=1`
-      )
-      .then((response) => {
-        this.movies = response.data.results;
-      })
-      .catch((error) => console.error(error));
   },
 };
 </script>

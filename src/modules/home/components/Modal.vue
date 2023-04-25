@@ -202,15 +202,16 @@ export default {
           email: this.email,
           password: this.password,
         });
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response));
         if(this.email === "admin@email.com"){
         this.$router.push("/admin");
           console.log("Admin")
         } else if (this.email === "seller@email.com") {
-          this.$router.push("/user/poster'");
+          this.$router.push("./");
          console.log("seller")
         } else {
+          this.$router.push("./");
           console.log("clien")
         }
    
