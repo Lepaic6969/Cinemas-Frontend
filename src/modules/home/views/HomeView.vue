@@ -25,6 +25,7 @@ import Nav from "../components/navBar.vue";
 import axios from "axios";
 import Footer from "../components/Footer.vue";
 import Modal from "../components/Modal.vue";
+import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",
@@ -38,6 +39,7 @@ export default {
       movies: [],
       apiKey: "f40d327254d74aec7e161062db22582b",
       showLoginModal: false,
+      cinemas:[]
     };
   },
     methods: {
@@ -51,6 +53,13 @@ export default {
     
   },
   async mounted() {
+     try {
+      const data = await fetchData("/movies");
+      this.cinemas = data.body;
+      console.log("Peliculas:", this.cinemas); // Agregado
+    } catch (error) {
+      console.error(error);
+    }
     axios
       .get(
         `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=es-MX&page=1`
