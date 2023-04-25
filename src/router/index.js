@@ -1,13 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
+import cinemaRouter from "@/modules/cinema/router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('../modules/home/views/HomeView.vue')
+      path: "/",
+      name: "home",
+      component: () => import("../modules/home/views/HomeView.vue"),
     },
     {
       path: "/user/payment",
@@ -70,6 +71,10 @@ const router = createRouter({
           name: "admin-generos",
           component: () => import("../modules/admin/genders/views/GenderView.vue"),
         },
+        {
+          path: "/cinema",
+          ...cinemaRouter,
+        },
             
       ],
     },
@@ -78,4 +83,5 @@ const router = createRouter({
   ]
 })
 
-export default router
+
+export default router;
