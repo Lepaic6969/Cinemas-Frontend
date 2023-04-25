@@ -3,7 +3,7 @@
 
   <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center " style="background:#000" :title="movie.name" >
+      <n-card class="text-center" style="background: #000" :title="movie.name">
         <div class="card-image">
           <img
             :src="
@@ -22,6 +22,8 @@
       </n-card>
     </n-col>
   </n-row>
+
+  <router-view></router-view>
 
   <!-- <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">

@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../modules/home/views/HomeView.vue"),
+      component: () => import("../modules/home/layout/HomeLayout.vue"),
     },
     {
       path: "/user/payment",
@@ -43,9 +43,9 @@ const router = createRouter({
     // ruta admin
     {
       path: "/admin",
-      name: "admin", 
+      name: "admin",
       component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
-      children: [ 
+      children: [
         {
           path: "",
           name: "admin-cinemas",
@@ -55,7 +55,7 @@ const router = createRouter({
           path: "salas/:id",
           name: "admin-salas",
           component: () => import("../modules/admin/rooms/views/RoomView.vue"),
-        }, 
+        },
         {
           path: "funciones/:id",
           name: "admin-show",
@@ -75,18 +75,14 @@ const router = createRouter({
           path: "/cinema",
           ...cinemaRouter,
         },
-         {
-      path: '/user/poster',
-      name: 'poster-films',
-      component: () => import('../modules/poster/views/PosterView.vue'),
-    }
-            
+        {
+          path: "/user/poster",
+          name: "poster-films",
+          component: () => import("../modules/poster/views/PosterView.vue"),
+        },
       ],
     },
-
-
-  ]
-})
-
+  ],
+});
 
 export default router;
