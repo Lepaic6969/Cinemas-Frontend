@@ -20,11 +20,16 @@
       <n-col span="8">
         <div class="logo-container">
           <a href="../">
-            <n-avatar
-              src="./src/assets/a.png"
-              alt="Logo de mi sitio web"
-              class="logo"
-            />
+             <n-avatar
+             v-if="selectedCinema"
+            :src="
+              selectedCinema.logo
+                ? selectedCinema.logo.secure_url
+                : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+            "
+            class="logo"
+            :alt="selectedCinema.name"
+          />
           </a>
         </div>
       </n-col>
@@ -42,6 +47,9 @@
             </p>
             <p style="color: #fff" v-if="selectedCinema">
               Ciudad: {{ selectedCinema.city }}.
+            </p>
+             <p style="color: #fff" v-if="selectedCinema">
+              Teléfono: {{ selectedCinema.phone }}.
             </p>
           </div>
         </div>
@@ -176,8 +184,9 @@ export default {
 }
 
 .logo {
-  width: 14rem;
-  height: 14vh;
+  margin-left: 10px;
+  width: 23vh;
+  height: 23vh;
   background: transparent;
 }
 </style>

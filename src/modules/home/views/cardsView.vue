@@ -20,6 +20,7 @@
       </n-card>
     </n-col>
   </n-row>
+     <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 </template>
 
 <script>
@@ -121,6 +122,8 @@ export default {
 
 .n-card {
   height: 100%;
+  border-radius: 8px;
+
 }
 @keyframes moveUpDown {
   0% {
