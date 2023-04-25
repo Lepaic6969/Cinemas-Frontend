@@ -205,7 +205,7 @@ export default {
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response));
         if(this.email === "admin@email.com"){
-       //this.$router.push("/admin");
+        this.$router.push("/admin");
           console.log("Admin")
         } else if (this.email === "seller@email.com") {
           this.$router.push("/user/payment");
