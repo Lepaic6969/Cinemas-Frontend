@@ -1,7 +1,7 @@
 <template>
  <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center " style="background:#000" :title="movie.name" >
+      <n-card class="text-center " :title="movie.name" >
         <div class="card-image">
           <img
             :src="
@@ -14,7 +14,7 @@
           />
           <div class="card-text">
             <n-button type="success">Trailer</n-button>
-            <n-button type="info" @click="buy()">Ver más</n-button>
+            <n-button type="info" @click="buy(movie)">Ver más</n-button>
           </div>
         </div>
       </n-card>
@@ -42,9 +42,10 @@ export default {
     };
   },
   methods: {
-    buy() {
+    buy(movie) {
       const token = localStorage.getItem("token");
       if (token) {
+        localStorage.setItem("MovieSelector", JSON.stringify(movie))
         this.$router.push("/user/poster");
       } else {
         this.showLoginModal = true;

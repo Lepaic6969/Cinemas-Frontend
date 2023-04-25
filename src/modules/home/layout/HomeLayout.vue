@@ -34,7 +34,6 @@
 import Nav from "../components/navBar.vue";
 import Footer from "../components/Footer.vue";
 import Modal from "../components/Modal.vue";
-import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",

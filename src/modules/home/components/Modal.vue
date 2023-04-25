@@ -202,8 +202,12 @@ export default {
           email: this.email,
           password: this.password,
         });
+        const User = {
+          email: this.email,
+          password: this.password,
+        }
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(User));
         if(this.email === "admin@email.com"){
         this.$router.push("/admin");
           console.log("Admin")
