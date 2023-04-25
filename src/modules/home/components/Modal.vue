@@ -208,7 +208,7 @@ export default {
         this.$router.push("/admin");
           console.log("Admin")
         } else if (this.email === "seller@email.com") {
-          this.$router.push("/user/payment");
+          this.$router.push("/user/poster'");
          console.log("seller")
         } else {
           console.log("clien")

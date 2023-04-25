@@ -15,6 +15,20 @@
     </n-col>
   </n-row>  
 
+    <n-row>
+    <n-col v-for="movie in cinemas" :key="movie.id" :span="5">
+      <n-card class="text-center" :title="movie.name">
+        <div class="card-image">
+          <img :src="getImage(movie.poster_path)" />
+          <div class="card-text">
+            <n-button type="success">Trailer</n-button>
+            <n-button type="info" @click="buy()">Comprar</n-button>
+          </div>
+        </div>
+      </n-card>
+    </n-col>
+  </n-row>  
+
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
   <Footer />
