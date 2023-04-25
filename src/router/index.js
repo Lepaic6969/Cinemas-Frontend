@@ -44,7 +44,7 @@ const router = createRouter({
         },
         {
           path: "/tickets",
-          name: "poster-films",
+          name: "tickets",
           component: () => import("../modules/tickets/views/PosterView.vue"),
         },
       ],
