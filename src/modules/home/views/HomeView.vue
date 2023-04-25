@@ -1,5 +1,5 @@
 <template>
-  <Nav />
+  <Nav/>
 
   <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
@@ -7,15 +7,16 @@
         <div class="card-image">
           <img :src="getImage(movie.poster_path)" />
           <div class="card-text">
-            <n-button type="success" @click="showTrailer(movie)"
-              >Trailer</n-button
-            >
-            <n-button type="info">Comprar</n-button>
+            <n-button type="success">Trailer</n-button>
+            <n-button type="info" @click="buy()">Comprar</n-button>
           </div>
         </div>
       </n-card>
     </n-col>
   </n-row>  
+
+  <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
+
   <Footer />
 </template>
 
@@ -23,19 +24,31 @@
 import Nav from "../components/navBar.vue";
 import axios from "axios";
 import Footer from "../components/Footer.vue";
+import Modal from "../components/Modal.vue";
 
 export default {
   name: "MovieCards",
   components: {
     Nav,
     Footer,
+    Modal
   },
   data() {
     return {
       movies: [],
       apiKey: "f40d327254d74aec7e161062db22582b",
-  
+      showLoginModal: false,
     };
+  },
+    methods: {
+    getImage(path) {
+      return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
+    },
+    
+    buy(){
+      this.showLoginModal = !this.showLoginModal;
+    }
+    
   },
   async mounted() {
     axios
@@ -46,11 +59,6 @@ export default {
         this.movies = response.data.results;
       })
       .catch((error) => console.error(error));
-  },
-  methods: {
-    getImage(path) {
-      return path ? `https://image.tmdb.org/t/p/w300${path}` : "";
-    },
   },
 };
 </script>
