@@ -26,7 +26,7 @@
             </div>
             <div class="form-group mb-2">
                 <label for="name " >Trailer:</label>
-                <input type="text" class="form-control mt-2" id="address" placeholder="Ingrese la trailer" v-model="trailer"> 
+                <input type="text" class="form-control mt-2" id="address" placeholder="Ingrese el enlace del trailer" v-model="trailer"> 
             </div> 
             <div class="form-group mb-2">
                 <label for="name " >Generos:</label>
