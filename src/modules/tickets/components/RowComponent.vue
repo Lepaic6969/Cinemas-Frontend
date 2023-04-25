@@ -32,7 +32,7 @@
 import { defineAsyncComponent } from "vue";
 export default {
   components: {
-    SeatComponet: defineAsyncComponent(() => import("../components/SeatComponet.vue")),
+    SeatComponet: defineAsyncComponent(() => import("./SeatComponet.vue")),
   },
 
   data() {
