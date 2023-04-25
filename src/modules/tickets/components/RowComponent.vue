@@ -1,5 +1,5 @@
 <template>
-  <div class="container main col-md-9 pb-3 pt-4">
+  <div class="container main w-100">
     <div class="row justify-content-md-center">
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid w-100 screen" />
       <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
@@ -112,6 +112,7 @@ export default {
   /* background-color: #747474; */
   background-color: #616161;
   padding: 3rem;
+  /* margin: 0 !important; */
 }
 
 .content-box {
