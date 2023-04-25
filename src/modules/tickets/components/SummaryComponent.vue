@@ -1,5 +1,5 @@
 <template>
-  <div class="box-text">
+  <div class="box-text my-3">
     <h3>RESUMEN DE TU COMPRA</h3>
     <ul>
       <li>Película:</li>
@@ -9,7 +9,7 @@
       <li></li>
     </ul>
   </div>
-  <div class="box-seats my-5">
+  <div class="box-seats my-3">
     <n-space vertical>
       <n-table striped class="text-center">
         <thead>
@@ -24,8 +24,8 @@
       </n-table>
     </n-space>
   </div>
-  <div class="box-buy text-center">
-    <n-button type="info"> Pagar </n-button>
+  <div class="box-buy text-center my-3">
+    <n-button round type="info"> Pagar </n-button>
   </div>
 </template>
 
