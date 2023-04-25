@@ -1,13 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
+import cinemaRouter from "@/modules/cinema/router";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: () => import('../modules/home/views/HomeView.vue')
+      path: "/",
+      name: "home",
+      component: () => import("../modules/home/views/HomeView.vue"),
     },
     {
       path: "/user/payment",
@@ -38,13 +39,54 @@ const router = createRouter({
         },
       ],
     },
+
+    // ruta admin
     {
+      path: "/admin",
+      name: "admin", 
+      component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
+      children: [ 
+        {
+          path: "",
+          name: "admin-cinemas",
+          component: () => import("../modules/admin/cinemas/views/CinemaView.vue"),
+        },
+        {
+          path: "salas/:id",
+          name: "admin-salas",
+          component: () => import("../modules/admin/rooms/views/RoomView.vue"),
+        }, 
+        {
+          path: "funciones/:id",
+          name: "admin-show",
+          component: () => import("../modules/admin/shows/views/ShowView.vue"),
+        },
+        {
+          path: "peliculas",
+          name: "admin-peliculas",
+          component: () => import("../modules/admin/movies/views/MovieView.vue"),
+        },
+        {
+          path: "generos",
+          name: "admin-generos",
+          component: () => import("../modules/admin/genders/views/GenderView.vue"),
+        },
+        {
+          path: "/cinema",
+          ...cinemaRouter,
+        },
+         {
       path: '/user/poster',
       name: 'poster-films',
       component: () => import('../modules/poster/views/PosterView.vue'),
     }
- 
+            
+      ],
+    },
+
+
   ]
 })
 
-export default router
+
+export default router;
