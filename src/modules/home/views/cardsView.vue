@@ -1,7 +1,7 @@
 <template>
- <n-row>
+  <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center " :title="movie.name" >
+      <n-card class="text-center" :title="movie.name">
         <div class="card-image">
           <img
             :src="
@@ -46,8 +46,8 @@ export default {
     buy(movie) {
       const token = localStorage.getItem("token");
       if (token) {
-        localStorage.setItem("MovieSelector", JSON.stringify(movie))
-        this.$router.push("/user/poster");
+        localStorage.setItem("MovieSelector", JSON.stringify(movie));
+        this.$router.push("/tickets");
       } else {
         this.showLoginModal = true;
       }

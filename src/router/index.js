@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import cinemaRouter from "@/modules/cinema/router";
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,10 +12,6 @@ const router = createRouter({
           path: "",
           name: "cards-home",
           component: () => import("@/modules/home/views/cardsView.vue"),
-        },
-        {
-          path: "/cinema",
-          ...cinemaRouter,
         },
         {
           path: "/user/payment",
@@ -49,9 +43,9 @@ const router = createRouter({
           ],
         },
         {
-          path: "/user/poster",
-          name: "poster-films",
-          component: () => import("../modules/poster/views/PosterView.vue"),
+          path: "/tickets",
+          name: "tickets",
+          component: () => import("../modules/tickets/views/TicketsView.vue"),
         },
       ],
     },
