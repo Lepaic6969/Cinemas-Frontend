@@ -1,7 +1,7 @@
 <template>
   <Nav />
-  
-  <router-view></router-view>
+
+  <router-view class="p-5"></router-view>
 
   <!-- <n-row>
     <n-col v-for="movie in movies" :key="movie.id" :span="5">
@@ -43,8 +43,7 @@ export default {
     Modal,
   },
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>

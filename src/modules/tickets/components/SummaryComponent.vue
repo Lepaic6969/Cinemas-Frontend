@@ -1,5 +1,5 @@
 <template>
-  <div class="box-text container">
+  <div class="box-text">
     <h3>RESUMEN DE TU COMPRA</h3>
     <ul>
       <li>Película:</li>

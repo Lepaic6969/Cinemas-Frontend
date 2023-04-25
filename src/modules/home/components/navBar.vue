@@ -1,20 +1,24 @@
 <template>
   <n-nav>
-    <n-avatar src="./src/assets/a.png" alt="Logo de mi sitio web" class="logo" @click="handleLogoClick" />
-      <n-nav-item @click="toggleRegisterModal"
-        >Registrarse
-        <n-icon>
-          <PersonAddSharp />
-        </n-icon>
-      </n-nav-item>
+    <n-avatar
+      src="./src/assets/a.png"
+      alt="Logo de mi sitio web"
+      class="logo"
+      @click="handleLogoClick"
+    />
+    <n-nav-item @click="toggleRegisterModal"
+      >Registrarse
+      <n-icon>
+        <PersonAddSharp />
+      </n-icon>
+    </n-nav-item>
 
-      <n-nav-item @click="toggleLoginModal"
-        >Iniciar sesión
-        <n-icon>
-          <PersonCircle />
-        </n-icon>
-      </n-nav-item>
-
+    <n-nav-item @click="toggleLoginModal"
+      >Iniciar sesión
+      <n-icon>
+        <PersonCircle />
+      </n-icon>
+    </n-nav-item>
   </n-nav>
 
   <Modal title="Registrarse" v-if="showRegisterModal"> </Modal>
@@ -46,8 +50,8 @@ export default {
       this.showLoginModal = !this.showLoginModal;
     },
     handleLogoClick() {
-    window.location.href = '../';
-}
+      window.location.href = "../";
+    },
   },
 };
 </script>
@@ -65,7 +69,6 @@ n-nav {
   overflow: hidden;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
-  margin-bottom: 8px;
   height: 10vh;
 }
 
@@ -78,10 +81,9 @@ n-nav {
   cursor: pointer;
 }
 
-
 n-nav-item:hover {
   color: #fff;
-  background: rgb(0, 154, 154); 
+  background: rgb(0, 154, 154);
   cursor: pointer;
 }
 
@@ -107,6 +109,4 @@ n-nav-item {
     transform: translateY(0);
   }
 }
-
-
 </style>
