@@ -9,40 +9,49 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../modules/home/layout/HomeLayout.vue"),
-      children:[
-        {
-          path:"",
-          name:"cards-home",
-          component:()=> import("@/modules/home/views/cardsView.vue")
-        }
-      ]
-    },
-    {
-      path: "/user/payment",
-      name: "payment-steps",
-      component: () => import("@/modules/payments/views/PaymentView.vue"),
-      redirect: "/user/payment/step1",
       children: [
         {
-          path: "step1",
-          name: "step-1",
-          component: () => import("@/modules/payments/components/Step1.vue"),
-          // component: Step1,
+          path: "",
+          name: "cards-home",
+          component: () => import("@/modules/home/views/cardsView.vue"),
         },
         {
-          path: "step2",
-          name: "step-2",
-          component: () => import("@/modules/payments/components/Step2.vue"),
+          path: "/cinema",
+          ...cinemaRouter,
         },
         {
-          path: "step3",
-          name: "step-3",
-          component: () => import("@/modules/payments/components/Step3.vue"),
+          path: "/user/payment",
+          name: "payment-steps",
+          component: () => import("@/modules/payments/views/PaymentView.vue"),
+          redirect: "/user/payment/step1",
+          children: [
+            {
+              path: "step1",
+              name: "step-1",
+              component: () => import("@/modules/payments/components/Step1.vue"),
+              // component: Step1,
+            },
+            {
+              path: "step2",
+              name: "step-2",
+              component: () => import("@/modules/payments/components/Step2.vue"),
+            },
+            {
+              path: "step3",
+              name: "step-3",
+              component: () => import("@/modules/payments/components/Step3.vue"),
+            },
+            {
+              path: "step4",
+              name: "step-4",
+              component: () => import("@/modules/payments/components/Step4.vue"),
+            },
+          ],
         },
         {
-          path: "step4",
-          name: "step-4",
-          component: () => import("@/modules/payments/components/Step4.vue"),
+          path: "/user/poster",
+          name: "poster-films",
+          component: () => import("../modules/poster/views/PosterView.vue"),
         },
       ],
     },
@@ -77,15 +86,6 @@ const router = createRouter({
           path: "generos",
           name: "admin-generos",
           component: () => import("../modules/admin/genders/views/GenderView.vue"),
-        },
-        {
-          path: "/cinema",
-          ...cinemaRouter,
-        },
-        {
-          path: "/user/poster",
-          name: "poster-films",
-          component: () => import("../modules/poster/views/PosterView.vue"),
         },
       ],
     },
