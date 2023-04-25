@@ -37,7 +37,7 @@ export const  useShowStore=defineStore('shows',{
         ],
         cargando:true,
         movies: [],
-        rooms:[],
+        rooms:[], 
         id:null,
         dataLs:[],
 
@@ -49,23 +49,38 @@ export const  useShowStore=defineStore('shows',{
             this.id=id//cinemaId
             try {
                 const data=await fetchData(URL);
-                const data2=await fetchData(URL2)//movies
-                const data3=await fetchData(URL3)//rooms
+                
                 if(data){
                     this.elements = data
                     this.elements = this.elements.filter(obj => obj.cinemaId == this.id)
                     this.elements.reverse()
                 }
+                
+                
+                this.cargando=false
+            } catch (error) {
+                console.log(error)
+                this.cargando=false
+            } 
+
+            try{
+                const data2=await fetchData(URL2)//movies
+                this.generos=data2.body//movies 
+            }catch (error){
+                console.log(error)
+                this.cargando=false 
+            }
+
+            try{ 
+                const data3=await fetchData(URL3)//rooms
                 if(data3){
                     this.rooms=data2//rooms
                     this.rooms=this.rooms.filter(obj => obj.cinemaId === this.id)//filtrar por cinema
 
                 } 
-                this.generos=data2//movies
-                this.cargando=false
-            } catch (error) {
+            }catch (error){
                 console.log(error)
-                this.cargando=false
+                this.cargando=false 
             }
             //
             */

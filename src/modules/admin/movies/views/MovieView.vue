@@ -14,15 +14,15 @@
                 <th scope="col">Imagen</th> 
                 <th scope="col">Nombre</th>
                 <th scope="col">Duración</th>
-                <th scope="col">Genero(s)</th>
+                <th scope="col">Género(s)</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="element in elements" :key="element" >
                 <td>
-                    <img src={{element.image}} style="width: 6vh;"> 
-                </td> 
+                        <img :src="element.image.secure_url" style="width: 6vw;" crossorigin="anonymous" > 
+                </td>  
                 <td>{{ element.name }}</td>
                 <td>{{element.duration}} : 00</td>
                 <td>

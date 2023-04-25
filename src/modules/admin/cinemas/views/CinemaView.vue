@@ -14,7 +14,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Ciudad</th>
                 <th scope="col">Dirección</th>
-                <th scope="col">Telefono</th>
+                <th scope="col">Teléfono</th>
                 <th scope="col">Visualizar</th>
                 <th scope="col">Opciones</th>
             </tr>

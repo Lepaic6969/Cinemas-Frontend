@@ -5,10 +5,30 @@
             <div class="form-group mb-2">
                 <label for="name " >Sala:</label>
                 <select name="select" class="form-select" aria-label="Default select example"  v-model="room_id">
-                    <option v-for="room in rooms" :key="room"  :value="room.id"> {{room.name}} </option>
+                    <option v-for="room in rooms" :key="room"  :value="room"> {{room.name}} </option>
                      
                 </select>
             </div> 
+
+            <div class="form-group mb-2">
+                <label for="name " >Capacidad: {{room_id.capacity}}</label>
+                <div class="row ms-2">
+                    <div class="col-4">
+                        <label  >General: </label>
+                        <input class="form-control sm mt-2" type="number"   placeholder="0" v-model="general">
+                    </div>
+                    
+                    <div class="col-4">
+                        <label  >Preferencial:</label>
+                        <input class="form-control sm mt-2" type="number"  placeholder="0" v-model="preferencial">
+                    </div> 
+                    
+                    <div class="col-4">
+                        <label  >Vip:</label>
+                        <input class="form-control sm mt-2" type="number"   placeholder="0" v-model="vip">
+                    </div> 
+                </div>
+            </div>
             
             <div class="form-group mb-2">
                 <label for="name " >Pelicula:</label>
@@ -26,15 +46,25 @@
                 <label for="name " >Fecha de Inicio:</label>
                 <input type="date" class="form-control mt-2" id="city" placeholder="Fecha Inicio" v-model="start_date" :min="minDate"> 
             </div>
-            <div class="form-group mb-2">
+            <div class="form-group mb-3">
                 <label for="name " >Fecha de Fin:</label>
                 <input type="date" class="form-control mt-2" id="address" placeholder="Fecha de Fin" v-model="end_date" :min="start_date"> 
-            </div>
-            <div class="form-group mb-2">
-                <label for="name " >Hora:</label>
-                <input type="number" class="form-control mt-2" id="phone" min="0" max="23" @input="limitarHora" placeholder="Hora " v-model="hour"> 
             </div> 
-            <div class="form-group mb-2 mt-5">
+            <div class="form-group mb-2">
+                <label for="name " >Hora de la función:</label>
+                <div class="row ms-2">
+                    <div class="col-4">
+                        <label  >Hora: </label>
+                <input type="number" class="form-control mt-2" id="phone" min="0" max="23" @input="limitarHora" placeholder="00 " v-model="hour" >
+                    </div>
+                    
+                    <div class="col-4">
+                        <label  >Minutos:</label>
+                        <input class="form-control sm mt-2" type="number" min="0" max="59" @input="limitarMinuto" v-model="minutos" placeholder="00">
+                    </div> 
+                </div>
+            </div>
+            <div class="form-group mb-2 mt-3">
                 <button type="submit" class="btn btn-outline-warning btn-lg w-100" data-bs-dismiss="offcanvas"
                     aria-label="Close" >{{buttonText}}</button>
             </div>
@@ -70,13 +100,18 @@
     const movie_id= ref(''); 
     const search= ref('')
     const showOptions = ref(false)
+    const minutos = ref('')
+    const general = ref('')
+    const preferencial = ref('')
+    const vip = ref('') 
     //params
     const route = useRoute();
     const cinemaId = route.params.id; 
+    
 
     //Funcionalidad del formulario.
     const processForm=()=>{
-        if(noEmpty()){
+        if(noEmpty()){ 
             if(create.value){
                 createItem();
             }else{
@@ -97,7 +132,9 @@
             start_date.value === "" ||
             end_date.value === "" ||
             hour.value === "" ||
-            movie_id.value === "" ){
+            movie_id.value === ""   ||
+            minutos.value==''  
+              ){
                 console.log("room_id: ",room_id.value, "start_date: ",start_date.value, "end_date: ",end_date.value, "hour: ",hour.value, "movie_id: ",movie_id.value)
             return false
             //campos incompletos
@@ -111,22 +148,31 @@
         start_date.value = ''
         end_date.value = ''
         hour.value= ''
+        minutos.value=0
         movie_id.value= ''
         search.value=''
+        general.value = ''
+        preferencial.value = ''
+        vip.value = ''
     }
     const createItem=()=>{
              
         const element={ 
-            room_id:room_id.value, 
+            room_id:room_id.value.id, 
             start_date: start_date.value , 
             end_date: end_date.value , 
-            hour: hour.value,
+            hour: hour.value +" : "+ minutos.value,
             movie_id: movie_id.value,
+            general: general.value,
+            preferencial: preferencial.value,
+            vip: vip.value
         }
 
         if(noRepeat(element)){
-            addElement(element);
-            resetInputs()  
+            if( calcCapacity()){
+                addElement(element);
+                resetInputs()  
+            }
         }else{
             Swal.fire(
             '¡Sala Ocupada!',
@@ -138,17 +184,23 @@
 
     const updateItem=()=>{
         const newElement={ 
-            room_id:room_id.value, 
+            room_id:room_id.value.id, 
             start_date: start_date.value , 
             end_date: end_date.value , 
-            hour: hour.value,
+            hour: hour.value +" : " +minutos.value,
             movie_id: movie_id.value,
+            general: general.value,
+            preferencial: preferencial.value,
+            vip: vip.value
         }
         console.log(newElement)
 
         if(noRepeat(newElement)){ 
-             updateElement(id.value,newElement);
-             resetInputs()
+            if( calcCapacity()){
+                updateElement(id.value,newElement);
+                resetInputs()  
+            }
+              
         }else{
             Swal.fire(
             '¡Sala Ocupada!',
@@ -157,15 +209,38 @@
             )
         }
     }
+    
+    const calcCapacity = () =>{
+        const total = parseInt(general.value)+ parseInt(preferencial.value)+ parseInt(vip.value)
         
+        if(total > room_id.value.capacity){
+            Swal.fire(
+            '¡Sobrepasó la Capacidad!',
+            'Reasigne las sillas Generales, preferenciales y Vip',
+            'error'
+            )
+            return false
+        }
+
+        if(total <= 0){
+            Swal.fire(
+            '¡No agregó la capacidad!',
+            'Reasigne las sillas Generales, preferenciales y Vip',
+            'error'
+            )
+            return false
+        }
+        return true
+    }
     const noRepeat = (nuevoShow) =>{
+        console.log("first")
         // Validación 1: no se repitan fecha y hora en la misma sala
         const showExistente = elements.value.find(show => (
             show.cinemaId === cinemaId &&
             show.room_id === nuevoShow.room_id &&
             show.start_date === nuevoShow.start_date &&
             show.end_date === nuevoShow.end_date &&
-            show.hour === nuevoShow.hour
+            show.hour.split(":")[0] === nuevoShow.hour.split(":")[0]
         ));
         if (showExistente) {
             return false;
@@ -177,7 +252,7 @@
             show.room_id === nuevoShow.room_id &&
             nuevoShow.start_date < show.end_date && 
             nuevoShow.end_date > show.start_date &&
-            nuevoShow.hour === show.hour
+            nuevoShow.hour.split(":")[0] === show.hour.split(":")[0]
         ));
         
         if (showSuperpuesto) {
@@ -189,7 +264,7 @@
             show.cinemaId === cinemaId &&
             show.room_id === nuevoShow.room_id &&
             show.end_date === nuevoShow.start_date &&
-            show.hour === nuevoShow.hour
+            show.hour.split(":")[0] === nuevoShow.hour.split(":")[0]
         ));
 
         if (showConflicto1) {
@@ -201,7 +276,7 @@
             show.cinemaId === cinemaId &&
             show.room_id === nuevoShow.room_id &&
             show.start_date === nuevoShow.end_date &&
-            show.hour === nuevoShow.hour
+            show.hour.split(":")[0] === nuevoShow.hour.split(":")[0]
         ));
 
         if (showConflicto2) {
@@ -214,13 +289,14 @@
             show.room_id === nuevoShow.room_id &&
             show.start_date <= nuevoShow.start_date &&
             show.end_date >= nuevoShow.end_date &&
-            show.hour === nuevoShow.hour
+            show.hour.split(":")[0] === nuevoShow.hour.split(":")[0]
         ));
 
         if (showConflicto3) {
             return false
         }
         
+        console.log("second")
        return true
     }
     //Este es el watch en composition API.
@@ -228,20 +304,30 @@
         resetInputs() 
         const index=elements.value.findIndex(obj => obj.id === id.value); //El índice que debo alterar.
         const item = elements.value[index]
+        const partesHora = item.hour.split(":");
         if(item){
             room_id.value=item.room_id
             start_date.value  = item.start_date
             end_date.value = item.end_date
-            hour.value = item.hour
+            hour.value = parseInt(partesHora[0])
+            minutos.value= parseInt(partesHora[1])
             movie_id.value = item.movie_id
         } 
     })
 
-    //no sobrepasar la hora
+    //no sobrepasar las hora
     const limitarHora = () => {
       if (hour.value > 23) {
         hour.value = 23;
-        console.log(hour)
+        //console.log(hour)
+      } 
+    }
+
+    //no sobrepasar los minutos
+    const limitarMinuto = () => {
+      if (minutos.value > 59) {
+        minutos.value = 59;
+        //console.log(minutos)
       } 
     }
     

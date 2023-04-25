@@ -43,8 +43,7 @@ export const  useRoomStore=defineStore('rooms',{
     }),
     actions:{
         async getElements(id){
-            //endpoint
-            /*  
+            //endpoint 
             this.cargando= true
             try {
                 const {data}=await fetchData(URL);
@@ -58,9 +57,9 @@ export const  useRoomStore=defineStore('rooms',{
             } catch (error) { 
                 console.log(error)
                 this.cargando= false
-            }
-            */
+            } 
             //localStorage 
+            /* 
             this.cargando=false
             this.id=id//cinemaId
             this.dataLs = JSON.parse(localStorage.getItem('rooms'))  
@@ -70,6 +69,7 @@ export const  useRoomStore=defineStore('rooms',{
             }else{
                 this.dataLs=[]
             }  
+            */
             
         },
         
@@ -81,8 +81,7 @@ export const  useRoomStore=defineStore('rooms',{
         },
         
         async addElement(element){
-            //endpoint
-            /*  
+            //endpoint 
             this.cargando= true
             const data={
                 name: element.name,
@@ -93,9 +92,10 @@ export const  useRoomStore=defineStore('rooms',{
              console.log(data)
             await fetchData(URL,'post',data);
             this.alert("agregada")
-            this.getElements()
-            */
+            this.getElements() 
+
             //localStorage 
+            /*  
             const data={ 
                 id:this.dataLs.length,
                 name: element.name,
@@ -107,10 +107,10 @@ export const  useRoomStore=defineStore('rooms',{
             this.alert("agregada")
             this.setData()//
             console.log("add: ", data) 
+            */
         },
         async updateElement(id,newElement){ 
-            //endpoint
-            /*  
+            //endpoint 
             this.cargando= true
             const url=`${URL}/${id}`;
             const data={
@@ -122,30 +122,32 @@ export const  useRoomStore=defineStore('rooms',{
             console.log(data);
             await fetchData(url,'put',data); ///PUT
             this.alert("actualizada")
-            this.getElements() 
-            */
+            this.getElements()  
+
             //localStorage 
+            /* 
             const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             this.dataLs[index]=newElement; 
             this.alert("actualizada")
             this.setData()  
+            */
         },
         async deleteElement(id){ 
-            //endPoint
-            /*  
+            //endPoint 
             this.cargando= true
             const url=`${URL}/${id}`;
             await fetchData(url,'delete');
             this.alert("eliminada")
-            this.getElements()
-            */
+            this.getElements() 
 
            //localStoragee 
+            /* 
            const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
            this.dataLs.splice(index,1); 
             this.alert("eliminada")
            this.setData() 
+            */
         }, 
         
         setData(){

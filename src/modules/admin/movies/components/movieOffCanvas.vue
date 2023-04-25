@@ -15,12 +15,12 @@
                 <div class="row ms-2">
                     <div class="col-5">
                         <label  >Horas: </label>
-                        <input class="form-control sm mt-2" type="number" min="0" max="23" v-model="horas">
+                        <input class="form-control sm mt-2" type="number"   v-model="horas">
                     </div>
                     
                     <div class="col-5">
                         <label  >Minutos:</label>
-                        <input class="form-control sm mt-2" type="number" min="0" max="59" v-model="minutos">
+                        <input class="form-control sm mt-2" type="number"   v-model="minutos">
                     </div> 
                 </div>
             </div>
@@ -135,20 +135,19 @@
         image.value= ''
         Generos.value=[]
     }
-    const createItem=()=>{
-        duration.value = horas.value +" : " +minutos.value     
-        const element={ 
-            name:name.value, 
-            duration: duration.value , 
-            trailer: trailer.value , 
+    const createItem = () => {
+        duration.value = horas.value + ' : ' + minutos.value;
+        const element = {
+            name: name.value,
+            duration: duration.value,
+            trailer: trailer.value,
             image: image.value,
-            genders: Generos.value,//agregar generos
-        }
+            id_genres: Generos.value,
+        };
 
         addElement(element);
-        resetInputs()
-         
-    }
+        resetInputs();
+    };
 
     const updateItem=()=>{
         duration.value = horas.value +" : " +minutos.value     
@@ -157,7 +156,7 @@
             duration: duration.value , 
             trailer: trailer.value , 
             image: image.value,
-            genders: Generos.value,//agregar generos
+            id_genres: Generos.value//agregar generos
         }
         console.log(newElement)
         updateElement(id.value,newElement);
@@ -179,9 +178,9 @@
             minutos.value = parseInt(partesHora[1])
             trailer.value = item.trailer
             image.value = item.image
-            Generos.value= item.genders
+            Generos.value= item.id_genres ? item.id_genres: []
             //Generos.value=item.gender ,//agregar generos
-            console.log(name.value)
+            console.log(Generos.value)
         } 
     })
 
@@ -210,7 +209,7 @@
 
     //component select
     const selectSearch = (item) =>{
-        Generos.value.push(item)
+        Generos.value.push({"id":item.id, "name": item.name})
         //filtrar repetidos
         Generos.value = Generos.value.filter((valor, indice, array) => {
             const primerIndice = array.findIndex(obj => obj.id === valor.id);

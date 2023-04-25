@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import Swal from "sweetalert2";
 //Importamos los helpers de las peticiones HTTP.
 import fetchData from  '../../../../helpers/fetchData' 
-const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/genders';
+const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/genres';
 export const  useGenderStore=defineStore('cinemas',{
     state:()=>({
         elements:[
@@ -27,22 +27,21 @@ export const  useGenderStore=defineStore('cinemas',{
     }),
     actions:{
         async getElements(){
-           //endpoint
-            /*  
+           //endpoint 
             try{
                 const data=await fetchData(URL); 
                 console.log(data)
                 if(data){
-                    this.elements=data; 
+                    this.elements=data.body; 
                     this.elements.reverse()
                     this.cargando= false
                 }
             }catch(error){
                 console.log(error)
                 this.cargando= false
-            }
-            */
+            } 
             //localStoragee 
+            /* 
             this.cargando=false
             const data = JSON.parse(localStorage.getItem('generos'))
             if(data){
@@ -50,6 +49,7 @@ export const  useGenderStore=defineStore('cinemas',{
                 this.elements.reverse()
             }
            
+            */
         },
         
         getElementById(id){
@@ -64,17 +64,17 @@ export const  useGenderStore=defineStore('cinemas',{
         },
         
         async addElement(element){
-            //endpoint
-            /*  
+            //endpoint 
             this.cargando= true
             const data={
-                name:cinema.name,  
+                name:element.name,  
             }  
             await fetchData(URL, 'post', data);  
              this.alert("agregado")
-            this.getElements()
-            */
+            this.getElements() 
+
             //localStorage 
+            /* 
             const data={
                 id:this.elements.length,
                 name:element.name, 
@@ -84,11 +84,12 @@ export const  useGenderStore=defineStore('cinemas',{
             this.setData()
             this.alert("agregado")
             console.log("add: ", data) 
+            */
         },
 
         async updateElement(id,newElement){ 
-            //endpoint 
-            /*
+            //endpoint  
+
             this.cargando= true
             const url=`${URL}/${id}`;
             const data={
@@ -96,34 +97,36 @@ export const  useGenderStore=defineStore('cinemas',{
             } 
             await fetchData(url,'put',data); ///PUT
             this.alert("actualizado")
-            this.getElements()
-            */
+            this.getElements() 
+
             //localStorage
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
             this.alert("actualizado")
             this.setData()
+            */
         },
 
         async deleteElement(id){
-            //endpoint 
-            /*
+            //endpoint  
             this.cargando= true
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
             this.alert("eliminado")
-            this.getElements()
-            */
+            this.getElements() 
               
 
             //localStorage 
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
             this.alert("eliminado")
             this.setData() 
+            */
         }, 
 
         setData(){

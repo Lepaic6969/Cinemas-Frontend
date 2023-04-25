@@ -38,7 +38,6 @@ export const  useCinemaStore=defineStore('cinemas',{
     actions:{
         async getElements(){
             //endpoint 
-            /* 
             this.cargando= true
             try {
                 const data=await fetchData(URL);
@@ -47,15 +46,16 @@ export const  useCinemaStore=defineStore('cinemas',{
             } catch (error) {
                 this.cargando= false
             }
-            */
             console.log(this.cargando)
             //localStoragee
+            /* 
              const data = JSON.parse(localStorage.getItem('cinemas'))  
              this.cargando= false
              if(data){
                 this.elements=data 
                 this.elements.reverse()
             }
+            */
            
         },
         
@@ -71,8 +71,7 @@ export const  useCinemaStore=defineStore('cinemas',{
         },
         
         async addElement(element){
-            //endpoint
-            /* 
+            //endpoint 
             this.cargando= true
             const data={
                 name:element.name, 
@@ -88,10 +87,10 @@ export const  useCinemaStore=defineStore('cinemas',{
             } 
             await fetchDataImg(URL, 'post', formData);  
             this.alert("agregado")
-            this.getElements()
-            */
+            this.getElements() 
             
             //localStorage 
+            /* 
             const data={
                 id:this.elements.length,
                 name:element.name, 
@@ -103,12 +102,12 @@ export const  useCinemaStore=defineStore('cinemas',{
             this.elements.push(data);
             this.alert("agregado")
             this.setData()//
-            console.log("add: ", data) 
+            console.log("add: ", data)
+            */ 
         },
 
         async updateElement(id,newElement){ 
-            //endpoint 
-            /* 
+            //endpoint  
             this.cargando= true
             const url=`${URL}/${id}`;
             const data={
@@ -127,34 +126,35 @@ export const  useCinemaStore=defineStore('cinemas',{
             await fetchData(url,'put',data); ///PUT
             
             this.alert("actualizado")
-            this.getElements() 
-            */
+            this.getElements()  
 
             //localStoragee 
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
             this.alert("actualizado")
             this.setData() 
+            */
         },
         
         async deleteElement(id){
-            //endpoint
-            /* 
+            //endpoint 
             this.cargando= true 
             const url=`${URL}/${id}`;
             await fetchData(url,'delete');  
             this.alert("eliminado")
-            this.getElements()
-            */
+            this.getElements() 
                
             //localStoragee 
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
             this.alert("eliminado")
             this.setData() 
+            */
         }, 
         
         setData(){

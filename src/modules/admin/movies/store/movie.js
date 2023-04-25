@@ -4,6 +4,7 @@ import fetchData from  '../../../../helpers/fetchData'
 import fetchDataImg from '../../../../helpers/fetchDataImg';
 import Swal from "sweetalert2";
 const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/movies';
+//const URL= 'http://localhost:3000/api/v1/movies'
 const URL2= 'https://movies-project-production-bb22.up.railway.app/api/v1/genres';
 export const  useMovieStore=defineStore('movie',{
     state:()=>({
@@ -36,23 +37,34 @@ export const  useMovieStore=defineStore('movie',{
     }),
     actions:{
         async getElements(){
-            //endpoint 
-            /*
+            //endpoint  
             try {
                 const data=await fetchData(URL);
-                const data2=await fetchData(URL2)//generos
-                this.generos=data2//generos 
+                
                 if(data){
-                    this.elements=data 
+                    this.elements=data.body 
                     this.elements.reverse()
+                    console.log(this.elements)
                 }
+                
                 this.cargando=false
             } catch (error) {
+                console.log(error)
                 this.cargando=false
+            } 
+
+            try {
+                const data2=await fetchData(URL2)//generos
+                console.log("Generos:",data2.body)
+                if(data2){
+                    this.generos=data2.body
+                }
+            } catch (error) {
+                console.log(error) 
             }
-            */
 
             //localStoragee
+            /* 
             this.cargando=false
             const data = JSON.parse(localStorage.getItem('movies'))  
             this.generos = JSON.parse(localStorage.getItem('generos'))  
@@ -61,6 +73,7 @@ export const  useMovieStore=defineStore('movie',{
                 this.elements=data 
                 this.elements.reverse()
             }
+            */
            
         },
         
@@ -72,82 +85,108 @@ export const  useMovieStore=defineStore('movie',{
         },
         
         async addElement(element){ 
-            //endpoint
-            /*
-            this.cargando=false
-            const data={
-                name:element.name,
-                duration:element.duration,
-                trailer: element.trailer,
-                image:element.image,
-                genders:element.gender
-            }
+            //endpoint 
+            this.cargando = true;
+            const { name, duration, trailer, image, id_genres } = element;
             const formData = new FormData();
-            for (const key in data) {
-                formData.append(key, data[key]);
-            } 
-            await fetchDataImg(URL, 'post', formData);  
-            this.alert("agregada")
+            formData.append("name", name);
+            formData.append("duration", duration);
+            formData.append("trailer", trailer);
+            formData.append("image", image);
+            formData.append("id_genres", JSON.stringify(id_genres));
+            
+            try {
+              const response = await fetch(URL, {
+                method: "POST",
+                body: formData,
+              });
+              console.log(formData.id_genres)
+              const data = await response.json();
+              if (response.ok) {
+                this.alert("agregada");
+              } else {
+                throw new Error(data.message);
+              }
+            } catch (error) {
+              console.log(error.message);
+              this.alert(error.message);
+            } finally {
+              this.cargando = false;
+            }
             this.getElements()
-            */
+            //this.getElements() 
             //localStorage
+            /* 
             const data={
                 id:this.elements.length,
                 name:element.name,
                 duration:element.duration,
                 trailer: element.trailer,
                 image:element.image,
-                genders:element.genders
+                id_genres:element.id_genres
             }
             this.elements.push(data);
             this.alert("agregada")
             this.setData()//
             console.log("add: ", data)
+            */
             
         },
         async updateElement(id,newElement){ 
-            //endpoint
-            /*
-            this.cargando=false
-            const data={
-                name:newElement.name,
-                duration:newElement.duration,
-                trailer: newElement.trailer,
-                image:newElement.image,
-                genders:newElement.genders
-            }
+            //endpoint 
+            this.cargando = true;
+            const { name, duration, trailer, image, id_genres } = newElement;
             const formData = new FormData();
-            for (const key in data) {
-                formData.append(key, data[key]);
-            } 
-            await fetchDataImg(URL, 'post', formData); 
-            this.alert("actualizada") 
-            this.getElements()
-            */
+            formData.append("name", name);
+            formData.append("duration", duration);
+            formData.append("trailer", trailer);
+            formData.append("image", image);
+            formData.append("id_genres", JSON.stringify(id_genres));
+            const url=`${URL}/${id}`;
+            try {
+                const response = await fetch(url, {
+                method: "PUT",
+                body: formData,
+            });
+            const data = await response.json();
+            if (response.ok) {
+                this.alert("actualizada");
+                this.getElements();
+            } else {
+                throw new Error(data.message);
+            }
+            } catch (error) {
+                console.log(error.message);
+                this.alert(error.message);
+            } finally {
+                this.cargando = false;
+            }
             //localStorage
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             console.log(id, newElement)
             this.elements[index]=newElement; 
             this.alert("actualizada")
             this.setData()
+            */
         },
         async deleteElement(id){
-            //endpoint
-            /*
+            //endpoint 
             this.cargando=false
             const url=`${URL}/${id}`;
             await fetchData(url,'delete'); 
             this.alert("eliminada")
-            this.getElements()
-            */
+            this.getElements() 
 
             //localStoragee
+            /* 
             const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
             this.elements.splice(index,1);
             //this.elements.splice(id,1);
             this.alert("eliminada")
             this.setData()
+            */
         }, 
         
         setData(){
