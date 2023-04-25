@@ -9,6 +9,13 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: () => import("../modules/home/layout/HomeLayout.vue"),
+      children:[
+        {
+          path:"",
+          name:"cards-home",
+          component:()=> import("@/modules/home/views/cardsView.vue")
+        }
+      ]
     },
     {
       path: "/user/payment",
