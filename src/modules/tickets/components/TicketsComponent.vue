@@ -1,16 +1,10 @@
 <template>
   <div class="container-poster" id="container-poster">
-    <div class="elemento1">
-      <div class="contenedor-logo">
-       <div class="texto">
-          <h1 class="mb-5">TÍTULO DE LA PELÍCULA</h1>
-        </div>
+      <div class="container-info">
+        <h5 class="card-title">{{movieName}}</h5>
         <button @click="handleOpen">ENTRADAS</button>
       </div>
-    </div>
-    <!-- <div class="elemento2" id="container-poster-responsive">
-
-    </div> -->
+       
   </div>
   <n-loading-bar-provider>
     <n-message-provider>
@@ -26,63 +20,24 @@
 </template>
 
 <script setup>
-import { usePosterStore } from "../../../stores/poster.js";
-import { ref, onMounted, watch } from "vue";
-import ModalDataMovie from "./ModalDataMovie.vue";
-import RowComponent from "./RowComponent.vue";
+  import { usePosterStore } from "../../../stores/poster.js";
+  import ModalDataMovie from "./ModalDataMovie.vue";
+  import { onMounted,ref } from "vue";
 
-//Para abrir el modal...
-const posterStore = usePosterStore();
-const { handleOpen } = posterStore;
+  const posterStore = usePosterStore();
+  const { handleOpen } = posterStore;
+  let urlPoster;
+  const movieName=ref('');
+  onMounted(()=>{
+    const {image,name}=JSON.parse(localStorage.getItem("MovieSelector"));
+    movieName.value=name;
+    urlPoster=image.secure_url;
+    //Esto es para poner la imagen de fondo...
+    const container=document.getElementById("container-poster");
+    console.log(`url(${urlPoster})`);
+    container.style.backgroundImage=`url('${urlPoster}')`;
 
-const urlPoster =
-  "/src/modules/tickets/assets/Heisemberg.jpg"; /*******Poster que quiero mostrar*******/
-
-//Contenedores de la vista.
-let containerPoster;
-let containerPosterResponsive;
-//Enlaces a las imágenes, cambian según el tamaño de pantalla -> Reactivas.
-const url = ref(urlPoster);
-const urlResponsive = ref("");
-
-//Responsive al momento de cargar la vista en cualquier pantalla.
-if (window.matchMedia("(max-width: 1012px)").matches) {
-  url.value = "";
-  urlResponsive.value = urlPoster;
-} else {
-  url.value = urlPoster;
-  urlResponsive.value = "";
-}
-
-//Media query con js -> Es basicamente para que al inspeccionar la vista y reajustar las diferentes
-//tamaños de pantalla, las url de las imágenes trabajen acorde al tamaño de pantalla
-// que se tiene actualmente (No indispensable).
-window.addEventListener("resize", () => {
-  if (window.matchMedia("(max-width: 1012px)").matches) {
-    url.value = "";
-    urlResponsive.value = urlPoster;
-  } else {
-    url.value = urlPoster;
-    urlResponsive.value = "";
-  }
-});
-
-//Función que pone las imágenes necesarias a los contenedores.
-const setImages = (containerPoster, containerPosterResponsive) => {
-  containerPoster.style.backgroundImage = `url('${url.value}')`;
-  containerPosterResponsive.style.backgroundImage = `url('${urlResponsive.value}')`;
-};
-
-//Esto es para que cada vez que cambie la Url, se vuelvan a cargar las imágenes a los contenedores.
-watch(url, (newUrl, oldUrl) => {
-  setImages(containerPoster, containerPosterResponsive);
-});
-
-onMounted(() => {
-  containerPoster = document.getElementById("container-poster");
-  containerPosterResponsive = document.getElementById("container-poster-responsive");
-  setImages(containerPoster, containerPosterResponsive);
-});
+  });
 </script>
 
 <style scoped>
@@ -94,232 +49,56 @@ onMounted(() => {
 }
 .container-poster {
   width: 100%;
-  height: 380px;
+  height: 450px;
   background: white;
-  display: flex;
+ 
   /* background-image: url(../assets/img.png); */
   border-radius: 15px;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); */
+  position: relative;
 }
 
-.elemento1 {
+.container-info{
+  background-color: rgb(43,43,43);
   width: 100%;
-  height: 100%;
-  background-color: rgb(32, 32, 32);
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  height: 25%;
+  border-radius: 15px;
+  
+  position: absolute;
+  bottom: 0;
 }
-.elemento2 {
-  width: 50%;
-  height: 100%;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  /* border: 1px solid gray; */
+.container-info h5{
+  color:white !important;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+
 }
 
-.contenedor-logo {
-  width: 60%;
-  height: 34%;
-  margin: 100px auto;
-  /* margin: 229px 188px 276px 83px; */
-}
-.contenedor-logo img {
-  width: 164px;
-  /* margin-bottom: 24px; */
-}
-.contenedor-logo .texto h1 {
-  color: white;
-  font-family: "Roboto Condensed", sans-serif;
-  margin-bottom: 8px;
-  font-weight: 400;
-  font-size: 20px;
-}
-.contenedor-logo .texto p {
-  color: white;
+ button {
   font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  margin-bottom: 24px;
-}
-.contenedor-logo button {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 15px;
   color: white;
-  background-color: rgba(27, 144, 252, 1);
-  width: 158px;
-  height: 51px;
+  background-color: RGB(27,144,252);
+  width: 75%;
+  height:50%;
+  display: block;
+  margin: 0 auto;
   border-radius: 53px;
-  transition: all 0.5s ease;
+  transition: all 0.9s ease;
+  color:white;
 }
 button:hover {
   transform: scale(1.1);
 }
 
 
-/* Estilos para Tablet */
 
-@media (max-width: 1012px) {
-  .elemento1,
-  .elemento2 {
-    width: 100%;
-    height: 50%;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-  }
-  .elemento1 {
-    order: 2;
-  }
-  .elemento2 {
-    order: 1;
-    height: 57%;
 
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .container-poster {
-    height: 1024px;
-    flex-direction: column;
-    background: white;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 92%, 0% 100%);
-  }
-  .contenedor-logo {
-    width: 83%;
-    height: 34%;
-    margin: 40px auto;
-  }
-  .contenedor-logo h1 {
-    font-size: 40px;
-  }
-  .contenedor-logo img {
-    width: 193px;
-    margin-bottom: 24px;
-  }
-  .contenedor-logo .texto p {
-    width: 90%;
-    font-size: 16px;
-  }
-  .contenedor-logo button {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
 
-@media (max-width: 960px) {
-  .elemento2 {
-    background-position: -10px center;
-  }
-}
-@media (max-width: 900px) {
-  .elemento2 {
-    background-position: -50px center;
-  }
-}
-@media (max-width: 850px) {
-  .elemento2 {
-    background-position: -100px center;
-  }
-}
-@media (max-width: 800px) {
-  .elemento2 {
-    background-position: -150px center;
-  }
-}
-@media (max-width: 750px) {
-  .elemento2 {
-    background-position: -200px center;
-  }
-}
-@media (max-width: 700px) {
-  .elemento2 {
-    background-position: -250px center;
-  }
-}
-@media (max-width: 650px) {
-  .elemento2 {
-    background-position: -300px center;
-  }
-}
-
-/* Estilos para móvil */
-@media (max-width: 600px) {
-  .container-poster {
-    height: 800px;
-    width: 100%;
-    background-color: rgb(32, 32, 32);
-  }
-  .elemento2 {
-    height: 42%;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .contenedor-logo {
-    margin: 35px auto;
-    height: 212px;
-    width: 86%;
-  }
-  .contenedor-logo img {
-    width: 25%;
-  }
-  .contenedor-logo h1 {
-    font-size: 24px;
-  }
-  .contenedor-logo p {
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 24px;
-  }
-  .contenedor-logo button {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-@media (max-width: 560px) {
-  .elemento2 {
-    background-position: -20px center;
-  }
-}
-@media (max-width: 520px) {
-  .elemento2 {
-    background-position: -60px center;
-  }
-}
-@media (max-width: 480px) {
-  .elemento2 {
-    background-position: -100px center;
-  }
-}
-@media (max-width: 440px) {
-  .elemento2 {
-    background-position: -140px center;
-  }
-}
-@media (max-width: 400px) {
-  .elemento2 {
-    background-position: -180px center;
-  }
-}
-@media (max-width: 360px) {
-  .elemento2 {
-    background-position: -220px center;
-  }
-}
-@media (max-width: 320px) {
-  .elemento2 {
-    background-position: -260px center;
-  }
-}
-@media (max-width: 280px) {
-  .elemento2 {
-    background-position: -300px center;
-  }
-}
-@media (max-width: 240px) {
-  .elemento2 {
-    background-position: -340px center;
-  }
-}
 </style>
