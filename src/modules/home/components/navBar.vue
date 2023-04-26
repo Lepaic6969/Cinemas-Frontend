@@ -1,11 +1,19 @@
 <template>
   <n-nav>
-    <n-avatar
-      src="./src/assets/a.png"
-      alt="Logo de mi sitio web"
-      class="logo"
-      @click="handleLogoClick"
-    />
+
+<n-avatar
+  v-if="selectedCinema"
+  :src="selectedCinema.logo ? selectedCinema.logo.secure_url : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'"
+  class="logo"
+  :alt="selectedCinema.name"
+  @click="handleLogoClick"
+/>
+<n-avatar
+  v-else
+  src="./src/assets/a.png"
+  alt="Logo de mi sitio web"
+  class="logo"
+/>
     <n-nav-item v-show="!loggedIn" @click="toggleRegisterModal"
       >Registrarse
       <n-icon>
@@ -20,7 +28,6 @@
       </n-icon>
     </n-nav-item>
   </n-nav>
-
   <Modal title="Registrarse" v-if="showRegisterModal"> </Modal>
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
@@ -31,6 +38,13 @@ import Modal from "./Modal.vue";
 import { PersonAddSharp, PersonCircle } from "@vicons/ionicons5";
 
 export default {
+  name: "navbar",
+  props: {
+    selectedCinema: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     PersonAddSharp,
     PersonCircle,
@@ -52,9 +66,11 @@ export default {
     },
     handleLogoClick() {
       window.location.href = "../";
+      this.loggedIn = !this.loggedIn
     },
 
   },
+
 };
 </script>
 
@@ -76,8 +92,8 @@ n-nav {
 }
 
 .logo {
-  width: 110px;
-  height: 6vh;
+  width: 9vh;
+  height: 7vh;
   background: transparent;
   margin-right: auto;
   animation: moveUpDown 4s infinite;

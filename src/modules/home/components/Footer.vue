@@ -1,57 +1,34 @@
 <template>
-  <div>
-    <div class="modal" v-show="showModal">
-      <div class="modal-content">
-        <h1>Cinemas</h1>
-        <select class="form-select" v-model="selectedCinema">
-          <option disabled selected value="">Selecciona un cinema</option>
-          <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema">
-            {{ cinema.name }}
-          </option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="container"></div>
-
-  <footer class="footer-container" style="background-color: #2c3e50">
+  <footer class="footer-container">
     <n-row>
       <n-col span="8">
         <div class="logo-container">
           <a href="../">
-             <n-avatar
-             v-if="selectedCinema"
-            :src="
-              selectedCinema.logo
-                ? selectedCinema.logo.secure_url
-                : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-            "
-            class="logo"
-            :alt="selectedCinema.name"
-          />
+            <n-avatar
+              v-if="selectedCinema"
+              :src="
+                selectedCinema.logo
+                  ? selectedCinema.logo.secure_url
+                  : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+              "
+              class="logo"
+              :alt="selectedCinema.name"
+            />
           </a>
         </div>
       </n-col>
       <n-col span="8">
-        <div class="social-container">
-          <div class="copy-container">
-            <h3 class="company-name" style="color: #fff" v-if="selectedCinema">
-              {{ selectedCinema.name }}
-            </h3>
-            <p style="color: #fff" v-if="selectedCinema">
-              © 2023 {{ selectedCinema.name }}. Todos los derechos reservados.
-            </p>
-            <p style="color: #fff" v-if="selectedCinema">
-              Dirección: {{ selectedCinema.address }}.
-            </p>
-            <p style="color: #fff" v-if="selectedCinema">
-              Ciudad: {{ selectedCinema.city }}.
-            </p>
-             <p style="color: #fff" v-if="selectedCinema">
-              Teléfono: {{ selectedCinema.phone }}.
-            </p>
-          </div>
+        <div class="social-container text-center" v-if="selectedCinema">
+          {{ selectedCinema.name }}
+          <br>
+          © 2023 {{ selectedCinema.name }}. Todos los derechos reservados.
+          <br>
+          Dirección: {{ selectedCinema.address }}. 
+          <br>
+          Ciudad:
+          {{ selectedCinema.city }}.
+          <br>
+           Teléfono: {{ selectedCinema.phone }}.
         </div>
       </n-col>
       <n-col span="8">
@@ -78,39 +55,22 @@
 </template>
 <script>
 import { LogoInstagram, LogoFacebook, LogoTwitter } from "@vicons/ionicons5";
-import fetchData from "../../../helpers/fetchData.js";
+
 export default {
   name: "footer",
+  props: {
+    selectedCinema: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     LogoInstagram,
     LogoFacebook,
     LogoTwitter,
   },
   data() {
-    return {
-      cinemas: [],
-      selectedCinema: null,
-      showModal: true,
-    };
-  },
-  async mounted() {
-    try {
-      const data = await fetchData("/cinemas");
-      this.cinemas = data.body;
-      console.log("Cinemas:", this.cinemas); // Agregado
-    } catch (error) {
-      console.error(error);
-    }
-  },
-    watch: {
-    selectedCinema: function () {
-      this.closeModal();
-    },
-  },
-  methods: {
-    closeModal() {
-      this.showModal = false;
-    },
+    return {};
   },
 };
 </script>
@@ -120,55 +80,29 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.01rem;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
+  height: 100%;
+  background: #2c3e50;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  margin-top: 1.4rem;
-}
-
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 4;
-  left: 0;
-  top: 0;
-  width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.9);
-  font-family: "Poppins", sans-serif !important;
-  font-weight: 800;
 }
 
-.modal-content {
-  background-color: #007bff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%;
-  text-align: center;
-  color: #fff;
-}
-
-
-.copy-container {
-  text-align: center;
-}
 
 .social-container {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  color: white;
 }
 
 .social-button {
   display: inline-block;
-  margin: 0 0.8rem;
+  margin: 0 1rem;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 10px;
@@ -184,9 +118,22 @@ export default {
 }
 
 .logo {
-  margin-left: 10px;
-  width: 23vh;
-  height: 23vh;
+  margin-left: 30%;
+  width: 20%;
+  height: 40%;
   background: transparent;
+  animation: moveUpDown 4s infinite;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

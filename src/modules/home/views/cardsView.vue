@@ -1,45 +1,93 @@
 <template>
-  <n-row>
-    <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center" :title="movie.name">
-        <div class="card-image">
-          <img
-            :src="
-              movie.image
-                ? movie.image.secure_url
-                : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-            "
-            class="card-img-top"
-            :alt="movie.name"
-          />
-          <div class="card-text">
-            <n-button type="success">Trailer</n-button>
-            <n-button type="info" @click="buy(movie)">Ver más</n-button>
+  <div v-if="movies.length > 0">
+    <n-row>
+      <n-col v-for="movie in movies" :key="movie.id" :span="5">
+        <n-card class="text-center">
+          <h2>{{ movie.name }}</h2>
+          <div class="card-image">
+            <img
+              :src="
+                movie.image
+                  ? movie.image.secure_url
+                  : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+              "
+              class="card-img-top"
+              :alt="movie.name"
+            />
+            <div class="card-text">
+              <n-button type="success" @click="toggleModal">Trailer</n-button>
+              <n-button type="info" @click="buy(movie)">Ver más</n-button>
+            </div>
           </div>
-        </div>
-      </n-card>
-    </n-col>
-  </n-row>
-     <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
+        </n-card>
+      </n-col>
+    </n-row>
+  </div>
+  <div v-else>
+    <h3 class="text-center">No hay peliculas para mostrar</h3>
+  </div>
+
+  <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
+
+
+    <!-- <div class="modal" v-show="show">
+    <div class="modal-container">
+      
+      <div class="modal-content">
+     <iframe
+        width="100%"
+        height="360"
+        :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      </div>
+    </div>
+  </div> -->
+  <n-modal
+    v-model:show="show"
+    class="custom-card"
+    preset="card"
+    :style="modal"
+    
+  >
+  
+    <div v-for="movie in movies" :key="movie.id">
+     <h2 class="text-center " v-text="movie.name"></h2>
+      </div>
+     <iframe
+        width="100%"
+        height="250"
+        :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    <template #footer>
+      <n-button  type="info" @click="buy(movie)">Ver más</n-button>
+    </template>
+  </n-modal>
 </template>
 
 <script>
-import Nav from "../components/navBar.vue";
-import Footer from "../components/Footer.vue";
 import Modal from "../components/Modal.vue";
 import fetchData from "../../../helpers/fetchData.js";
 
 export default {
   name: "MovieCards",
   components: {
-    Nav,
-    Footer,
     Modal,
   },
   data() {
     return {
       movies: [],
       showLoginModal: false,
+      show: false,
+      videoId: "TcMBFSGVi1c",
+      modal: {
+        width: '500px',
+      },
     };
   },
   methods: {
@@ -51,6 +99,9 @@ export default {
       } else {
         this.showLoginModal = true;
       }
+    },
+    toggleModal() {
+      this.show = !this.show;
     },
   },
   async mounted() {
@@ -72,6 +123,7 @@ export default {
   background: #949494;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
+  color: white;
 }
 
 .card-image {
@@ -94,8 +146,14 @@ export default {
   gap: 8%;
   margin-top: 15px auto;
   width: 80%;
+  
 }
 
+h3, h2 {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 800;
+  margin-bottom: 10%;
+}
 .n-card:hover .card-text {
   opacity: 1;
   font-family: "Poppins", sans-serif !important;
@@ -123,8 +181,25 @@ export default {
 .n-card {
   height: 100%;
   border-radius: 8px;
-
 }
+
+.n-icon {
+  margin-top: 4px;
+}
+.n-avatar {
+  width: 80px;
+  height: 80px;
+  margin-left: 40%;
+  background: transparent;
+}
+
+.modal-content {
+  border: none;
+  background: #039be5;
+  color: white;
+}
+
+
 @keyframes moveUpDown {
   0% {
     transform: translateY(0);
