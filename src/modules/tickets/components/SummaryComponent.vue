@@ -1,7 +1,9 @@
 <template>
   <div class="container box">
     <div class="container box-text my-3 text-start">
-      <h3>RESUMEN <span class="text-primary">DE TU COMPRA</span></h3>
+      <h3 class="text-md-start text-center">
+        RESUMEN <span class="text-primary">DE TU COMPRA</span>
+      </h3>
       <ul>
         <li>Película:</li>
         <li>Función:</li>
