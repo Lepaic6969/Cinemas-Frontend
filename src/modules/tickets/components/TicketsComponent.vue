@@ -2,18 +2,15 @@
   <div class="container-poster" id="container-poster">
     <div class="elemento1">
       <div class="contenedor-logo">
-        <img src="../assets/Daco_4071008 1.png" alt="logo" />
-        <div class="texto">
-          <h1>¡DISPONIBLE AHORA!</h1>
-          <p>
-            Aquí iría la descripción de nuestra película, transmitida exclusivamente en nuestro
-            cine.
-          </p>
+       <div class="texto">
+          <h1 class="mb-5">TÍTULO DE LA PELÍCULA</h1>
         </div>
         <button @click="handleOpen">ENTRADAS</button>
       </div>
     </div>
-    <div class="elemento2" id="container-poster-responsive"></div>
+    <!-- <div class="elemento2" id="container-poster-responsive">
+
+    </div> -->
   </div>
   <n-loading-bar-provider>
     <n-message-provider>
@@ -31,15 +28,15 @@
 <script setup>
 import { usePosterStore } from "../../../stores/poster.js";
 import { ref, onMounted, watch } from "vue";
-import ModalDataMovie from "../components/ModalDataMovie.vue";
-import RowComponent from "../components/RowComponent.vue";
+import ModalDataMovie from "./ModalDataMovie.vue";
+import RowComponent from "./RowComponent.vue";
 
 //Para abrir el modal...
 const posterStore = usePosterStore();
 const { handleOpen } = posterStore;
 
 const urlPoster =
-  "/src/modules/tickets/assets/walter.jpg"; /*******Poster que quiero mostrar*******/
+  "/src/modules/tickets/assets/Heisemberg.jpg"; /*******Poster que quiero mostrar*******/
 
 //Contenedores de la vista.
 let containerPoster;
@@ -86,87 +83,6 @@ onMounted(() => {
   containerPosterResponsive = document.getElementById("container-poster-responsive");
   setImages(containerPoster, containerPosterResponsive);
 });
-
-//Función para el responsive según el dispositivo en el que se abra la app.
-const d = document,
-  n = navigator,
-  ua = n.userAgent; //Este es el que contiene la información.
-const userDiveceInfo = (id) => {
-  const $id = d.getElementById(id),
-    //Estos objetos sólo son validaciones para el tipo de dispositivo desde el que ven la aplicación.
-    isMobile = {
-      android: () => ua.match(/android/i),
-      ios: () => ua.match(/iphone|ipad|ipod/i),
-      windows: () => ua.match(/windows phone/i),
-      any: function () {
-        return this.android() || this.ios() || this.windows(); //Esta validación es para cualquier dispositivo.
-      },
-    },
-    isDesktop = {
-      linux: () => ua.match(/linux/i),
-      mac: () => ua.match(/mac os/i),
-      windows: () => ua.match(/windows nt/i),
-      any: function () {
-        return this.linux() || this.mac() || this.windows();
-      },
-    },
-    //Este objeto es para las validaciones referentes a cual navegador están usando para visitar mi sitio.
-    isBrowser = {
-      chrome: () => ua.match(/chrome/i),
-      safari: () => ua.match(/safari/i),
-      firefox: () => ua.match(/firefox/i),
-      opera: () => ua.match(/opera|opera mini/i),
-      ie: () => ua.match(/msie|iemobile/i),
-      edge: () => ua.match(/edg/i),
-      any: function () {
-        return (
-          this.chrome() ||
-          this.safari() ||
-          this.firefox() ||
-          this.opera() ||
-          this.ie() ||
-          this.edge()
-        );
-      },
-    };
-  // console.log(ua);
-  //  console.log(isBrowser.edge());
-
-  $id.innerHTML = `
-        <ul>
-            <li>User Agent: <b>${ua}</b></li>
-            <li>Plataforma: <b>${isMobile.any() ? isMobile.any() : isDesktop.any()}</b></li>
-            <li>Navegador: <b>${isBrowser.any()}</b></li>
-
-        </ul>
-    `;
-
-  if (isBrowser.chrome() && !isBrowser.edge()) {
-    $id.innerHTML += `Este contenido sólo se puede ver en chrome`;
-  }
-  if (isBrowser.chrome() && isBrowser.edge()) {
-    $id.innerHTML += `Este contenido sólo se puede ver en edge`;
-  }
-  if (isBrowser.firefox()) {
-    $id.innerHTML += `Este contenido sólo se puede ver en Firefox`;
-  }
-
-  if (isDesktop.windows()) {
-    $id.innerHTML += `<p><mark>Descarga nuestro contenido para Windows</mark></p> `;
-  }
-  if (isDesktop.linux()) {
-    $id.innerHTML += `<p><mark>Descarga nuestro contenido para Linux</mark></p> `;
-  }
-  if (isDesktop.mac()) {
-    $id.innerHTML += `<p><mark>Descarga nuestro contenido para Mac</mark></p> `;
-  }
-
-  //Redirecciones (Esto es para mostrar una versión de la página dependiendo desde donde se la visite).
-  //Redirije a la página de Jonathan Mircha.
-  if (isMobile.android()) {
-    // location.href="https://jonmircha.com"
-  }
-};
 </script>
 
 <style scoped>
@@ -178,23 +94,22 @@ const userDiveceInfo = (id) => {
 }
 .container-poster {
   width: 100%;
-  height: 768px;
+  height: 380px;
   background: white;
   display: flex;
   /* background-image: url(../assets/img.png); */
+  border-radius: 15px;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 88%, 0% 100%);
+  /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); */
 }
 
 .elemento1 {
-  width: 40%;
+  width: 100%;
   height: 100%;
-  background-color: #070;
   background-color: rgb(32, 32, 32);
-
-  clip-path: polygon(0% 0%, 85% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 .elemento2 {
   width: 50%;
@@ -206,16 +121,19 @@ const userDiveceInfo = (id) => {
 .contenedor-logo {
   width: 60%;
   height: 34%;
-  margin: 229px 188px 276px 83px;
+  margin: 100px auto;
+  /* margin: 229px 188px 276px 83px; */
 }
 .contenedor-logo img {
   width: 164px;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
 }
 .contenedor-logo .texto h1 {
   color: white;
   font-family: "Roboto Condensed", sans-serif;
   margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 20px;
 }
 .contenedor-logo .texto p {
   color: white;
@@ -237,36 +155,7 @@ const userDiveceInfo = (id) => {
 button:hover {
   transform: scale(1.1);
 }
-/* Estilos para pantalla grande */
 
-@media (max-width: 1440px) {
-  .container-poster {
-    background-position: -300px center;
-    height: 1024px;
-  }
-  .contenedor-logo {
-    margin: 337px auto;
-  }
-}
-
-@media (max-width: 1422px) {
-  .container-poster {
-    background-position: -400px center;
-    height: 1024px;
-  }
-}
-@media (max-width: 1300px) {
-  .container-poster {
-    background-position: -500px center;
-    height: 1024px;
-  }
-}
-@media (max-width: 1100px) {
-  .container-poster {
-    background-position: -570px center;
-    height: 1024px;
-  }
-}
 
 /* Estilos para Tablet */
 
@@ -283,7 +172,7 @@ button:hover {
   .elemento2 {
     order: 1;
     height: 57%;
-    /* background-image: url(../assets/img.png);  **********Hay que hacerlo dinámicamente********** */
+
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
