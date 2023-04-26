@@ -65,7 +65,7 @@
   const handleSubmit=()=>{
     if(cinema.value==='' || schedule.value==='') return;
     setRoomSelected(cinema.value,schedule.value);
-    console.log('sala seleccionada: '+ roomSelected);
+    console.log(roomSelected.value);
   }
 
   watch(cinema,(newCimema,oldCinema)=>{

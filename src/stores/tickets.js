@@ -31,8 +31,6 @@ export const useTicketStore = defineStore('ticket', {
           this.setRooms(rooms);
         },
         setRoomSelected(id,hour){
-          console.log(id,hour)
-          console.log(this.data)
           const allObjects=this.data.filter(el=>el.Room.id===id);//Filtro por id
           const Object=allObjects.filter(el=>el.hour===hour); //Filtro por hora
           this.roomSelected=Object;
