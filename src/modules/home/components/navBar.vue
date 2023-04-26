@@ -87,7 +87,6 @@ n-nav {
   overflow: hidden;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
-  margin-bottom: 8px;
   height: 10vh;
 }
 

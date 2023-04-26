@@ -22,9 +22,9 @@
                       <label for="cinema" class="form-label text-white fs-4">Seleccione la Sala:</label>
                       <SelectComponent v-model="cinema" id="cinema" :data="[{id:1,name:'Sala 1'},{id:2,name:'Sala 2'},{id:3,name:'Sala 3'}]"/>
                     </div>
-                    <div class="mb-3" v-if="cinema!==''">
+                    <div class="mb-3">
                       <label for="schedule" class="form-label text-white fs-4">Seleccione el Horario:</label>
-                      <SelectComponent v-model="schedule" id="schedule" :data="[{id:1,name:'1 pm'},{id:2,name:'2 pm'},{id:3,name:'3 pm'}]"/>
+                      <SelectComponent v-model="schedule" id="schedule" :data=" (cinema!=='')?([{id:1,name:'1 pm'},{id:2,name:'2 pm'},{id:3,name:'3 pm'}]):[] "/>
                     </div>
                     <button @click="handleClose">ADQUIRIR ASIENTOS</button>
                   </form>
