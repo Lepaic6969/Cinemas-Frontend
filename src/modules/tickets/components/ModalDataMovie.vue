@@ -24,7 +24,8 @@
                     </div>
                     <div class="mb-3">
                       <label for="schedule" class="form-label text-white fs-4">Seleccione el Horario:</label>
-                      <SelectComponent v-model="schedule" id="schedule" :data=" (cinema!=='')?([{id:1,name:'1 pm'},{id:2,name:'2 pm'},{id:3,name:'3 pm'}]):[] "/>
+                      <!-- <SelectComponent v-model="schedule" id="schedule" :data=" (cinema!=='')?([{id:1,name:'1 pm'},{id:2,name:'2 pm'},{id:3,name:'3 pm'}]):[] "/> -->
+                      <SelectSchedule v-model="schedule" id="schedule" :data=" (cinema!=='')?(schedules):[] "/>
                     </div>
                     <button @click="handleClose">ADQUIRIR ASIENTOS</button>
                   </form>
@@ -46,6 +47,7 @@
   import { useTicketStore } from '../../../stores/tickets';
   import { storeToRefs } from "pinia";
   import SelectComponent from "./SelectComponent.vue";
+  import SelectSchedule from './SelectSchedule.vue';
 
   
   const posterStore = usePosterStore();
@@ -53,8 +55,8 @@
   const { handleClose} = posterStore;
   
   const ticketStore=useTicketStore();
-  const {setSchedules}=ticketStore;
-  const {rooms,schedules}=storeToRefs(ticketStore);
+  const {setSchedules,setRoomSelected}=ticketStore;
+  const {rooms,schedules,roomSelected}=storeToRefs(ticketStore);
   //Variables reactivas que recibo desde el formulario.
   const cinema=ref('');
   const schedule=ref('');
@@ -62,15 +64,8 @@
   //Función que procesa el formulario
   const handleSubmit=()=>{
     if(cinema.value==='' || schedule.value==='') return;
-    const movie=localStorage.getItem("MovieSelector");
-    //Este objeto es el que se le envía a Jasser.
-    const info={
-      room:cinema.value,
-      schedule:schedule.value,
-      movie
-    }
-    console.log(info);
-    
+    setRoomSelected(cinema.value,schedule.value);
+    console.log('sala seleccionada: '+ roomSelected);
   }
 
   watch(cinema,(newCimema,oldCinema)=>{
