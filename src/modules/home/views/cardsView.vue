@@ -30,40 +30,26 @@
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
 
-    <!-- <div class="modal" v-show="show">
-    <div class="modal-container">
-      
-      <div class="modal-content">
-     <iframe
-        width="100%"
-        height="360"
-        :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      </div>
-    </div>
-  </div> -->
   <n-modal
     v-model:show="show"
     class="custom-card"
     preset="card"
     :style="modal"
-    
   >
   
     <div v-for="movie in movies" :key="movie.id">
      <h2 class="text-center " v-text="movie.name"></h2>
-      </div>
+      
      <iframe
         width="100%"
         height="250"
-        :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`"
+        :src="`${movie.trailer}?autoplay=1&mute=1`"
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-      ></iframe>
+      >
+      </iframe>
+      </div>
     <template #footer>
       <n-button  type="info" @click="buy(movie)">Ver más</n-button>
     </template>
@@ -109,6 +95,10 @@ export default {
       const data = await fetchData("/movies");
       this.movies = data.body;
       console.log("Peliculas:", this.movies); // Agregado
+      this.movies.map (e => {
+      console.log("Peli:", e.trailer);
+      })
+
     } catch (error) {
       console.error(error);
     }
