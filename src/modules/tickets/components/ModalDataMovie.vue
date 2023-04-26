@@ -20,7 +20,7 @@
                   <form @submit.prevent="handleSubmit">
                     <div class="mb-3">
                       <label for="cinema" class="form-label text-white fs-4">Seleccione la Sala:</label>
-                      <SelectComponent v-model="cinema" id="cinema" :data="[{id:1,name:'Sala 1'},{id:2,name:'Sala 2'},{id:3,name:'Sala 3'}]"/>
+                      <SelectComponent v-model="cinema" id="cinema" :data="rooms"/>
                     </div>
                     <div class="mb-3">
                       <label for="schedule" class="form-label text-white fs-4">Seleccione el Horario:</label>
@@ -41,8 +41,9 @@
   </template>
   
   <script setup>
-  import {ref} from 'vue';
+  import {ref,watch} from 'vue';
   import { usePosterStore } from "../../../stores/poster.js";
+  import { useTicketStore } from '../../../stores/tickets';
   import { storeToRefs } from "pinia";
   import SelectComponent from "./SelectComponent.vue";
 
@@ -50,15 +51,31 @@
   const posterStore = usePosterStore();
   const { showModal } = storeToRefs(posterStore);
   const { handleClose} = posterStore;
-
+  
+  const ticketStore=useTicketStore();
+  const {setSchedules}=ticketStore;
+  const {rooms,schedules}=storeToRefs(ticketStore);
   //Variables reactivas que recibo desde el formulario.
   const cinema=ref('');
   const schedule=ref('');
 
   //Función que procesa el formulario
   const handleSubmit=()=>{
-    console.log(cinema.value,schedule.value);
+    if(cinema.value==='' || schedule.value==='') return;
+    const movie=localStorage.getItem("MovieSelector");
+    //Este objeto es el que se le envía a Jasser.
+    const info={
+      room:cinema.value,
+      schedule:schedule.value,
+      movie
+    }
+    console.log(info);
+    
   }
+
+  watch(cinema,(newCimema,oldCinema)=>{
+    setSchedules(newCimema);
+  });
   
   </script>
   
