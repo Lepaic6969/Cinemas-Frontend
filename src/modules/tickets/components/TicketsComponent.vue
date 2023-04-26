@@ -49,7 +49,7 @@
 }
 .container-poster {
   width: 100%;
-  height: 450px;
+  height: 400px;
   background: white;
  
   /* background-image: url(../assets/img.png); */
