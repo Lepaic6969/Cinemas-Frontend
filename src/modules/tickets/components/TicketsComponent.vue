@@ -48,7 +48,7 @@ onMounted(() => {
   height: 400px;
   background: white;
   /* background-image: url(../assets/img.png); */
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 0;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -59,8 +59,7 @@ onMounted(() => {
   background-color: rgba(43, 43, 43, 0.8);
   width: 100%;
   height: 25%;
-  border-radius: 15px;
-
+  border-radius: 1rem 1rem 0 0;
   position: absolute;
   bottom: 0;
 }
