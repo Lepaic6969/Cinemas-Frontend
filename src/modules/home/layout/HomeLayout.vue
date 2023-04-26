@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <router-view></router-view>
+  <router-view class="p-5"></router-view>
 
   <Footer :selectedCinema="selectedCinema"/>
 </template>
