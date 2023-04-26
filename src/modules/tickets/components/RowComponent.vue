@@ -1,5 +1,5 @@
 <template>
-  <div class="container main w-100">
+  <div class="main">
     <div class="row justify-content-md-center">
       <img src="../assets/images/pantalla.png" alt="screen" class="img-fluid w-100 screen" />
       <div class="d-flex flex-md-row flex-column gap-5 gap-md-2">
@@ -111,8 +111,28 @@ export default {
   position: relative;
   /* background-color: #747474; */
   background-color: #616161;
-  padding: 3rem;
+  padding: 2rem;
+  height: 100%;
+  max-height: max-content;
+  box-shadow: 0.25rem 0.25rem 0.25rem #2b2b2b;
+  border-radius: 0 1rem 1rem 0;
   /* margin: 0 !important; */
+}
+
+.main::after {
+  content: "Reservada";
+  position: absolute;
+  width: 6rem;
+  height: 2rem;
+  background-color: #01eea2;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.35rem;
+  font-weight: 700;
+  bottom: 0.35rem;
+  right: 0.35rem;
+  font-size: 0.8rem;
+  box-shadow: 0.15rem 0.15rem 0rem #2b2b2b;
 }
 
 .content-box {
@@ -204,6 +224,19 @@ export default {
   .vip > *::after {
     font-size: 0.7rem;
     bottom: -60%;
+  }
+
+  .main::after {
+    transform: rotate(90deg);
+    bottom: 3rem;
+    right: -3rem;
+    box-shadow: 0.25rem -0.25rem 0.25rem #2b2b2b;
+  }
+}
+
+@media (max-width: 767px) {
+  .main {
+    border-radius: 0 0 1rem 1rem;
   }
 }
 
