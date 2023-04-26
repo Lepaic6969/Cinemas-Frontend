@@ -1,7 +1,7 @@
 <template>
  <Nav :selectedCinema="selectedCinema"/>
   
-    <div>
+
     <div class="modal" v-show="showModal">
       <div class="modal-content">
         <h1>Cinemas</h1>
@@ -13,7 +13,7 @@
         </select>
       </div>
     </div>
-  </div>
+
 
   <router-view class="p-5"></router-view>
 

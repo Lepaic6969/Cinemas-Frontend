@@ -3,7 +3,6 @@
     <n-row>
       <n-col v-for="movie in movies" :key="movie.id" :span="5">
         <n-card class="text-center">
-          <h2>{{ movie.name }}</h2>
           <div class="card-image">
             <img
               :src="
@@ -15,10 +14,13 @@
               :alt="movie.name"
             />
             <div class="card-text">
-              <n-button type="success" @click="toggleModal">Trailer</n-button>
+              <n-button type="success" @click="toggleModal(movie)"
+                >Trailer</n-button
+              >
               <n-button type="info" @click="buy(movie)">Ver más</n-button>
             </div>
           </div>
+          <h4 class="mt-4">{{ movie.name }}</h4>
         </n-card>
       </n-col>
     </n-row>
@@ -29,29 +31,18 @@
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
+  <n-modal v-model:show="show" class="custom-card" preset="card" :style="modal">
+    <h2 class="text-center" v-text="film.name"></h2>
+    <iframe
+      allow="autoplay"
+      width="100%"
+      height="360"
+      :src="film.trailer"
+      autoplay
+    ></iframe>
 
-  <n-modal
-    v-model:show="show"
-    class="custom-card"
-    preset="card"
-    :style="modal"
-  >
-  
-    <div v-for="movie in movies" :key="movie.id">
-     <h2 class="text-center " v-text="movie.name"></h2>
-      
-     <iframe
-        width="100%"
-        height="250"
-        :src="`${movie.trailer}?autoplay=1&mute=1`"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      >
-      </iframe>
-      </div>
     <template #footer>
-      <n-button  type="info" @click="buy(movie)">Ver más</n-button>
+      <n-button type="info" @click="buy(movie)">Ver más</n-button>
     </template>
   </n-modal>
 </template>
@@ -68,11 +59,12 @@ export default {
   data() {
     return {
       movies: [],
+      sala:[],
+      film: {},
       showLoginModal: false,
       show: false,
-      videoId: "TcMBFSGVi1c",
       modal: {
-        width: '500px',
+        width: "500px",
       },
     };
   },
@@ -86,7 +78,8 @@ export default {
         this.showLoginModal = true;
       }
     },
-    toggleModal() {
+    toggleModal(movie) {
+      this.film = movie;
       this.show = !this.show;
     },
   },
@@ -94,11 +87,21 @@ export default {
     try {
       const data = await fetchData("/movies");
       this.movies = data.body;
-      console.log("Peliculas:", this.movies); // Agregado
-      this.movies.map (e => {
-      console.log("Peli:", e.trailer);
-      })
 
+      const datas = await fetchData("/movie-rooms");
+      this.sala = datas.body;
+      console.log("sala:", this.sala);
+      console.log("Peliculas:", this.movies); // Agregado
+      // let index = 0;
+      // this.movies.map (e => {
+      //   movies[index].code =  e.trailer.substr(32);
+      //   index++;
+      // //console.log("Peli:", e.trailer.substr(32));
+      // })
+
+      // this.movies.map (e => {
+      // console.log("Peli:", e.code);
+      // })
     } catch (error) {
       console.error(error);
     }
@@ -136,10 +139,11 @@ export default {
   gap: 8%;
   margin-top: 15px auto;
   width: 80%;
-  
 }
 
-h3, h2 {
+h3,
+h2,
+h4 {
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
   margin-bottom: 10%;
@@ -188,7 +192,6 @@ h3, h2 {
   background: #039be5;
   color: white;
 }
-
 
 @keyframes moveUpDown {
   0% {
