@@ -53,6 +53,7 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
+  transition: 0.3s ease-in-out;
 }
 
 .container-info {

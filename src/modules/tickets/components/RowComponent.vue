@@ -58,10 +58,6 @@ export default {
       preferential: prefeSeats || [],
     };
   },
-
-  creaate() {
-    console.log(generalSeats);
-  },
 };
 </script>
 
@@ -76,12 +72,22 @@ export default {
 
 .main {
   position: relative;
-  background-color: #616161;
+  background-color: rgba(43, 43, 43, 0.8);
   padding: 2rem;
   height: 100%;
   max-height: max-content;
   box-shadow: 0.25rem 0.25rem 0.25rem #2b2b2b;
   border-radius: 0 1rem 1rem 0;
+  animation: fadeIn 1s ease-in 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .main::after {
