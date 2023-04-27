@@ -91,8 +91,8 @@ n-nav {
 }
 
 .logo {
-  width: 9vh;
-  height: 7vh;
+  width: 4.2%;
+  height: 85%;
   background: transparent;
   margin-right: auto;
   animation: moveUpDown 4s infinite;

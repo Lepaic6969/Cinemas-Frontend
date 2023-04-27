@@ -18,10 +18,12 @@
   <router-view class="p-5"></router-view>
 
   <Footer :selectedCinema="selectedCinema"/>
+   <Cards :selectedCinema="selectedCinema"/>
 </template>
 
 <script>
 import Nav from "../components/navBar.vue";
+import Cards from "../views/cardsView.vue";
 import Footer from "../components/Footer.vue";
 import fetchData from "../../../helpers/fetchData.js";
 
@@ -30,6 +32,7 @@ export default {
   components: {
     Nav,
     Footer,
+    Cards
   },
   data() {
     return {
@@ -50,6 +53,7 @@ export default {
     watch: {
     selectedCinema: function () {
       this.closeModal();
+      console.log("as", this.selectedCinema)
     },
   },
   methods: {

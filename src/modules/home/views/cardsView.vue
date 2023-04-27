@@ -1,26 +1,27 @@
 <template>
-  <div v-if="movies.length > 0">
+  <div v-if="sala.length > 0">
     <n-row>
-      <n-col v-for="movie in movies" :key="movie.id" :span="5">
+      <n-col v-for="movie in sala" :key="movie.id" :span="5">
         <n-card class="text-center">
           <div class="card-image">
             <img
               :src="
-                movie.image
-                  ? movie.image.secure_url
+                movie.movie.image
+                  ? movie.movie.image.secure_url
                   : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
               "
               class="card-img-top"
-              :alt="movie.name"
+              :alt="movie.movie.name"
             />
             <div class="card-text">
               <n-button type="success" @click="toggleModal(movie)"
                 >Trailer</n-button
               >
-              <n-button type="info" @click="buy(movie)">Ver más</n-button>
+              <n-button type="info" @click="buy(movie.movie)">Ver más</n-button>
             </div>
           </div>
-          <h4 class="mt-4">{{ movie.name }}</h4>
+          <h4 class="mt-4 mb-0" v-text="movie.movie.name"></h4>
+          <p>Disponible hasta: {{ new Date(movie.end_date).toLocaleDateString('es-ES',{ month: 'long', day: 'numeric' }) }}</p>
         </n-card>
       </n-col>
     </n-row>
@@ -32,19 +33,21 @@
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
   <n-modal v-model:show="show" class="custom-card" preset="card" :style="modal">
-    <h2 class="text-center" v-text="film.name"></h2>
+    <h2 class="text-center" v-text="film.movie.name"></h2>
     <iframe
       allow="autoplay"
       width="100%"
       height="360"
-      :src="film.trailer"
+      :src="film.movie.trailer"
       autoplay
     ></iframe>
 
     <template #footer>
-      <n-button type="info" @click="buy(movie)">Ver más</n-button>
+      <n-button class="btnBuy" type="warning" @click="buy(film.movie)">Ver más</n-button>
     </template>
   </n-modal>
+
+  <h2 v-if="selectedCinema">{{selectedCinema.name}}</h2>
 </template>
 
 <script>
@@ -52,7 +55,11 @@ import Modal from "../components/Modal.vue";
 import fetchData from "../../../helpers/fetchData.js";
 
 export default {
-  name: "MovieCards",
+  selectedCinema: {
+      type: Object,
+      required: true,
+    },
+  name: "Cards",
   components: {
     Modal,
   },
@@ -65,6 +72,8 @@ export default {
       show: false,
       modal: {
         width: "500px",
+        background: "#039be5",
+        color:"white"
       },
     };
   },
@@ -85,13 +94,12 @@ export default {
   },
   async mounted() {
     try {
-      const data = await fetchData("/movies");
-      this.movies = data.body;
 
       const datas = await fetchData("/movie-rooms");
       this.sala = datas.body;
-      console.log("sala:", this.sala);
-      console.log("Peliculas:", this.movies); // Agregado
+      console.log(this.selectedCinema)
+      // console.log("sala:", this.sala);
+      // console.log("Peliculas:", this.movies); // Agregado
       // let index = 0;
       // this.movies.map (e => {
       //   movies[index].code =  e.trailer.substr(32);
@@ -163,6 +171,11 @@ h4 {
   height: 4vh;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
+}
+.btnBuy{
+  justify-content: center;
+  height: 6vh;
+  margin-left: 160px;
 }
 .card-image img {
   border-radius: 8px;

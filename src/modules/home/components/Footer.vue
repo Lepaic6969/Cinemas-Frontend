@@ -118,7 +118,7 @@ export default {
 }
 
 .logo {
-  margin-left: 30%;
+  margin-left: 15%;
   width: 20%;
   height: 40%;
   background: transparent;

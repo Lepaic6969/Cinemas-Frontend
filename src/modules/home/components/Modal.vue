@@ -309,7 +309,7 @@ export default {
 .n-avatar {
   width: 80px;
   height: 80px;
-  margin-left: 40%;
+  margin-left: 38%;
   background: transparent;
 }
 
