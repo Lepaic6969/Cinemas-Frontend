@@ -78,6 +78,16 @@ export default {
   max-height: max-content;
   box-shadow: 0.25rem 0.25rem 0.25rem #2b2b2b;
   border-radius: 0 1rem 1rem 0;
+  animation: fadeIn 1s ease-in 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .main::after {

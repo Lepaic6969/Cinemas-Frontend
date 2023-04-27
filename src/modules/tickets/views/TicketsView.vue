@@ -19,7 +19,7 @@
 import TicketsComponent from "../components/TicketsComponent.vue";
 import RowComponent from "../components/RowComponent.vue";
 import SummaryComponent from "../components/SummaryComponent.vue";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import fetchData from "../../../helpers/fetchData.js";
 import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
@@ -27,6 +27,8 @@ import { storeToRefs } from "pinia";
 const ticketStore = useTicketStore();
 const { setData } = ticketStore;
 const { data, seats } = storeToRefs(ticketStore);
+
+const changeSize = ref("col container");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
@@ -36,8 +38,12 @@ onMounted(async () => {
   console.log(data.value);
 });
 
-const changeSize = computed(() => {
-  return seats.length <= 0 ? "col-md-3" : "col container";
+watch(seats, (newSeats) => {
+  if (newSeats.length > 0) {
+    changeSize.value = "col-md-3 box-summary-rounded";
+  } else {
+    changeSize.value = "col-md-12";
+  }
 });
 </script>
 
@@ -45,8 +51,8 @@ const changeSize = computed(() => {
 .box-summary {
   box-shadow: 0.15rem 0.15rem 0.8rem #2b2b2b;
   padding: 1rem;
-  border-radius: 1rem 0 0 1rem;
-  transition: all 0.3s linear;
+  border-radius: 1rem 1rem 1rem 1rem;
+  transition: 0.3s ease-in-out;
 }
 
 .box-summary-rounded {
