@@ -6,12 +6,7 @@
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box"
         >
-          <SeatComponet
-            v-for="seatG in general"
-            :key="seatG"
-            :seatNumber="seatG"
-            :reserved="true"
-          />
+          <SeatComponet v-for="seatG in general" :key="seatG" :seatNumber="seatG" />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
@@ -30,6 +25,12 @@
 
 <script>
 import { defineAsyncComponent } from "vue";
+import { useTicketStore } from "../../../stores/tickets";
+import { storeToRefs } from "pinia";
+
+const ticketStore = useTicketStore();
+const { data } = storeToRefs(ticketStore);
+
 export default {
   components: {
     SeatComponet: defineAsyncComponent(() => import("./SeatComponet.vue")),
@@ -37,57 +38,14 @@ export default {
 
   data() {
     return {
-      general: [
-        "G1",
-        "G2",
-        "G3",
-        "G4",
-        "G5",
-        "G6",
-        "G7",
-        "G8",
-        "G9",
-        "G10",
-        "G11",
-        "G12",
-        "G13",
-        "G14",
-        "G15",
-        "G16",
-        "G17",
-        "G18",
-        "G19",
-        "G20",
-        "G21",
-        "G22",
-        "G23",
-        "G24",
-        "G25",
-        "G26",
-        "G27",
-        "G28",
-        "G29",
-        "G30",
-      ],
-      vip: ["V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10"],
-      preferential: [
-        "P1",
-        "P2",
-        "P3",
-        "P4",
-        "P5",
-        "P6",
-        "P7",
-        "P8",
-        "P9",
-        "P10",
-        "P11",
-        "P12",
-        "P13",
-        "P14",
-        "P15",
-      ],
+      general: [],
+      vip: [],
+      preferential: [],
     };
+  },
+
+  created() {
+    console.log({ ...data });
   },
 };
 </script>
@@ -97,26 +55,18 @@ export default {
   white-space: nowrap;
 }
 
-/* .grid-fluid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  text-align: center;
-} */
-
 .screen {
   filter: drop-shadow(0rem 1rem 1rem #e3e4e5) contrast(120%) brightness(110%);
 }
 
 .main {
   position: relative;
-  /* background-color: #747474; */
   background-color: #616161;
   padding: 2rem;
   height: 100%;
   max-height: max-content;
   box-shadow: 0.25rem 0.25rem 0.25rem #2b2b2b;
   border-radius: 0 1rem 1rem 0;
-  /* margin: 0 !important; */
 }
 
 .main::after {
