@@ -27,7 +27,7 @@
 
   const router = useRouter();
   const finish=()=>{
-    router.push('/')
+    router.push('/user/billing');
     nextPinia();
     
   }

@@ -43,6 +43,12 @@ const router = createRouter({
           name: "tickets",
           component: () => import("../modules/tickets/views/TicketsView.vue"),
         },
+          //Tura de Facturación.
+        {
+          path: "/user/billing",
+          name: "billing",
+          component: () => import("../modules/billing/views/BillingView.vue"),
+        },
       ],
     },
 
@@ -79,6 +85,8 @@ const router = createRouter({
         },
       ],
     },
+
+  
   ],
 });
 
