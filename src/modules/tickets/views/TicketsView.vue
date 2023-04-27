@@ -3,11 +3,7 @@
     <div class="box-summary" :class="changeSize">
       <TicketsComponent />
       <span></span>
-      <h3 class="text-center my-5" v-if="seats.length <= 0">
-        Aqui veras el
-        <p class="text-primary">RESUMEN DE TU COMPRA</p>
-      </h3>
-      <SummaryComponent v-else />
+      <SummaryComponent />
     </div>
     <div class="col-md-9 container-row" v-if="seats.length > 0">
       <RowComponent />
@@ -19,7 +15,7 @@
 import TicketsComponent from "../components/TicketsComponent.vue";
 import RowComponent from "../components/RowComponent.vue";
 import SummaryComponent from "../components/SummaryComponent.vue";
-import { computed, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import fetchData from "../../../helpers/fetchData.js";
 import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
@@ -42,7 +38,7 @@ watch(seats, (newSeats) => {
   if (newSeats.length > 0) {
     changeSize.value = "col-md-3 box-summary-rounded";
   } else {
-    changeSize.value = "col-md-12";
+    changeSize.value = "col";
   }
 });
 </script>
