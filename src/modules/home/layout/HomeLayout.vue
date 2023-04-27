@@ -1,8 +1,6 @@
 <template>
  <Nav :selectedCinema="selectedCinema"/>
-  
-
-    <div class="modal" v-show="showModal">
+      <div class="modal" v-show="showModal">
       <div class="modal-content">
         <h1>Cinemas</h1>
         <select class="form-select" v-model="selectedCinema">

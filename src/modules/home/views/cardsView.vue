@@ -1,8 +1,12 @@
 <template>
-  <div v-if="sala.length > 0" >
-    <n-row >
-      <n-col v-for="movie in sala" :key="movie.id" :span="5" >
-        <n-card class="text-center" v-if="new Date(movie.start_date) < oneWeekFromNow">
+  <Slices />
+  <div v-if="sala.length > 0">
+    <n-row>
+      <n-col v-for="movie in sala" :key="movie.id" :span="5">
+        <n-card
+          class="text-center"
+          v-if="new Date(movie.start_date) < oneWeekFromNow"
+        >
           <div class="card-image">
             <img
               :src="
@@ -21,38 +25,20 @@
             </div>
           </div>
           <h4 class="mt-4 mb-0" v-text="movie.movie.name"></h4>
-          <p>Disponible hasta: {{ new Date(movie.end_date).toLocaleDateString('es-ES',{ month: 'long', day: 'numeric' }) }}</p>
+          <p>
+            Disponible hasta:
+            {{
+              new Date(movie.end_date).toLocaleDateString("es-ES", {
+                month: "long",
+                day: "numeric",
+              })
+            }}
+          </p>
         </n-card>
       </n-col>
     </n-row>
-
-   <n-row >
-      <n-col v-for="movie in sala" :key="movie.id" :span="5" >
-        <n-card class="text-center" v-if="new Date(movie.start_date) > oneWeekFromNow">
-          <div class="card-image">
-            <img
-              :src="
-                movie.movie.image
-                  ? movie.movie.image.secure_url
-                  : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-              "
-              class="card-img-top"
-              :alt="movie.movie.name"
-            />
-            <div class="card-text">
-              <n-button type="success" @click="toggleModal(movie)"
-                >Trailer</n-button
-              >
-              <n-button type="info" @click="buy(movie.movie)">Ver más</n-button>
-            </div>
-          </div>
-          <h4 class="mt-4 mb-0" v-text="movie.movie.name"></h4>
-          <p>Disponible hasta: {{ new Date(movie.end_date).toLocaleDateString('es-ES',{ month: 'long', day: 'numeric' }) }}</p>
-        </n-card>
-      </n-col>
-    </n-row>
-    
   </div>
+
   <div v-else>
     <h3 class="text-center">No hay peliculas para mostrar</h3>
   </div>
@@ -70,35 +56,38 @@
     ></iframe>
 
     <template #footer>
-      <n-button class="btnBuy" type="warning" @click="buy(film.movie)">Ver más</n-button>
+      <n-button class="btnBuy" type="warning" @click="buy(film.movie)"
+        >Ver más</n-button
+      >
     </template>
   </n-modal>
-
 </template>
 
 <script>
 import Modal from "../components/Modal.vue";
 import fetchData from "../../../helpers/fetchData.js";
+import Slices from "../components/sliceView.vue";
 
 export default {
   name: "Cards",
   components: {
     Modal,
+    Slices,
   },
   data() {
     return {
       movies: [],
       Rooms: [],
-      sala:[],
+      sala: [],
       film: {},
       showLoginModal: false,
       show: false,
       modal: {
         width: "500px",
         background: "#039be5",
-        color:"white"
+        color: "white",
       },
-      oneWeekFromNow: new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000))
+      oneWeekFromNow: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
     };
   },
   methods: {
@@ -118,37 +107,34 @@ export default {
   },
   async mounted() {
     try {
-      const cinePeli = JSON.parse(localStorage.getItem("Sala")) 
-      const cinemas = cinePeli.id     
-      console.log("cinemas",cinemas)
+      const cinePeli = JSON.parse(localStorage.getItem("Sala"));
+      const cinemas = cinePeli.id;
+      console.log("cinemas", cinemas);
 
-const moviesData = await fetchData("/movie-rooms");
-const currentDate = new Date();
-this.movies = moviesData.body.filter(movie => {
-  const endDate = new Date(movie.end_date);
-  console.log("final",endDate)
-  return endDate > currentDate && endDate < this.oneWeekFromNow;
-});
-
+      const moviesData = await fetchData("/movie-rooms");
+      const currentDate = new Date();
+      this.movies = moviesData.body.filter((movie) => {
+        const endDate = new Date(movie.end_date);
+        console.log("final", endDate);
+        return endDate > currentDate && endDate < this.oneWeekFromNow;
+      });
 
       // const data = await fetchData("/movies");
       // this.movies = data.body
       // console.log("Peliculas:", this.movies);
 
-   const date = await fetchData("/rooms");
-      this.rooms = date.data
-      console.log("Rooms:", this.rooms);
+       const date = await fetchData("/rooms");
+          this.rooms = date.data
+          console.log("Rooms:", this.rooms);
 
       const datas = await fetchData("/movie-rooms");
-      this.sala = datas.body;      
+      this.sala = datas.body;
       console.log("sala:", this.sala);
       console.log("salass:", this.sala[0].Room);
     } catch (error) {
       console.error(error);
     }
   },
-
-
 };
 </script>
 
@@ -207,7 +193,7 @@ h4 {
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
 }
-.btnBuy{
+.btnBuy {
   justify-content: center;
   height: 6vh;
   margin-left: 160px;
