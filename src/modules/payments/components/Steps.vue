@@ -9,14 +9,14 @@
           title="Forma de Pago:"
           description="Llene los datos para el pago electrónico."
         />
-        <n-step
+        <!-- <n-step
           title="Datos de envío:"
           description="Díganos a donde quiere que llevemos su pedido."
-        />
+        /> -->
         
         <n-step
-          title="Agradecimientos por la compra:"
-          description="Su pedido va en camino..."
+          title="Agradecimientos:"
+          description="Disfrute su Película."
         />
      
       </n-steps>

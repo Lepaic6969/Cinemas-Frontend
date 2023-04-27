@@ -2,10 +2,7 @@
   <div class="my-component">
     
    
-    <div class="w-25">
-        <!-- <img src="./assets/img/pepinillo.jpg" alt="pickle" class="w-50">
-        <img src="./assets/img/pepinillo2.jpg" alt="pickle" class="w-50"> -->
-    </div>
+
     <form @submit.prevent="makePayment">
       <div class="mb-3">
         <label for="payment-method" class="col-form-label fw-bold">Seleccione el de su preferencia:</label>
@@ -179,5 +176,12 @@
     padding-bottom: 0;
     border-radius: 10px;
   }
+  
+@media(max-width:768px){
+  
+  .my-component{
+    padding: 10px;
+  }
+}
 
 </style>
