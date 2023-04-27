@@ -23,6 +23,9 @@
 .containerQR{
     display: flex;
     justify-content: center;
-    padding: 48px 0;
+    padding: 30px 0;
+    padding-top: 0;
+    /* border:1px solid black; */
+    height: 220px;
   }
 </style>
