@@ -15,22 +15,21 @@
 import TicketsComponent from "../components/TicketsComponent.vue";
 import RowComponent from "../components/RowComponent.vue";
 import SummaryComponent from "../components/SummaryComponent.vue";
-import {onMounted} from 'vue';
-import fetchData from '../../../helpers/fetchData.js';
-import {useTicketStore} from '../../../stores/tickets';
+import { onMounted } from "vue";
+import fetchData from "../../../helpers/fetchData.js";
+import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
 
-const ticketStore=useTicketStore();
-const {setData}=ticketStore;
-const {data}=storeToRefs(ticketStore);
+const ticketStore = useTicketStore();
+const { setData } = ticketStore;
+const { data } = storeToRefs(ticketStore);
 
-onMounted(async()=>{
-  const {id}=JSON.parse(localStorage.getItem("MovieSelector"));
-  console.log("id que mando en la pet: "+id);
-  const {body}=await fetchData(`/movie-rooms/room/${id}`); //Estas son las salas disponibles para esa película
+onMounted(async () => {
+  const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
+  console.log("id que mando en la pet: " + id);
+  const { body } = await fetchData(`/movie-rooms/room/${id}`); //Estas son las salas disponibles para esa película
   setData(body);
   console.log(data.value);
-  
 });
 </script>
 
