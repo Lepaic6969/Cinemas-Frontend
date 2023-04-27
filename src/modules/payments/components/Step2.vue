@@ -17,7 +17,7 @@
         </select>
         
       </div>
-      <div class="mb-3" v-if="paymentMethod==='paypal'">
+      <div class="mb-5 mt-5" v-if="paymentMethod==='paypal'">
         <p>Para completar la transacción, te enviaremos a los servidores seguros de PayPal.
         </p>
         <p>
@@ -167,7 +167,7 @@
     onMounted(()=>{
       stepByNumber(2);
        total.value=Number(localStorage.getItem("total"));
-    })
+    });
 </script>
 
 <style scoped>
@@ -175,6 +175,8 @@
     font-family:Arial, Helvetica, sans-serif;
     background-color: white;
     padding: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
     border-radius: 10px;
   }
 

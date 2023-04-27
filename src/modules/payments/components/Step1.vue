@@ -4,17 +4,18 @@
     
     <div >
       <div class="d-flex">
-        <div class=" py-4 w-75">
+        <div class="w-75-responsive">
           <p ><span class="fw-bold">Película:</span>  Mario Bross</p>
           <p ><span class="fw-bold">Sala:</span>  10</p>
+          <p ><span class="fw-bold">Horario:</span> 5:00 pm</p>
           <p ><span class="fw-bold">Asientos: </span>A9, A8.</p>
           <p ><span class="fw-bold">Valor: </span>${{format(total)}}</p>
         </div>
-        <div >
+        <div class="d-none d-md-block"  >
           <img src="../assets/crispetas.gif" alt="grispetas">
         </div>
       </div>
-      <button class="btn btn-dark w-100 mt-3" @click="nextStep">Siguiente</button>
+      <button class="btn btn-dark w-100 mt-5" @click="nextStep">Siguiente</button>
        
     </div>
 </div>
@@ -59,7 +60,7 @@ const{prevPinia,nextPinia,stepByNumber}=useSteps;
     font-family:Arial, Helvetica, sans-serif;
     background-color: white;
     padding: 50px;
-    border-radius: 10px;
+    padding-top: 10px;
   }
   .form-check-input:checked {
   background-color: #000;
@@ -89,6 +90,21 @@ const{prevPinia,nextPinia,stepByNumber}=useSteps;
 }
 .form-switch .form-check-input:checked:focus+.form-check-label::before {
   box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+}
+
+.w-75-responsive{
+  width:75%
+}
+
+@media(max-width:768px){
+  .w-75-responsive{
+    width: 100%;
+  }
+  
+  .my-component{
+    padding: 10px;
+    padding-top: 10px;
+  }
 }
 
 
