@@ -14,28 +14,40 @@
   alt="Logo de mi sitio web"
   class="logo"
 />
-    <n-nav-item v-show="!loggedIn" @click="toggleRegisterModal"
+    <n-nav-item v-if="!user" @click="toggleRegisterModal"
       >Registrarse
       <n-icon>
         <PersonAddSharp />
       </n-icon>
     </n-nav-item>
+        <n-nav-item v-else @click="handleExit"
+      class="ml-4">{{user.email}}
+      <n-icon >
+        <Exit/>
+      </n-icon>
+    </n-nav-item>
 
-    <n-nav-item @click="toggleLoginModal"
+    <n-nav-item  v-if="!user" @click="toggleLoginModal"
       >Iniciar sesión
       <n-icon>
         <PersonCircle />
       </n-icon>
     </n-nav-item>
   </n-nav>
+
+  
   <Modal title="Registrarse" v-if="showRegisterModal"> </Modal>
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
+
+  <Modal title="Salir" v-if="showExit"> </Modal>
+
 </template>
 
 <script>
 import Modal from "./Modal.vue";
-import { PersonAddSharp, PersonCircle } from "@vicons/ionicons5";
+import { PersonAddSharp, PersonCircle,Exit } from "@vicons/ionicons5";
+import Swal from "sweetalert2";
 
 export default {
   name: "navbar",
@@ -49,13 +61,14 @@ export default {
     PersonAddSharp,
     PersonCircle,
     Modal,
+    Exit
   },
   data() {
     return {
       showRegisterModal: false,
       showLoginModal: false,
-      loggedIn: false,
-    };
+      user: JSON.parse(localStorage.getItem("user"))
+  };
   },
   methods: {
     toggleRegisterModal() {
@@ -66,11 +79,25 @@ export default {
     },
     handleLogoClick() {
       window.location.href = "../";
-      this.loggedIn = !this.loggedIn
     },
-
+     handleExit() {
+   Swal.fire({
+        title: "¿Desea cerrar sesión?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("user");
+          this.user = null;
+          window.location.reload();
+        }
+      });
+    },
   },
-
 };
 </script>
 

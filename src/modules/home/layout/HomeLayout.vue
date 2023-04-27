@@ -18,12 +18,10 @@
   <router-view class="p-5"></router-view>
 
   <Footer :selectedCinema="selectedCinema"/>
-   <Cards :selectedCinema="selectedCinema"/>
 </template>
 
 <script>
 import Nav from "../components/navBar.vue";
-import Cards from "../views/cardsView.vue";
 import Footer from "../components/Footer.vue";
 import fetchData from "../../../helpers/fetchData.js";
 
@@ -32,7 +30,6 @@ export default {
   components: {
     Nav,
     Footer,
-    Cards
   },
   data() {
     return {
@@ -45,7 +42,7 @@ export default {
     try {
       const data = await fetchData("/cinemas");
       this.cinemas = data.body;
-      console.log("Cinemas:", this.cinemas); // Agregado
+       console.log("cinemas", this.cinemas)
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +50,7 @@ export default {
     watch: {
     selectedCinema: function () {
       this.closeModal();
-      console.log("as", this.selectedCinema)
+      localStorage.setItem("Sala", JSON.stringify(this.selectedCinema));
     },
   },
   methods: {

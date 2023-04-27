@@ -102,7 +102,7 @@ export default {
 
 .social-button {
   display: inline-block;
-  margin: 0 1rem;
+  margin: 0 2%;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 10px;

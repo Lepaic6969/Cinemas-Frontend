@@ -161,7 +161,6 @@ export default {
        
         const response = await fetchData("/users","post",data);
         const result = response.data;
-        console.log(response);
         Swal.fire({
           icon: "success",
           title: "Registro exitoso",
@@ -210,13 +209,10 @@ export default {
         localStorage.setItem("user", JSON.stringify(User));
         if(this.email === "admin@email.com"){
         this.$router.push("/admin");
-          console.log("Admin")
         } else if (this.email === "seller@email.com") {
           this.$router.push("./");
-         console.log("seller")
         } else {
           this.$router.push("./");
-          console.log("clien")
         }
    
         if(!response){
@@ -234,7 +230,7 @@ export default {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        
+         window.location.reload();
         this.show = false;
       } catch (error) {
         // If there was an error, show a message and give the option to register
