@@ -58,10 +58,6 @@ export default {
       preferential: prefeSeats || [],
     };
   },
-
-  creaate() {
-    console.log(generalSeats);
-  },
 };
 </script>
 

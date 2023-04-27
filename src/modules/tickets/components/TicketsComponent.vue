@@ -50,7 +50,7 @@ onMounted(() => {
   /* background-image: url(../assets/img.png); */
   border-radius: 1rem 1rem 0 0;
   background-position: center center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   position: relative;
 }

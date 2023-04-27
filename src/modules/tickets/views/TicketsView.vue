@@ -1,11 +1,15 @@
 <template>
   <div class="d-flex flex-md-row flex-column gap-2">
-    <div class="col-md-3 box-summary">
+    <div class="box-summary" :class="changeSize">
       <TicketsComponent />
       <span></span>
-      <SummaryComponent />
+      <h3 class="text-center my-5" v-if="seats.length <= 0">
+        Aqui veras el
+        <p class="text-primary">RESUMEN DE TU COMPRA</p>
+      </h3>
+      <SummaryComponent v-else />
     </div>
-    <div class="col-md-9 container-row">
+    <div class="col-md-9 container-row" v-if="seats.length > 0">
       <RowComponent />
     </div>
   </div>
@@ -15,14 +19,14 @@
 import TicketsComponent from "../components/TicketsComponent.vue";
 import RowComponent from "../components/RowComponent.vue";
 import SummaryComponent from "../components/SummaryComponent.vue";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import fetchData from "../../../helpers/fetchData.js";
 import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
 
 const ticketStore = useTicketStore();
 const { setData } = ticketStore;
-const { data } = storeToRefs(ticketStore);
+const { data, seats } = storeToRefs(ticketStore);
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
@@ -31,12 +35,21 @@ onMounted(async () => {
   setData(body);
   console.log(data.value);
 });
+
+const changeSize = computed(() => {
+  return seats.length <= 0 ? "col-md-3" : "col container";
+});
 </script>
 
 <style scoped>
 .box-summary {
   box-shadow: 0.15rem 0.15rem 0.8rem #2b2b2b;
   padding: 1rem;
+  border-radius: 1rem 0 0 1rem;
+  transition: all 0.3s linear;
+}
+
+.box-summary-rounded {
   border-radius: 1rem 0 0 1rem;
 }
 
