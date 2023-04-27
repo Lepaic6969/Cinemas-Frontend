@@ -72,7 +72,7 @@ export default {
 
 .main {
   position: relative;
-  background-color: #616161;
+  background-color: rgba(43, 43, 43, 0.8);
   padding: 2rem;
   height: 100%;
   max-height: max-content;

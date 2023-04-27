@@ -50,9 +50,10 @@ onMounted(() => {
   /* background-image: url(../assets/img.png); */
   border-radius: 1rem 1rem 0 0;
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   position: relative;
+  transition: 0.3s ease-in-out;
 }
 
 .container-info {
