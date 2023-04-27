@@ -6,17 +6,32 @@
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box"
         >
-          <SeatComponet v-for="seatG in general" :key="seatG" :seatNumber="seatG" />
+          <SeatComponet
+            v-for="seatG in general"
+            :key="seatG.id"
+            :seatNumber="seatG.seatNumber"
+            :reserved="seatG.status"
+          />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
         >
-          <SeatComponet v-for="seatV in vip" :key="seatV" :seatNumber="seatV" />
+          <SeatComponet
+            v-for="seatV in vip"
+            :key="seatV.id"
+            :seatNumber="seatV.seatNumber"
+            :reserved="seatV.status"
+          />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box prefe"
         >
-          <SeatComponet v-for="seatP in preferential" :key="seatP" :seatNumber="seatP" />
+          <SeatComponet
+            v-for="seatP in preferential"
+            :key="seatP.id"
+            :seatNumber="seatP.seatNumber"
+            :reserved="seatP.status"
+          />
         </div>
       </div>
     </div>
@@ -29,7 +44,7 @@ import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
 
 const ticketStore = useTicketStore();
-const { data } = storeToRefs(ticketStore);
+const { generalSeats, vipSeats, prefeSeats } = storeToRefs(ticketStore);
 
 export default {
   components: {
@@ -38,14 +53,14 @@ export default {
 
   data() {
     return {
-      general: [],
-      vip: [],
-      preferential: [],
+      general: generalSeats || [],
+      vip: vipSeats || [],
+      preferential: prefeSeats || [],
     };
   },
 
-  created() {
-    console.log({ ...data });
+  creaate() {
+    console.log(generalSeats);
   },
 };
 </script>

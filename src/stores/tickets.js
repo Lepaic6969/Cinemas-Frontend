@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import fetchData from "../helpers/fetchData";
 
 export const useTicketStore = defineStore("ticket", {
   state: () => ({
@@ -40,6 +41,13 @@ export const useTicketStore = defineStore("ticket", {
     },
 
     // actions-jasser
+
+    async getSeats(id) {
+      const { data } = await fetchData(`/tickets/movieRoom/${id}`);
+      this.seats = data;
+      console.log(this.seats);
+    },
+
     addTickets(ticket = {}) {
       this.ticketsToBuy.push({ ...ticket });
       this.total += ticket.price;
@@ -49,6 +57,27 @@ export const useTicketStore = defineStore("ticket", {
       const index = this.ticketsToBuy.findIndex((ticket) => ticket.id === id);
       this.total -= this.ticketsToBuy[index].price;
       this.ticketsToBuy.splice(index, 1);
+    },
+  },
+
+  getters: {
+    generalSeats() {
+      if (this.seats.length > 0) {
+        const generalSeats = this.seats.filter((seat) => seat.seatNumber.includes("G"));
+        return generalSeats;
+      }
+    },
+    vipSeats() {
+      if (this.seats.length > 0) {
+        const vipSeats = this.seats.filter((seat) => seat.seatNumber.includes("V"));
+        return vipSeats;
+      }
+    },
+    prefeSeats() {
+      if (this.seats.length > 0) {
+        const prefeSeats = this.seats.filter((seat) => seat.seatNumber.includes("P"));
+        return prefeSeats;
+      }
     },
   },
 });
