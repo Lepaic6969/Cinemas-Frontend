@@ -80,27 +80,21 @@ export const useTicketStore = defineStore("ticket", {
     generalSeats() {
       if (this.seats.length > 0) {
         const generalSeats = this.seats.filter((seat) => seat.seatNumber.includes("G"));
-
         const orderSeatsGeneral = orderSeats(generalSeats);
-
         return orderSeatsGeneral;
       }
     },
     vipSeats() {
       if (this.seats.length > 0) {
         const vipSeats = this.seats.filter((seat) => seat.seatNumber.includes("V"));
-
         const orderSeatsVip = orderSeats(vipSeats);
-
         return orderSeatsVip;
       }
     },
     prefeSeats() {
       if (this.seats.length > 0) {
         const prefeSeats = this.seats.filter((seat) => seat.seatNumber.includes("P"));
-
         const orderSeatsPrefe = orderSeats(prefeSeats);
-
         return orderSeatsPrefe;
       }
     },
