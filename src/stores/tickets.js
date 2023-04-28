@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import fetchData from "../helpers/fetchData";
+import orderSeats from "../helpers/orderArraySeats";
 
 export const useTicketStore = defineStore("ticket", {
   state: () => ({
@@ -8,16 +9,16 @@ export const useTicketStore = defineStore("ticket", {
     schedules: [],
     roomSelected: null, //Este va a contener tanto la sala como el horario, se hace un doble filter y listo.
 
-    // states-jasser 
+    // states-jasser
     //Contiene un array de ids que son los que uso para la petición.
- 
+
     ticketsBuy: {
       tickets: [],
       data: {
         status: true,
       },
     },
-       //Tiquetes a comprar, se usan el la pre-factura
+    //Tiquetes a comprar, se usan el la pre-factura
     ticketsToBuy: [],
     seats: [],
     total: 0,
@@ -79,19 +80,28 @@ export const useTicketStore = defineStore("ticket", {
     generalSeats() {
       if (this.seats.length > 0) {
         const generalSeats = this.seats.filter((seat) => seat.seatNumber.includes("G"));
-        return generalSeats;
+
+        const orderSeatsGeneral = orderSeats(generalSeats);
+
+        return orderSeatsGeneral;
       }
     },
     vipSeats() {
       if (this.seats.length > 0) {
         const vipSeats = this.seats.filter((seat) => seat.seatNumber.includes("V"));
-        return vipSeats;
+
+        const orderSeatsVip = orderSeats(vipSeats);
+
+        return orderSeatsVip;
       }
     },
     prefeSeats() {
       if (this.seats.length > 0) {
         const prefeSeats = this.seats.filter((seat) => seat.seatNumber.includes("P"));
-        return prefeSeats;
+
+        const orderSeatsPrefe = orderSeats(prefeSeats);
+
+        return orderSeatsPrefe;
       }
     },
   },
