@@ -34,7 +34,7 @@
         box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
     }
     .template-styles{
-        background-color: #2b2b2b;
+        background-color: white;
         width: 100%;
         min-height: 130vh;
         height: auto;
