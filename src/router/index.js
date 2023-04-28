@@ -33,19 +33,21 @@ const router = createRouter({
             {
               path: "step3",
               name: "step-3",
-              component: () => import("@/modules/payments/components/Step3.vue"),
-            },
-            {
-              path: "step4",
-              name: "step-4",
               component: () => import("@/modules/payments/components/Step4.vue"),
             },
+           
           ],
         },
         {
           path: "/tickets",
           name: "tickets",
           component: () => import("../modules/tickets/views/TicketsView.vue"),
+        },
+          //Tura de Facturación.
+        {
+          path: "/user/billing",
+          name: "billing",
+          component: () => import("../modules/billing/views/BillingView.vue"),
         },
       ],
     },
@@ -83,6 +85,8 @@ const router = createRouter({
         },
       ],
     },
+
+  
   ],
 });
 

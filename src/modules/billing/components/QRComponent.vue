@@ -26,6 +26,6 @@
     padding: 30px 0;
     padding-top: 0;
     /* border:1px solid black; */
-    height: 220px;
+    height: 115px;
   }
 </style>

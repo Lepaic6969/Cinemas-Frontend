@@ -53,6 +53,7 @@ import { storeToRefs } from "pinia";
 import SelectComponent from "./SelectComponent.vue";
 import SelectSchedule from "./SelectSchedule.vue";
 
+
 const posterStore = usePosterStore();
 const { showModal } = storeToRefs(posterStore);
 const { handleClose } = posterStore;
