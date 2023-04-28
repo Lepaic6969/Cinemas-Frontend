@@ -5,7 +5,12 @@
       <span></span>
       <SummaryComponent />
     </div>
-    <div class="col-md-9 container-row" v-if="seats.length > 0">
+    <div class="col d-flex justify-content-center align-items-center" v-if="seats.length <= 0">
+      <h1 class="text-center fw-bold">
+        Seleccione <span class="text-primary">una sala y hora</span>
+      </h1>
+    </div>
+    <div class="col-md-9 container-row" v-else>
       <RowComponent />
     </div>
   </div>
@@ -24,7 +29,7 @@ const ticketStore = useTicketStore();
 const { setData } = ticketStore;
 const { data, seats } = storeToRefs(ticketStore);
 
-const changeSize = ref("col container");
+// const changeSize = ref("col-md-5");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
@@ -34,13 +39,13 @@ onMounted(async () => {
   console.log(data.value);
 });
 
-watch(seats, (newSeats) => {
-  if (newSeats.length > 0) {
-    changeSize.value = "col-md-3 box-summary-rounded";
-  } else {
-    changeSize.value = "col";
-  }
-});
+// watch(seats, (newSeats) => {
+//   if (newSeats.length > 0) {
+//     changeSize.value = "col-md-3 box-summary-rounded";
+//   } else {
+//     changeSize.value = "col";
+//   }
+// });
 </script>
 
 <style scoped>
@@ -55,7 +60,7 @@ watch(seats, (newSeats) => {
   border-radius: 1rem 0 0 1rem;
 }
 
-span {
+.box-summary > span {
   background: url("../assets/pattern.png") repeat-x;
   display: block;
   width: 100%;

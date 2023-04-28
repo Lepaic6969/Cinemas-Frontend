@@ -74,6 +74,19 @@ export default {
   position: relative;
   filter: drop-shadow(2px 1px 10px #312b2b);
   transition: 0.1s ease-in-out;
+  animation: fadeIn 1s ease-in 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .no-reserved:hover {
