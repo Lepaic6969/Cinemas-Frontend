@@ -85,9 +85,9 @@ export default {
 }
 
 .screen {
+  opacity: 1;
   filter: drop-shadow(0rem 1rem 1rem #e3e4e5) contrast(120%) brightness(110%);
   animation: onScreen 3s ease-in-out 1;
-  opacity: 0.9;
 }
 
 @keyframes onScreen {
