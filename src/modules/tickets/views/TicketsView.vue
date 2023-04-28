@@ -24,7 +24,7 @@ const ticketStore = useTicketStore();
 const { setData } = ticketStore;
 const { data, seats } = storeToRefs(ticketStore);
 
-const changeSize = ref("col container");
+const changeSize = ref("col-md-4 container");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
