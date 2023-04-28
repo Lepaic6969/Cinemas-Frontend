@@ -23,7 +23,7 @@ import Footer from "../components/Footer.vue";
 import fetchData from "../../../helpers/fetchData.js";
 
 export default {
-  name: "MovieCards",
+  name: "Home",
   components: {
     Nav,
     Footer,
@@ -49,21 +49,18 @@ export default {
     this.showModal = showModal ? JSON.parse(showModal) : true;
 
     if (this.user === null) {
-      this.showModal = true
+      localStorage.removeItem("showModal");
     }
   },
   watch: {
     selectedCinema: function () {
       localStorage.setItem("Sala", JSON.stringify(this.selectedCinema));
       this.showModal = false;
-      this.saveModalState();
-    },
-  },
-  methods: {
-    saveModalState() {
       localStorage.setItem("showModal", JSON.stringify(this.showModal));
+      location.reload();
     },
   },
+  methods: {},
 };
 </script>
 

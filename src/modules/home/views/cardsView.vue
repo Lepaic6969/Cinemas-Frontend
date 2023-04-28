@@ -1,8 +1,8 @@
 <template>
   <Slices />
-  <div v-if="sala.length > 0">
+  <div v-if="movi.length > 0">
     <n-row>
-      <n-col v-for="movie in sala" :key="movie.id" :span="5">
+      <n-col v-for="movie in movi" :key="movie.id" :span="5">
         <n-card
           class="text-center"
           v-if="new Date(movie.start_date) < oneWeekFromNow"
@@ -76,6 +76,8 @@ export default {
   },
   data() {
     return {
+      movi: [],
+      cine: [],
       movies: [],
       Rooms: [],
       sala: [],
@@ -88,8 +90,7 @@ export default {
         color: "white",
       },
       oneWeekFromNow: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
-        //  cinePeli: JSON.parse(localStorage.getItem("Sala")),
-cinePeli: Object.values(JSON.parse(localStorage.getItem("Sala")))
+      cinePeli: JSON.parse(localStorage.getItem("Sala")),
     };
   },
   methods: {
@@ -109,34 +110,44 @@ cinePeli: Object.values(JSON.parse(localStorage.getItem("Sala")))
   },
   async mounted() {
     try {
+      const aux = this.cinePeli.id;
+
+      const mov = await fetchData("/movies");
+      this.movi = mov.body;
+
       const moviesData = await fetchData("/movie-rooms");
       const currentDate = new Date();
       this.movies = moviesData.body.filter((movie) => {
         const endDate = new Date(movie.end_date);
-        console.log("final", endDate);
+        // console.log("final", endDate);
         return endDate > currentDate && endDate < this.oneWeekFromNow;
       });
 
       const date = await fetchData("/rooms");
       this.rooms = date.data;
-      console.log("Rooms:", this.rooms);
+
 
       const datas = await fetchData("/movie-rooms");
       this.sala = datas.body;
-      console.log("sala:", this.sala);
-      console.log("salass:", this.sala[0].Room);
+      console.log("SALA:",this.sala)
+      this.movi = [];
+      this.sala.map((salaId) => {
+        if (salaId.Room.cinemaId === aux) {
+          this.movi.push(salaId);
+        localStorage.setItem("SalaId",this.movi)
+        }
+      });
     } catch (error) {
       console.error(error);
     }
 
-     console.log("ww",this.cinePeli);
-     const a = this.cinePeli.id
-this.movies = a.filter((room) => room.movie).flat();
-console.log("asas", this.movies);
-
-
+    const cinemaId = this.rooms.find((room) => room.id === room.id).cinema_id;
   },
-  
+
+  // for (let i = 0; i < this.rooms.length; i++) {
+  //   const roomId = this.rooms[i].id;
+  //   console.log(roomId);
+  // }
 };
 </script>
 
