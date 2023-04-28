@@ -21,9 +21,13 @@
             </tr>
           </thead>
           <tbody>
+            <tr v-for="{ price, id, seatNumber } in ticketsToBuy" :key="id">
+              <td>{{ seatNumber }}</td>
+              <td>{{ newValueFormat(price) }}</td>
+            </tr>
             <tr>
-              <td>G15</td>
-              <td>$12.000</td>
+              <td class="fw-bold">Total</td>
+              <td class="fw-bold">{{ newValueFormat(total) }}</td>
             </tr>
           </tbody>
         </n-table>
@@ -36,7 +40,32 @@
 </template>
 
 <script>
-export default {};
+import { useTicketStore } from "@/stores/tickets.js";
+import { storeToRefs } from "pinia";
+
+const ticketStore = useTicketStore();
+
+const { ticketsToBuy, total } = storeToRefs(ticketStore);
+
+export default {
+  data() {
+    return {
+      ticketsToBuy,
+      total: total || 0,
+    };
+  },
+
+  methods: {
+    newValueFormat(value) {
+      const formatter = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      });
+      return formatter.format(value);
+    },
+  },
+};
 </script>
 
 <style scoped>

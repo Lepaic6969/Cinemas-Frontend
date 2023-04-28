@@ -1,5 +1,7 @@
 <template>
-  <span class="seat" @click="toggleReservation" :class="isReservedColor">{{ seatNumber }}</span>
+  <span :id="id" class="seat" @click="toggleReservation" :class="isReservedColor">{{
+    seatNumber
+  }}</span>
 </template>
 
 <script>
@@ -12,21 +14,37 @@ export default {
     reserved: {
       type: Boolean,
       default: false,
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+    id: {
+      type: Number,
+      required: true,
     },
   },
 
   data() {
     return {
-      isReserved: false,
+      isReserved: this.reserved,
     };
   },
 
   methods: {
     toggleReservation() {
-      console.log(this.seatNumber, this.reserved);
-      // this.reserved = !this.reserved;
+      if ((this, this.isReserved === true)) return;
+
       this.isReserved = !this.isReserved;
-      this.$emit(this.reserved ? "reserve" : "unreserve", this.seatNumber);
+
+      this.$emit("setDataReservation", {
+        seatNumber: this.seatNumber,
+        status: this.isReserved,
+        price: this.price,
+        id: this.id,
+      });
     },
   },
 
