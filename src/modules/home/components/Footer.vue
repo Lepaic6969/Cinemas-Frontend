@@ -20,15 +20,15 @@
       <n-col span="8">
         <div class="social-container text-center" v-if="selectedCinema">
           {{ selectedCinema.name }}
-          <br>
+          <br />
           © 2023 {{ selectedCinema.name }}. Todos los derechos reservados.
-          <br>
-          Dirección: {{ selectedCinema.address }}. 
-          <br>
+          <br />
+          Dirección: {{ selectedCinema.address }}.
+          <br />
           Ciudad:
           {{ selectedCinema.city }}.
-          <br>
-           Teléfono: {{ selectedCinema.phone }}.
+          <br />
+          Teléfono: {{ selectedCinema.phone }}.
         </div>
       </n-col>
       <n-col span="8">
@@ -58,19 +58,21 @@ import { LogoInstagram, LogoFacebook, LogoTwitter } from "@vicons/ionicons5";
 
 export default {
   name: "footer",
-  props: {
-    selectedCinema: {
-      type: Object,
-      required: true,
-    },
-  },
+  // props: {
+  //   selectedCinema: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   components: {
     LogoInstagram,
     LogoFacebook,
     LogoTwitter,
   },
   data() {
-    return {};
+    return {
+      selectedCinema: JSON.parse(localStorage.getItem("Sala")),
+    };
   },
 };
 </script>
@@ -91,7 +93,6 @@ export default {
   align-items: center;
   height: 100%;
 }
-
 
 .social-container {
   display: flex;

@@ -50,6 +50,8 @@ export default {
       console.error(error);
     }
   },
+
+  created(){}
 };
 </script>
 <style scoped>

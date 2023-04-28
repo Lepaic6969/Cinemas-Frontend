@@ -51,12 +51,12 @@ import Swal from "sweetalert2";
 
 export default {
   name: "navbar",
-  props: {
-    selectedCinema: {
-      type: Object,
-      required: true,
-    },
-  },
+  // props: {
+  //   selectedCinema: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   components: {
     PersonAddSharp,
     PersonCircle,
@@ -67,7 +67,9 @@ export default {
     return {
       showRegisterModal: false,
       showLoginModal: false,
-      user: JSON.parse(localStorage.getItem("user"))
+      user: JSON.parse(localStorage.getItem("user")),
+      selectedCinema: JSON.parse(localStorage.getItem("Sala"))
+
   };
   },
   methods: {
@@ -93,10 +95,11 @@ export default {
         if (result.isConfirmed) {
           localStorage.removeItem("user");
           this.user = null;
+              window.location.reload();
+
           Swal.fire({
         title: "Gracias por visitarnos",
           })
-          this.$router.push("./");
         }
       });
     },
