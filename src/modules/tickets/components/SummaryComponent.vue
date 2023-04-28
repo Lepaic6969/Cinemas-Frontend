@@ -4,11 +4,16 @@
       <h3 class="text-md-start text-center">
         RESUMEN <span class="text-primary">DE TU COMPRA</span>
       </h3>
-      <ul>
-        <li>Película:</li>
-        <li>Función:</li>
-        <li>Fecha:</li>
-        <li>Sala:</li>
+      <ul v-if="room">
+        <li>
+          Película: <span class="text-primary">{{ room[0].movie.name }}</span>
+        </li>
+        <li>
+          Función: <span class="text-primary">{{ room[0].hour }}</span>
+        </li>
+        <li>
+          Sala: <span class="text-primary">{{ room[0].Room.name }}</span>
+        </li>
       </ul>
     </div>
     <div class="box-seats my-3">
@@ -48,6 +53,13 @@ const ticketStore = useTicketStore();
 const { ticketsToBuy, total } = storeToRefs(ticketStore);
 
 export default {
+  props: {
+    room: {
+      type: Object,
+      required: true,
+    },
+  },
+
   data() {
     return {
       ticketsToBuy,
