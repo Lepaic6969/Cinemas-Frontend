@@ -29,6 +29,7 @@
               <input
                 placeholder="Ingrese su teléfono"
                 v-model="phone"
+                type="number"
               />
             </n-space>
             <n-space>
@@ -161,7 +162,6 @@ export default {
        
         const response = await fetchData("/users","post",data);
         const result = response.data;
-        console.log(response);
         Swal.fire({
           icon: "success",
           title: "Registro exitoso",
@@ -183,76 +183,73 @@ export default {
       }
     },
 
-    async checkUser() {
-      if (
-        !this.email ||
-        !this.password 
-      ) {
-        Swal.fire({
-          title: "Campos incompletos",
-          text: "Por favor, ingrese todos los campos requeridos.",
-          icon: "warning",
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "OK",
-        });
-        return;
+async checkUser() {
+  if (
+    !this.email ||
+    !this.password 
+  ) {
+    Swal.fire({
+      title: "Campos incompletos",
+      text: "Por favor, ingrese todos los campos requeridos.",
+      icon: "warning",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+  try {
+    const response = await fetchData("/users/login", "post", {
+      email: this.email,
+      password: this.password,
+    });
+    const User = {
+      email: this.email,
+      password: this.password,
+    }
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(User));
+    setTimeout(() => {
+  if(this.email === "admin@email.com"){
+    this.$router.push("/admin");
+  } else {
+    window.location.reload();
+  }
+}, 1600); // Ejecutar después de 5 segundos
+
+    if(!response){
+      throw error
+    }
+    Swal.fire({
+      icon: "success",
+      title: "¡Bienvenido! " + this.email,
+      timer: 1500,
+      showConfirmButton: false,
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+    });
+    this.show = false;
+  } catch (error) {
+    // If there was an error, show a message and give the option to register
+    Swal.fire({
+      title: "No estas registrado",
+      text: "¿Deseas registrarse?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.showRegisterModal();
       }
-      try {
-        const response = await fetchData("/users/login", "post", {
-          email: this.email,
-          password: this.password,
-        });
-        const User = {
-          email: this.email,
-          password: this.password,
-        }
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(User));
-        if(this.email === "admin@email.com"){
-        this.$router.push("/admin");
-          console.log("Admin")
-        } else if (this.email === "seller@email.com") {
-          this.$router.push("./");
-         console.log("seller")
-        } else {
-          this.$router.push("./");
-          console.log("clien")
-        }
-   
-        if(!response){
-          throw error
-        }
-        Swal.fire({
-          icon: "success",
-          title: "¡Bienvenido/a!",
-          timer: 1500,
-          showConfirmButton: false,
-          showClass: {
-            popup: "animate__animated animate__fadeInDown",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-        });
-        
-        this.show = false;
-      } catch (error) {
-        // If there was an error, show a message and give the option to register
-        Swal.fire({
-          title: "No estas registrado",
-          text: "¿Deseas registrarse?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sí",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.showRegisterModal();
-          }
-        });
-      }
-    },
+    });
+  }
+},
+
 
     showRegisterModal() {
       this.isRegisterModal = true;
@@ -309,7 +306,7 @@ export default {
 .n-avatar {
   width: 80px;
   height: 80px;
-  margin-left: 40%;
+  margin-left: 38%;
   background: transparent;
 }
 
