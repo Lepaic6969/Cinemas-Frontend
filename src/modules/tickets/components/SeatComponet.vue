@@ -5,6 +5,13 @@
 </template>
 
 <script>
+import { useTicketStore } from "@/stores/tickets.js";
+import { storeToRefs } from "pinia";
+
+const ticketStore = useTicketStore();
+
+const { deleteTickets } = ticketStore;
+
 export default {
   props: {
     seatNumber: {
@@ -29,28 +36,32 @@ export default {
 
   data() {
     return {
-      isReserved: this.reserved,
+      isReserved: false,
     };
   },
 
   methods: {
     toggleReservation() {
-      if ((this, this.isReserved === true)) return;
+      if (this.reserved) return;
 
       this.isReserved = !this.isReserved;
 
-      this.$emit("setDataReservation", {
-        seatNumber: this.seatNumber,
-        status: this.isReserved,
-        price: this.price,
-        id: this.id,
-      });
+      if (this.isReserved) {
+        this.$emit("setDataReservation", {
+          seatNumber: this.seatNumber,
+          status: this.isReserved,
+          price: this.price,
+          id: this.id,
+        });
+      } else {
+        deleteTickets(this.id);
+      }
     },
   },
 
   computed: {
     isReservedColor() {
-      return this.isReserved ? "seat reserved" : "seat no-reserved";
+      return this.reserved || this.isReserved ? "seat reserved" : "seat no-reserved";
     },
   },
 };

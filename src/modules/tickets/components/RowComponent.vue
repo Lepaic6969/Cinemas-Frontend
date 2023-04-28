@@ -55,7 +55,7 @@ import { storeToRefs } from "pinia";
 const ticketStore = useTicketStore();
 
 const { addTickets } = ticketStore;
-const { generalSeats, vipSeats, prefeSeats, ticketsToBuy, total } = storeToRefs(ticketStore);
+const { generalSeats, vipSeats, prefeSeats } = storeToRefs(ticketStore);
 
 export default {
   components: {

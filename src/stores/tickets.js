@@ -9,6 +9,13 @@ export const useTicketStore = defineStore("ticket", {
     roomSelected: null, //Este va a contener tanto la sala como el horario, se hace un doble filter y listo.
 
     // states-jasser
+    ticketsBuy: {
+      tickets: [],
+      data: {
+        status: true,
+      },
+    },
+
     ticketsToBuy: [],
     seats: [],
     total: 0,
@@ -45,18 +52,23 @@ export const useTicketStore = defineStore("ticket", {
     async getSeats(id) {
       const { data } = await fetchData(`/tickets/movieRoom/${id}`);
       this.seats = data;
-      console.log(this.seats);
+      // console.log(this.seats);
     },
 
     addTickets(ticket = {}) {
+      const { id } = ticket;
       this.ticketsToBuy.push({ ...ticket });
+      this.ticketsBuy.tickets.push(id.toString());
       this.total += ticket.price;
     },
 
     deleteTickets(id) {
+      // console.log(id);
       const index = this.ticketsToBuy.findIndex((ticket) => ticket.id === id);
+      const ticketBuy = this.ticketsBuy.tickets.findIndex((ticket) => ticket.id === id);
       this.total -= this.ticketsToBuy[index].price;
       this.ticketsToBuy.splice(index, 1);
+      this.ticketsBuy.tickets.splice(index, 1);
     },
   },
 
