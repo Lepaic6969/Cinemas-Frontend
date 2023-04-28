@@ -8,14 +8,16 @@ export const useTicketStore = defineStore("ticket", {
     schedules: [],
     roomSelected: null, //Este va a contener tanto la sala como el horario, se hace un doble filter y listo.
 
-    // states-jasser
+    // states-jasser 
+    //Contiene un array de ids que son los que uso para la petición.
+ 
     ticketsBuy: {
       tickets: [],
       data: {
         status: true,
       },
     },
-
+       //Tiquetes a comprar, se usan el la pre-factura
     ticketsToBuy: [],
     seats: [],
     total: 0,

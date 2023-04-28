@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-    import {RouterView} from 'vue-router'
-    import Steps from '../components/Steps.vue'
+    import {RouterView} from 'vue-router';
+    import Steps from '../components/Steps.vue';
  
 </script>
 

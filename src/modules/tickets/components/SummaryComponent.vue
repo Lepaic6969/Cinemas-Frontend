@@ -39,7 +39,7 @@
       </n-space>
     </div>
     <div class="box-buy text-center my-3" v-if="total > 0">
-      <n-button color="#1b90fc" round><i class="fa-solid fa-wallet me-1"></i> Pagar </n-button>
+      <n-button color="#1b90fc" round @click="handlePay"><i class="fa-solid fa-wallet me-1"></i> Pagar </n-button>
     </div>
   </div>
 </template>
@@ -76,6 +76,16 @@ export default {
       });
       return formatter.format(value);
     },
+    handlePay(){
+        //Aquí viene lo de las dirrecciones si eres vendedor o cliente normal
+        const {email}=JSON.parse(localStorage.getItem("user"));
+        if(email==="seller@email.com"){
+          this.$router.push('/user/billing');
+          //TODO:Si es vendedor aquí de una vez debe hacer la petición, porque no se pasa por pasarela.
+        }else{
+          this.$router.push('/user/payment');
+        }
+    }
   },
 };
 </script>

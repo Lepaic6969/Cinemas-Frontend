@@ -8,20 +8,20 @@
                     
                     <label>Película:</label>
                     <div class="container-black">
-                        TITULO DE LA PELÍCULA
+                        {{ movie }}
                     </div>
                     
                     <label>Ubicación:</label>
                     <div class="container-black">
-                        NOMBRE DE LA SALA
+                        {{ room }}
                     </div>
                     <label>Asientos:</label>
                     <div class="container-black">
-                        G1 P2 V3
+                        {{ chairs }}
                     </div>
                     <br>
                     <label>Total:</label>
-                    <p>$40.000</p>
+                    <p>${{format( total )}}</p>
                 </div>
                 
                 <div class="col-12  container-QR">
@@ -29,7 +29,7 @@
                 </div>
                
             </div>
-            <button class="btn btn-outline-dark">Imprimir</button>
+            <button class="btn btn-outline-dark" @click="handlePrint">Imprimir</button>
          </div>
          
     </div>
@@ -39,11 +39,40 @@
 <script setup>
     import QRComponent from '../components/QRComponent.vue';
     import {ref,onMounted} from 'vue';
-    const date=ref(null);
+    import {storeToRefs} from 'pinia';
+    import {useTicketStore} from '../../../stores/tickets.js';
+    const ticketStore=useTicketStore();
+   //Variables reactivas...
+   const total=ref(0);
+   const movie=ref('');
+   const room=ref('');
+   const chairs=ref('');
 
+    const handlePrint=()=>{
+        alert("Estamos desarrollando la funcionalidad de la impresión de la factura.")
+    }
+    const format=(value)=>{
+    return value.toLocaleString('es-ES',{style:'currency',currency:'COP',maximumFractionDigits: 0})
+  }
     onMounted(()=>{
-        date.value=new Date().toLocaleDateString();
-    })
+
+        //Aquí lo de la factura para que sea dinámica...
+        const {ticketsToBuy,roomSelected}=storeToRefs(ticketStore);
+
+        movie.value=roomSelected.value[0].movie.name.toUpperCase();
+        room.value=roomSelected.value[0].Room.name.toUpperCase();
+
+        //Esto es para el string de sillas.
+        const chairsArr=ticketsToBuy.value;
+        chairsArr.forEach(el=>{
+          chairs.value+=el.seatNumber+' ';
+        })
+        //Esto es para el total de la compra
+        ticketsToBuy.value.forEach(el=>{
+          total.value+=el.price;
+        });
+        localStorage.setItem("total",total.value);
+    });
 </script>
 
 <style scoped>

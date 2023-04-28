@@ -65,7 +65,15 @@
   import { useRouter } from 'vue-router';
   import QRComponent from './QRComponent.vue';
   import {ref,onMounted} from 'vue';
-  import {useStepsStore} from '../store/steps.js'
+  import {useStepsStore} from '../store/steps.js';
+  import {storeToRefs} from 'pinia';
+  import {useTicketStore} from '../../../stores/tickets.js';
+  import fetchData from '../../../helpers/fetchData';
+  const ticketStore=useTicketStore();
+  const {ticketsBuy}=storeToRefs(ticketStore); // En el .value trae -> ['27','33'];
+      
+
+
   const useSteps=useStepsStore();
   const{prevPinia,nextPinia,stepByNumber}=useSteps;
   const router = useRouter();
@@ -127,9 +135,9 @@
     const makePaymentCard=()=>{
       const rightInformation=validateData()
       if(rightInformation){
-        
         nextPinia();
         router.push('/payment/step3');
+        makeRequest(ticketsBuy.value.tickets);
         //Hecha con éxito la transacción, se procede a borrar el formulario y resetear el formulario.
         cardName.value='' 
         cardNumber.value=''
@@ -145,6 +153,7 @@
       //Por ahora sin validaciones en Paypal, hace la compra directamente.
       nextPinia();
       router.push('/user/payment/step3');
+      makeRequest(ticketsBuy.value.tickets);
        //Hecha con éxito la transacción, se procede a borrar el formulario y resetear el formulario.
        cardName.value='' 
        cardNumber.value=''
@@ -157,13 +166,28 @@
     const makePayment=()=>{
       (paymentMethod.value==='card')?makePaymentCard():makePaymentPaypal()
     };
+    const makeRequest=async(tickets)=>{
+      console.log("NOTA: Aún no tenemos persistencia de datos, para las sillas");
+      // const dataRequest=  {
+      //   tickets:[Number(tickets[0]),Number(tickets[1])],
+      //   data: {
+      //       status: false
+      //   }
+      // }
+      // try{
+      //   console.log(dataRequest.tickets);
+      //   await fetchData("/tickets","put",dataRequest);
+      // }catch(err){
+      //   console.log(err);
+      // }
+    }
 
    
     
 
     onMounted(()=>{
       stepByNumber(2);
-       total.value=Number(localStorage.getItem("total"));
+      total.value=Number(localStorage.getItem("total"));
     });
 </script>
 
