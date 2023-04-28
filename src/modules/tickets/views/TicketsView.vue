@@ -33,7 +33,7 @@ const ticketStore = useTicketStore();
 const { setData } = ticketStore;
 const { data, seats, roomSelected } = storeToRefs(ticketStore);
 
-// const changeSize = ref("col-md-5");
+const changeSize = ref("box-summary");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
@@ -43,13 +43,13 @@ onMounted(async () => {
   console.log(data.value);
 });
 
-// watch(seats, (newSeats) => {
-//   if (newSeats.length > 0) {
-//     changeSize.value = "col-md-3 box-summary-rounded";
-//   } else {
-//     changeSize.value = "col";
-//   }
-// });
+watch(seats, (newSeats) => {
+  if (newSeats.length > 0) {
+    changeSize.value = "box-summary-rounded";
+  } else {
+    changeSize.value = "box-summary";
+  }
+});
 </script>
 
 <style scoped>
