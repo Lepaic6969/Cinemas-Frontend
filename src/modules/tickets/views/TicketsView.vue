@@ -3,7 +3,7 @@
     <div class="box-summary" :class="changeSize">
       <TicketsComponent />
       <span></span>
-      <SummaryComponent />
+      <SummaryComponent :room="roomSelected" />
     </div>
     <div class="col d-flex justify-content-center align-items-center" v-if="seats.length <= 0">
       <h1 class="text-center fw-bold">
@@ -27,7 +27,7 @@ import { storeToRefs } from "pinia";
 
 const ticketStore = useTicketStore();
 const { setData } = ticketStore;
-const { data, seats } = storeToRefs(ticketStore);
+const { data, seats, roomSelected } = storeToRefs(ticketStore);
 
 // const changeSize = ref("col-md-5");
 
