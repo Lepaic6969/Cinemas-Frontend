@@ -5,7 +5,11 @@
       <span></span>
       <SummaryComponent :room="roomSelected" />
     </div>
-    <div class="col d-flex justify-content-center align-items-center" v-if="seats.length <= 0">
+    <div
+      class="col d-flex flex-column justify-content-center align-items-center"
+      v-if="seats.length <= 0"
+    >
+      <h2>Entradas:</h2>
       <h1 class="text-center fw-bold">
         Seleccione <span class="text-primary">una sala y hora</span>
       </h1>
