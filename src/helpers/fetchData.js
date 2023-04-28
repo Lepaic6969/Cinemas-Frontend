@@ -27,10 +27,8 @@ const fetchData = async (url, method = "get", data = {}) => {
   };
   try {
     const { data } = await axios(options);
-    console.log("successful request");
     return data;
   } catch (error) {
-    console.log(error);
     Swal.fire("Error", `${error.response.data.message}`, "error");
   }
 };
