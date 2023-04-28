@@ -167,19 +167,23 @@
       (paymentMethod.value==='card')?makePaymentCard():makePaymentPaypal()
     };
     const makeRequest=async(tickets)=>{
-      console.log("NOTA: Aún no tenemos persistencia de datos, para las sillas");
-      // const dataRequest=  {
-      //   tickets:[Number(tickets[0]),Number(tickets[1])],
-      //   data: {
-      //       status: false
-      //   }
-      // }
-      // try{
-      //   console.log(dataRequest.tickets);
-      //   await fetchData("/tickets","put",dataRequest);
-      // }catch(err){
-      //   console.log(err);
-      // }
+      const chairs=[];
+        Object.keys(tickets).forEach(key=>{
+          const chair=Number(tickets[key]);
+          chairs.push(chair);
+        });
+
+      const dataRequest=  {
+        tickets:chairs,
+        data: {
+            status: true
+        }
+      }
+      try{
+        await fetchData("/tickets","put",dataRequest);
+      }catch(err){
+        console.log(err);
+      }
     }
 
    
