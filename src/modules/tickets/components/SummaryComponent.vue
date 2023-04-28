@@ -33,7 +33,7 @@
         </n-table>
       </n-space>
     </div>
-    <div class="box-buy text-center my-3">
+    <div class="box-buy text-center my-3" v-if="total > 0">
       <n-button color="#1b90fc" round><i class="fa-solid fa-wallet me-1"></i> Pagar </n-button>
     </div>
   </div>
