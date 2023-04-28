@@ -72,6 +72,7 @@ export const useTicketStore = defineStore("ticket", {
     },
   },
 
+  // getters jasser
   getters: {
     generalSeats() {
       if (this.seats.length > 0) {

@@ -11,7 +11,7 @@ import { storeToRefs } from "pinia";
 const ticketStore = useTicketStore();
 
 const { deleteTickets } = ticketStore;
-
+const { ticketsBuy } = storeToRefs(ticketStore);
 export default {
   props: {
     seatNumber: {
@@ -55,6 +55,7 @@ export default {
         });
       } else {
         deleteTickets(this.id);
+        console.log(ticketsBuy);
       }
     },
   },
