@@ -1,44 +1,95 @@
 <template>
-  <n-row>
-    <n-col v-for="movie in movies" :key="movie.id" :span="5">
-      <n-card class="text-center" :title="movie.name">
-        <div class="card-image">
-          <img
-            :src="
-              movie.image
-                ? movie.image.secure_url
-                : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-            "
-            class="card-img-top"
-            :alt="movie.name"
-          />
-          <div class="card-text">
-            <n-button type="success">Trailer</n-button>
-            <n-button type="info" @click="buy(movie)">Ver más</n-button>
+  <Slices />
+  <div v-if="sala.length > 0">
+    <n-row>
+      <n-col v-for="movie in sala" :key="movie.id" :span="5">
+        <n-card
+          class="text-center"
+          v-if="new Date(movie.start_date) < oneWeekFromNow"
+        >
+          <div class="card-image">
+            <img
+              :src="
+                movie.movie.image
+                  ? movie.movie.image.secure_url
+                  : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+              "
+              class="card-img-top"
+              :alt="movie.movie.name"
+            />
+            <div class="card-text">
+              <n-button type="success" @click="toggleModal(movie)"
+                >Trailer</n-button
+              >
+              <n-button type="info" @click="buy(movie.movie)">Ver más</n-button>
+            </div>
           </div>
-        </div>
-      </n-card>
-    </n-col>
-  </n-row>
+          <h4 class="mt-4 mb-0" v-text="movie.movie.name"></h4>
+          <p>
+            Disponible hasta:
+            {{
+              new Date(movie.end_date).toLocaleDateString("es-ES", {
+                month: "long",
+                day: "numeric",
+              })
+            }}
+          </p>
+        </n-card>
+      </n-col>
+    </n-row>
+  </div>
+
+  <div v-else>
+    <h3 class="text-center">No hay peliculas para mostrar</h3>
+  </div>
+
+  <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
+
+  <n-modal v-model:show="show" class="custom-card" preset="card" :style="modal">
+    <h2 class="text-center" v-text="film.movie.name"></h2>
+    <iframe
+      allow="autoplay"
+      width="100%"
+      height="360"
+      :src="film.movie.trailer"
+      autoplay
+    ></iframe>
+
+    <template #footer>
+      <n-button class="btnBuy" type="warning" @click="buy(film.movie)"
+        >Ver más</n-button
+      >
+    </template>
+  </n-modal>
 </template>
 
 <script>
-import Nav from "../components/navBar.vue";
-import Footer from "../components/Footer.vue";
 import Modal from "../components/Modal.vue";
 import fetchData from "../../../helpers/fetchData.js";
+import Slices from "../components/sliceView.vue";
 
 export default {
-  name: "MovieCards",
+  name: "Cards",
   components: {
-    Nav,
-    Footer,
     Modal,
+    Slices,
   },
   data() {
     return {
       movies: [],
+      Rooms: [],
+      sala: [],
+      film: {},
       showLoginModal: false,
+      show: false,
+      modal: {
+        width: "500px",
+        background: "#039be5",
+        color: "white",
+      },
+      oneWeekFromNow: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+        //  cinePeli: JSON.parse(localStorage.getItem("Sala")),
+cinePeli: Object.values(JSON.parse(localStorage.getItem("Sala")))
     };
   },
   methods: {
@@ -51,16 +102,41 @@ export default {
         this.showLoginModal = true;
       }
     },
+    toggleModal(movie) {
+      this.film = movie;
+      this.show = !this.show;
+    },
   },
   async mounted() {
     try {
-      const data = await fetchData("/movies");
-      this.movies = data.body;
-      console.log("Peliculas:", this.movies); // Agregado
+      const moviesData = await fetchData("/movie-rooms");
+      const currentDate = new Date();
+      this.movies = moviesData.body.filter((movie) => {
+        const endDate = new Date(movie.end_date);
+        console.log("final", endDate);
+        return endDate > currentDate && endDate < this.oneWeekFromNow;
+      });
+
+      const date = await fetchData("/rooms");
+      this.rooms = date.data;
+      console.log("Rooms:", this.rooms);
+
+      const datas = await fetchData("/movie-rooms");
+      this.sala = datas.body;
+      console.log("sala:", this.sala);
+      console.log("salass:", this.sala[0].Room);
     } catch (error) {
       console.error(error);
     }
+
+     console.log("ww",this.cinePeli);
+     const a = this.cinePeli.id
+this.movies = a.filter((room) => room.movie).flat();
+console.log("asas", this.movies);
+
+
   },
+  
 };
 </script>
 
@@ -71,6 +147,7 @@ export default {
   background: #949494;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
+  color: white;
 }
 
 .card-image {
@@ -95,6 +172,13 @@ export default {
   width: 80%;
 }
 
+h3,
+h2,
+h4 {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 800;
+  margin-bottom: 10%;
+}
 .n-card:hover .card-text {
   opacity: 1;
   font-family: "Poppins", sans-serif !important;
@@ -111,6 +195,11 @@ export default {
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
 }
+.btnBuy {
+  justify-content: center;
+  height: 6vh;
+  margin-left: 160px;
+}
 .card-image img {
   border-radius: 8px;
   width: 100%;
@@ -121,7 +210,25 @@ export default {
 
 .n-card {
   height: 100%;
+  border-radius: 8px;
 }
+
+.n-icon {
+  margin-top: 4px;
+}
+.n-avatar {
+  width: 80px;
+  height: 80px;
+  margin-left: 40%;
+  background: transparent;
+}
+
+.modal-content {
+  border: none;
+  background: #039be5;
+  color: white;
+}
+
 @keyframes moveUpDown {
   0% {
     transform: translateY(0);
