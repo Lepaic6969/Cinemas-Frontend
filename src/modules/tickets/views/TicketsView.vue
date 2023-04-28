@@ -3,9 +3,18 @@
     <div class="box-summary" :class="changeSize">
       <TicketsComponent />
       <span></span>
-      <SummaryComponent />
+      <SummaryComponent :room="roomSelected" />
     </div>
-    <div class="col-md-9 container-row" v-if="seats.length > 0">
+    <div
+      class="col d-flex flex-column justify-content-center align-items-center"
+      v-if="seats.length <= 0"
+    >
+      <h2>Entradas:</h2>
+      <h1 class="text-center fw-bold">
+        Seleccione <span class="text-primary">una sala y hora</span>
+      </h1>
+    </div>
+    <div class="col-md-9 container-row" v-else>
       <RowComponent />
     </div>
   </div>
@@ -22,9 +31,9 @@ import { storeToRefs } from "pinia";
 
 const ticketStore = useTicketStore();
 const { setData } = ticketStore;
-const { data, seats } = storeToRefs(ticketStore);
+const { data, seats, roomSelected } = storeToRefs(ticketStore);
 
-const changeSize = ref("col container");
+const changeSize = ref("box-summary");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
@@ -36,9 +45,9 @@ onMounted(async () => {
 
 watch(seats, (newSeats) => {
   if (newSeats.length > 0) {
-    changeSize.value = "col-md-3 box-summary-rounded";
+    changeSize.value = "box-summary-rounded";
   } else {
-    changeSize.value = "col";
+    changeSize.value = "box-summary";
   }
 });
 </script>
@@ -55,7 +64,7 @@ watch(seats, (newSeats) => {
   border-radius: 1rem 0 0 1rem;
 }
 
-span {
+.box-summary > span {
   background: url("../assets/pattern.png") repeat-x;
   display: block;
   width: 100%;

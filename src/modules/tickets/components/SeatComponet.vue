@@ -1,8 +1,17 @@
 <template>
-  <span class="seat" @click="toggleReservation" :class="isReservedColor">{{ seatNumber }}</span>
+  <span :id="id" class="seat" @click="toggleReservation" :class="isReservedColor">{{
+    seatNumber
+  }}</span>
 </template>
 
 <script>
+import { useTicketStore } from "@/stores/tickets.js";
+import { storeToRefs } from "pinia";
+
+const ticketStore = useTicketStore();
+
+const { deleteTickets } = ticketStore;
+const { ticketsBuy } = storeToRefs(ticketStore);
 export default {
   props: {
     seatNumber: {
@@ -12,6 +21,16 @@ export default {
     reserved: {
       type: Boolean,
       default: false,
+      required: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+    },
+    id: {
+      type: Number,
+      required: true,
     },
   },
 
@@ -23,16 +42,27 @@ export default {
 
   methods: {
     toggleReservation() {
-      console.log(this.seatNumber, this.reserved);
-      // this.reserved = !this.reserved;
+      if (this.reserved) return;
+
       this.isReserved = !this.isReserved;
-      this.$emit(this.reserved ? "reserve" : "unreserve", this.seatNumber);
+
+      if (this.isReserved) {
+        this.$emit("setDataReservation", {
+          seatNumber: this.seatNumber,
+          status: this.isReserved,
+          price: this.price,
+          id: this.id,
+        });
+      } else {
+        deleteTickets(this.id);
+        console.log(ticketsBuy);
+      }
     },
   },
 
   computed: {
     isReservedColor() {
-      return this.isReserved ? "seat reserved" : "seat no-reserved";
+      return this.reserved || this.isReserved ? "seat reserved" : "seat no-reserved";
     },
   },
 };
@@ -56,6 +86,19 @@ export default {
   position: relative;
   filter: drop-shadow(2px 1px 10px #312b2b);
   transition: 0.1s ease-in-out;
+  animation: fadeIn 1s ease-in 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .no-reserved:hover {

@@ -7,30 +7,39 @@
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box"
         >
           <SeatComponet
-            v-for="seatG in general"
-            :key="seatG.id"
-            :seatNumber="seatG.seatNumber"
-            :reserved="seatG.status"
+            v-for="{ id, seatNumber, status, price } in general"
+            :key="id"
+            :seatNumber="seatNumber"
+            :reserved="status"
+            :price="price"
+            :id="id"
+            @setDataReservation="datoToSaveSeats"
           />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box vip"
         >
           <SeatComponet
-            v-for="seatV in vip"
-            :key="seatV.id"
-            :seatNumber="seatV.seatNumber"
-            :reserved="seatV.status"
+            v-for="{ id, seatNumber, status, price } in vip"
+            :key="id"
+            :seatNumber="seatNumber"
+            :reserved="status"
+            :price="price"
+            :id="id"
+            @setDataReservation="datoToSaveSeats"
           />
         </div>
         <div
           class="container d-flex flex-wrap justify-content-start align-items-start gap-2 align-content-start content-box prefe"
         >
           <SeatComponet
-            v-for="seatP in preferential"
-            :key="seatP.id"
-            :seatNumber="seatP.seatNumber"
-            :reserved="seatP.status"
+            v-for="{ id, seatNumber, status, price } in preferential"
+            :key="id"
+            :seatNumber="seatNumber"
+            :reserved="status"
+            :price="price"
+            :id="id"
+            @setDataReservation="datoToSaveSeats"
           />
         </div>
       </div>
@@ -44,7 +53,9 @@ import { useTicketStore } from "../../../stores/tickets";
 import { storeToRefs } from "pinia";
 
 const ticketStore = useTicketStore();
-const { generalSeats, vipSeats, prefeSeats } = storeToRefs(ticketStore);
+
+const { addTickets } = ticketStore;
+const { generalSeats, vipSeats, prefeSeats, ticketsBuy } = storeToRefs(ticketStore);
 
 export default {
   components: {
@@ -57,6 +68,13 @@ export default {
       vip: vipSeats || [],
       preferential: prefeSeats || [],
     };
+  },
+
+  methods: {
+    datoToSaveSeats(dataToSave) {
+      addTickets({ ...dataToSave });
+      console.log(ticketsBuy);
+    },
   },
 };
 </script>
@@ -78,16 +96,6 @@ export default {
   max-height: max-content;
   box-shadow: 0.25rem 0.25rem 0.25rem #2b2b2b;
   border-radius: 0 1rem 1rem 0;
-  animation: fadeIn 1s ease-in 1;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 .main::after {
