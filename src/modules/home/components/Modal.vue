@@ -221,7 +221,7 @@ async checkUser() {
     }
     Swal.fire({
       icon: "success",
-      title: "¡Bienvenido/a!",
+      title: "¡Bienvenido! " + this.email,
       timer: 1500,
       showConfirmButton: false,
       showClass: {

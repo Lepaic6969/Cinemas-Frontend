@@ -93,7 +93,10 @@ export default {
         if (result.isConfirmed) {
           localStorage.removeItem("user");
           this.user = null;
-          window.location.reload();
+          Swal.fire({
+        title: "Gracias por visitarnos",
+          })
+          this.$router.push("./");
         }
       });
     },

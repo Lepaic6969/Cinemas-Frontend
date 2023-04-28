@@ -1,21 +1,20 @@
 <template>
- <Nav :selectedCinema="selectedCinema"/>
-      <div class="modal" v-show="showModal">
-      <div class="modal-content">
-        <h1>Cinemas</h1>
-        <select class="form-select" v-model="selectedCinema">
-          <option disabled selected value="">Selecciona un cinema</option>
-          <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema">
-            {{ cinema.name }}
-          </option>
-        </select>
-      </div>
+  <Nav :selectedCinema="selectedCinema" />
+  <div class="modal" v-show="showModal">
+    <div class="modal-content">
+      <h1>Cinemas</h1>
+      <select class="form-select" v-model="selectedCinema">
+        <option disabled selected value="">Selecciona un cinema</option>
+        <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema">
+          {{ cinema.name }}
+        </option>
+      </select>
     </div>
-
+  </div>
 
   <router-view class="p-5"></router-view>
 
-  <Footer :selectedCinema="selectedCinema"/>
+  <Footer :selectedCinema="selectedCinema" />
 </template>
 
 <script>
@@ -31,29 +30,38 @@ export default {
   },
   data() {
     return {
-       cinemas: [],
+      cinemas: [],
       selectedCinema: null,
-     showModal:true
+      showModal: true,
+      user: JSON.parse(localStorage.getItem("user")),
     };
   },
   async mounted() {
     try {
       const data = await fetchData("/cinemas");
       this.cinemas = data.body;
-       console.log("cinemas", this.cinemas)
+      console.log("cinemas", this.cinemas);
     } catch (error) {
       console.error(error);
     }
+
+    const showModal = localStorage.getItem("showModal");
+    this.showModal = showModal ? JSON.parse(showModal) : true;
+
+    if (this.user === null) {
+      this.showModal = true
+    }
   },
-    watch: {
+  watch: {
     selectedCinema: function () {
-      this.closeModal();
       localStorage.setItem("Sala", JSON.stringify(this.selectedCinema));
+      this.showModal = false;
+      this.saveModalState();
     },
   },
   methods: {
-    closeModal() {
-      this.showModal = false;
+    saveModalState() {
+      localStorage.setItem("showModal", JSON.stringify(this.showModal));
     },
   },
 };
@@ -98,7 +106,6 @@ export default {
   text-align: center;
   color: #fff;
 }
-
 
 .copy-container {
   text-align: center;

@@ -88,6 +88,8 @@ export default {
         color: "white",
       },
       oneWeekFromNow: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+        //  cinePeli: JSON.parse(localStorage.getItem("Sala")),
+cinePeli: Object.values(JSON.parse(localStorage.getItem("Sala")))
     };
   },
   methods: {
@@ -107,10 +109,6 @@ export default {
   },
   async mounted() {
     try {
-      const cinePeli = JSON.parse(localStorage.getItem("Sala"));
-      const cinemas = cinePeli.id;
-      console.log("cinemas", cinemas);
-
       const moviesData = await fetchData("/movie-rooms");
       const currentDate = new Date();
       this.movies = moviesData.body.filter((movie) => {
@@ -119,13 +117,9 @@ export default {
         return endDate > currentDate && endDate < this.oneWeekFromNow;
       });
 
-      // const data = await fetchData("/movies");
-      // this.movies = data.body
-      // console.log("Peliculas:", this.movies);
-
-       const date = await fetchData("/rooms");
-          this.rooms = date.data
-          console.log("Rooms:", this.rooms);
+      const date = await fetchData("/rooms");
+      this.rooms = date.data;
+      console.log("Rooms:", this.rooms);
 
       const datas = await fetchData("/movie-rooms");
       this.sala = datas.body;
@@ -134,7 +128,15 @@ export default {
     } catch (error) {
       console.error(error);
     }
+
+     console.log("ww",this.cinePeli);
+     const a = this.cinePeli.id
+this.movies = a.filter((room) => room.movie).flat();
+console.log("asas", this.movies);
+
+
   },
+  
 };
 </script>
 
