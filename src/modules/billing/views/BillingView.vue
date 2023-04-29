@@ -41,6 +41,9 @@
     import {ref,onMounted} from 'vue';
     import {storeToRefs} from 'pinia';
     import {useTicketStore} from '../../../stores/tickets.js';
+    import jsPDF from 'jspdf';
+  
+
     const ticketStore=useTicketStore();
    //Variables reactivas...
    const total=ref(0);
@@ -49,7 +52,14 @@
    const chairs=ref('');
 
     const handlePrint=()=>{
-        alert("Estamos desarrollando la funcionalidad de la impresión de la factura.")
+          //Variable para generar el PDF
+        const doc = new jsPDF();
+        // const factura = document.querySelector('.template-styles');
+        html2canvas(document.querySelector('.template-styles')).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        doc.addImage(imgData, 'PNG', 10, 10, 180, 240);
+        doc.save('factura.pdf');
+        });
     }
     const format=(value)=>{
     return value.toLocaleString('es-ES',{style:'currency',currency:'COP',maximumFractionDigits: 0})
