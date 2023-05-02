@@ -47,7 +47,8 @@ Inmediatamente se muestra en la parte inferior izquierda un resumen a modo de pr
 
 Una vez se quiera comprar los asientos escogidos se le da click al botón comprar que aparece en la prefactura, si el usuario logeado es vendedor sale directamente la factura en pantalla con la opción de imprimirla ,así:
 
-![Uploading 4.png…]()
+![4](https://user-images.githubusercontent.com/82120052/235733098-0c183ed6-06d8-4f2c-97f2-9b214a619975.png)
+
 
 ![5](https://user-images.githubusercontent.com/82120052/235732834-8f2d9a4c-6e3b-493b-808c-b9dfd5e960aa.png)
 
