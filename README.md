@@ -6,11 +6,11 @@ Al iniciar el proyecto se encuentra esta primera interfaz donde podrá escoger e
 Una vez seleccionado el cine es momento de logearse (Hay 3 roles, el de administrador, el de vendedor y el de cliente) Las credenciales de ingreso son las siguientes:
 
  
-  -Vendedor -> Email: seller@email.com Contraseña: contraseña123
+  - Vendedor -> Email: seller@email.com Contraseña: contraseña123
 
-  -Administrador -> Email: admin@email.com Contraseña: contraseña123
+  - Administrador -> Email: admin@email.com Contraseña: contraseña123
 
-  -Cliente -> Email:camilo@gmail.com Contraseña:123456
+  - Cliente -> Email:camilo@gmail.com Contraseña:123456
 
 Funcionalidad para el usuario tipo Cliente y Vendedor:
 Las funcionalidades del vendedor y del cliente son inicialmente las mismas, a continuación se detallan las funcionalidades que son similares para los dos casos:
