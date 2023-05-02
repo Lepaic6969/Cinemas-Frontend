@@ -1,5 +1,6 @@
 <template>
-      <div class="template-styles d-flex align-items-start">
+      
+      <div class="template-styles d-flex align-items-start mt-5">
         <div class="container  container-styles">
             <div class="row">
                 <div class="col-12">
@@ -29,10 +30,13 @@
                 </div>
                
             </div>
-            <button class="btn btn-outline-dark" @click="handlePrint">Imprimir</button>
+           
+           
          </div>
-         
+         <button class="btn btn-outline-dark ms-2" @click="handlePrint" id="btn-print">🖨️ <span class="d-none d-md-block">Imprimir</span> </button>
     </div>
+
+   
 
 </template>
 
@@ -52,14 +56,17 @@
    const chairs=ref('');
 
     const handlePrint=()=>{
-          //Variable para generar el PDF
+        //Variable para generar el PDF
         const doc = new jsPDF();
-        // const factura = document.querySelector('.template-styles');
-        html2canvas(document.querySelector('.template-styles')).then(canvas => {
+        const facturaHTML=document.querySelector('.template-styles');
+        const btnPrint=document.getElementById("btn-print");
+        facturaHTML.removeChild(btnPrint);
+        html2canvas(facturaHTML).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PNG', 10, 10, 180, 240);
+        doc.addImage(imgData, 'PNG', 10, 10, 220, 240);
         doc.save('factura.pdf');
         });
+        
     }
     const format=(value)=>{
     return value.toLocaleString('es-ES',{style:'currency',currency:'COP',maximumFractionDigits: 0})
@@ -97,6 +104,17 @@
        width: 30%;
        position: relative;
     }
+    .container-styles-print{
+       background-color: white;
+       border:1px solid #2b2b2b;
+       padding: 35px;
+       /* padding-right:0; */
+       border-radius: 10px;
+       min-height: 77vh;
+       height: auto;
+       width: 70%;
+       position: relative;
+    }
     .container {
         box-shadow: inset 0px 0px 30px rgba(0, 0, 0, 0.5);
     }
@@ -120,6 +138,11 @@
         text-align: center;
         margin-top: 0;
     }
+    .btn-styles{
+        position:fixed;
+        top: 80%;
+        left: 37%;
+    }
     
     @media(max-width: 992px){
         .container-styles{
@@ -133,7 +156,7 @@
     }
     @media(max-width: 567px){
         .container-styles{
-            width: 100%;
+            width: 90%;
         }
     }
 
