@@ -47,10 +47,11 @@
 <script>
 import { useTicketStore } from "@/stores/tickets.js";
 import { storeToRefs } from "pinia";
+import fetchData from "../../../helpers/fetchData";
 
 const ticketStore = useTicketStore();
 
-const { ticketsToBuy, total } = storeToRefs(ticketStore);
+const { ticketsToBuy, total,ticketsBuy } = storeToRefs(ticketStore);
 
 export default {
   props: {
@@ -76,12 +77,12 @@ export default {
       });
       return formatter.format(value);
     },
-    handlePay(){
+    async handlePay(){
         //Aquí viene lo de las dirrecciones si eres vendedor o cliente normal
         const {email}=JSON.parse(localStorage.getItem("user"));
         if(email==="seller@email.com"){
           this.$router.push('/user/billing');
-          //TODO:Si es vendedor aquí de una vez debe hacer la petición, porque no se pasa por pasarela.
+          await fetchData('/tickets','put',ticketsBuy.value);
         }else{
           this.$router.push('/user/payment');
         }
