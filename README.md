@@ -1,4 +1,4 @@
-# Proyecto De Cine - MartketMix
+# Proyecto Cine - MartketMix
 ## Desarrollado con las tecnologías:
 
   - Vue.js 
