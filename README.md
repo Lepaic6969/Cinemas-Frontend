@@ -82,5 +82,5 @@ Para iniciar el proyecto de manera loca, Sigue los siguientes pasos:
  1. Abre tu terminal y Clona este repositorio con el comando `git clone https://github.com/Lepaic6969/Cinemas-Frontend.git` , espera que se descargue 
  2. Haz un cd al repo descargado `cd Cinemas-Frontend`
  3. Una vez dentro de la carpeta **Cinemas-Frontend**, escribe el siguiente comando en tu terminal `npm i`, esto con el fin de instalar las devdependencies y dependencies usadas en el proyecto
- 4. Descargadas las devdependencies y dependencies del proyecto, utiliza el comando `npm run dev`, para levantar el proyecto de forma loca en tu maquina
+ 4. Descargadas las devdependencies y dependencies del proyecto, utiliza el comando `npm run dev`, para levantar el proyecto de forma local en tu maquina y el comando `npm run build` para generar un build para despligue del proyecto
  5. Por ultimo copia el link que te otorga la terminal y pegalo en tu navegador, podras ver el proyecto levantado de manera local
