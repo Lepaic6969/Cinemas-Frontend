@@ -47,6 +47,8 @@ Inmediatamente se muestra en la parte inferior izquierda un resumen a modo de pr
 
 Una vez se quiera comprar los asientos escogidos se le da click al botón comprar que aparece en la prefactura, si el usuario logeado es vendedor sale directamente la factura en pantalla con la opción de imprimirla ,así:
 
+![image](https://user-images.githubusercontent.com/71667791/235727062-fd961b54-9641-4d13-8071-391ac3347eb2.png)
+
 ![4](https://user-images.githubusercontent.com/82120052/235733098-0c183ed6-06d8-4f2c-97f2-9b214a619975.png)
 
 
@@ -55,5 +57,5 @@ Una vez se quiera comprar los asientos escogidos se le da click al botón compra
 Generando de esta forma un archivo con el nombre de factura.pdf.
 Por otro lado si el usuario es un cliente antes de ir a la factura deberá ir a la pasarela de pagos para reservar definitivamente los asientos que ha escogido a través de su pago.
 
-![image](https://user-images.githubusercontent.com/71667791/235727062-fd961b54-9641-4d13-8071-391ac3347eb2.png)
+
 Una vez realizado el pago el usuario cliente ya podrá ver y descargar su factura.
