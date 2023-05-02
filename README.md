@@ -11,7 +11,7 @@ Administrador -> Email: admin@email.com Contraseña: contraseña123
 Cliente -> Email:camilo@gmail.com Contraseña:123456
 
 Funcionalidad para el usuario tipo Cliente y Vendedor:
-Las funcionalidades del vendedor y del cliente son inicialmente las mismas, a continuación se detallan las funcionalidades que sn similares para los dos casos:
+Las funcionalidades del vendedor y del cliente son inicialmente las mismas, a continuación se detallan las funcionalidades que son similares para los dos casos:
 Una vez realizado el login, se puede escoger la película que quiere ver:
 ![image](https://user-images.githubusercontent.com/71667791/235728305-2ad91b98-475b-49fe-91aa-da4913b47eb0.png)
 
