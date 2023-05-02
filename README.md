@@ -14,7 +14,8 @@ Una vez realizado el login, se puede escoger la película que quiere ver:
 ![image](https://user-images.githubusercontent.com/71667791/235728305-2ad91b98-475b-49fe-91aa-da4913b47eb0.png)
 
 Al darle click en "trailer" se muestra un modal en pantalla con el triler de la película y al darle en "ver más" lo redirige hacia el lugar donde se puede escoger el horario y las sillas correspondientes para esa película.
-![image](https://user-images.githubusercontent.com/71667791/235722086-991f187d-1265-49f3-a501-7c383e7aa9ff.png)
+![image](https://user-images.githubusercontent.com/71667791/235728637-024b4f13-5f09-448a-a7da-ff5c5e9da501.png)
+
 Para seleccionar la sala y el horario en la película debe dar click en el botón de entradas. Una vez seleccionado, se podrá ver la siguiete interfaz donde se pueden apartar las sillas deseadas.
 ![image](https://user-images.githubusercontent.com/71667791/235722693-f148a2f4-afaf-4cc4-8be1-f577ea57a727.png)
 Las sillas en blanco indican sillas disponibles y las verdes son las sillas que ya están reservadas, para escoger una silla sólo basta darle click en alguna disponible.
