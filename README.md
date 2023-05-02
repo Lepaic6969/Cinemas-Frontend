@@ -11,7 +11,8 @@ Cliente -> Email:camilo@gmail.com Contraseña:123456
 Funcionalidad para el usuario tipo Cliente y Vendedor:
 Las funcionalidades del vendedor y del cliente son inicialmente las mismas, a continuación se detallan las funcionalidades que sn similares para los dos casos:
 Una vez realizado el login, se puede escoger la película que quiere ver:
-![image](https://user-images.githubusercontent.com/71667791/235721218-f651313b-23c2-4418-b0dd-a01d6b1e0827.png)
+![image](https://user-images.githubusercontent.com/71667791/235728305-2ad91b98-475b-49fe-91aa-da4913b47eb0.png)
+
 Al darle click en "trailer" se muestra un modal en pantalla con el triler de la película y al darle en "ver más" lo redirige hacia el lugar donde se puede escoger el horario y las sillas correspondientes para esa película.
 ![image](https://user-images.githubusercontent.com/71667791/235722086-991f187d-1265-49f3-a501-7c383e7aa9ff.png)
 Para seleccionar la sala y el horario en la película debe dar click en el botón de entradas. Una vez seleccionado, se podrá ver la siguiete interfaz donde se pueden apartar las sillas deseadas.
