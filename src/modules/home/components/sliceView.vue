@@ -6,7 +6,7 @@
           :src="
             movie.movie.image
               ? movie.movie.image.secure_url
-              : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+              : 'https://www.pinterest.com.mx/pin/379428337337479179/'
           "
           class="img-fluid imgs"
           :alt="movie.movie.name"
