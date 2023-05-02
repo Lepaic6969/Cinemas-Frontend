@@ -25,15 +25,22 @@ Funcionalidad para el usuario tipo Cliente y Vendedor:
 Las funcionalidades del vendedor y del cliente son inicialmente las mismas, a continuación se detallan las funcionalidades que son similares para los dos casos:
 Una vez realizado el login, se puede escoger la película que quiere ver:
 
-![image](https://user-images.githubusercontent.com/71667791/235728305-2ad91b98-475b-49fe-91aa-da4913b47eb0.png)
+![1](https://user-images.githubusercontent.com/82120052/235732248-dc996bba-efc3-4a34-a1ce-a7103d94a50c.png)
+
 
 Al darle click en "trailer" se muestra un modal en pantalla con el triler de la película y al darle en "ver más" lo redirige hacia el lugar donde se puede escoger el horario y las sillas correspondientes para esa película.
 
-![image](https://user-images.githubusercontent.com/71667791/235728637-024b4f13-5f09-448a-a7da-ff5c5e9da501.png)
+![Screenshot from 2023-05-02 11-49-20](https://user-images.githubusercontent.com/82120052/235732280-4bdef9c5-0fb0-472b-8fc8-9b31c5f01994.png)
+
+![2](https://user-images.githubusercontent.com/82120052/235732330-ba294902-a96d-49ae-bed4-a1955c9a8501.png)
+
 
 Para seleccionar la sala y el horario en la película debe dar click en el botón de entradas. Una vez seleccionado, se podrá ver la siguiete interfaz donde se pueden apartar las sillas deseadas.
 
-![image](https://user-images.githubusercontent.com/71667791/235722693-f148a2f4-afaf-4cc4-8be1-f577ea57a727.png)
+![Screenshot from 2023-05-02 11-49-43](https://user-images.githubusercontent.com/82120052/235732377-ef6a0c27-d7c7-4ae7-aa7d-7916cefa371e.png)
+
+![3](https://user-images.githubusercontent.com/82120052/235732392-3adeb547-fcea-4095-a4dc-8bb57d78323a.png)
+
 
 Las sillas en blanco indican sillas disponibles y las verdes son las sillas que ya están reservadas, para escoger una silla sólo basta darle click en alguna disponible.
 Inmediatamente se muestra en la parte inferior izquierda un resumen a modo de prefactura, donde se detalla el costo y las sillas apartadas (Hay 3 tipos de sillas, generales, preferenciales y VIP). Acontinuación se muestra como se vería la pre-factura.
