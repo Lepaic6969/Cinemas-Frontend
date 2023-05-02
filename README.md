@@ -39,17 +39,17 @@ Para seleccionar la sala y el horario en la película debe dar click en el botó
 
 ![Screenshot from 2023-05-02 11-49-43](https://user-images.githubusercontent.com/82120052/235732377-ef6a0c27-d7c7-4ae7-aa7d-7916cefa371e.png)
 
-![3](https://user-images.githubusercontent.com/82120052/235732392-3adeb547-fcea-4095-a4dc-8bb57d78323a.png)
-
 
 Las sillas en blanco indican sillas disponibles y las verdes son las sillas que ya están reservadas, para escoger una silla sólo basta darle click en alguna disponible.
 Inmediatamente se muestra en la parte inferior izquierda un resumen a modo de prefactura, donde se detalla el costo y las sillas apartadas (Hay 3 tipos de sillas, generales, preferenciales y VIP). Acontinuación se muestra como se vería la pre-factura.
 
-![image](https://user-images.githubusercontent.com/71667791/235723774-dce8297f-3ba3-4337-ab2e-ca98a74c8b5d.png)
+![3](https://user-images.githubusercontent.com/82120052/235732392-3adeb547-fcea-4095-a4dc-8bb57d78323a.png)
 
 Una vez se quiera comprar los asientos escogidos se le da click al botón comprar que aparece en la prefactura, si el usuario logeado es vendedor sale directamente la factura en pantalla con la opción de imprimirla ,así:
 
-![image](https://user-images.githubusercontent.com/71667791/235725557-f7c61fb6-c284-4fa4-81cb-ced3f54f09c5.png)
+![Uploading 4.png…]()
+
+![5](https://user-images.githubusercontent.com/82120052/235732834-8f2d9a4c-6e3b-493b-808c-b9dfd5e960aa.png)
 
 Generando de esta forma un archivo con el nombre de factura.pdf.
 Por otro lado si el usuario es un cliente antes de ir a la factura deberá ir a la pasarela de pagos para reservar definitivamente los asientos que ha escogido a través de su pago.
