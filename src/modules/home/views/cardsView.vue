@@ -119,35 +119,27 @@ export default {
       const currentDate = new Date();
       this.movies = moviesData.body.filter((movie) => {
         const endDate = new Date(movie.end_date);
-        // console.log("final", endDate);
         return endDate > currentDate && endDate < this.oneWeekFromNow;
       });
 
       const date = await fetchData("/rooms");
       this.rooms = date.data;
 
-
       const datas = await fetchData("/movie-rooms");
       this.sala = datas.body;
-      console.log("SALA:",this.sala)
       this.movi = [];
       this.sala.map((salaId) => {
         if (salaId.Room.cinemaId === aux) {
           this.movi.push(salaId);
-        localStorage.setItem("SalaId",this.movi)
+          localStorage.setItem("SalaId", this.movi);
         }
       });
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
 
     const cinemaId = this.rooms.find((room) => room.id === room.id).cinema_id;
   },
-
-  // for (let i = 0; i < this.rooms.length; i++) {
-  //   const roomId = this.rooms[i].id;
-  //   console.log(roomId);
-  // }
 };
 </script>
 
@@ -250,5 +242,12 @@ h4 {
   100% {
     transform: translateY(0);
   }
+}
+
+@media (max-width: 768px) {
+.n-card {
+  width:300px;
+  border-radius: 8px;
+}
 }
 </style>

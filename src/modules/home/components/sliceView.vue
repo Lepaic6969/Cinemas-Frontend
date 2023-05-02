@@ -8,7 +8,7 @@
               ? movie.movie.image.secure_url
               : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
           "
-          class="imgs"
+          class="img-fluid imgs"
           :alt="movie.movie.name"
         />
 
@@ -18,7 +18,6 @@
             new Date(movie.end_date).toLocaleDateString('es-ES', {
               month: 'long',
               day: 'numeric',
-              year: 'numeric',
             })
           "
         ></span>
@@ -47,7 +46,6 @@ export default {
       const datas = await fetchData("/movie-rooms");
       this.sala = datas.body;
     } catch (error) {
-      console.error(error);
     }
   },
 
@@ -87,5 +85,44 @@ export default {
   left: 5%;
   margin-bottom: 1%;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+.sl {
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+  max-height: 50vh;
+  object-fit: cover;
+  box-shadow: 4px 14px 14px #888888;
+  margin-bottom: 4%;
+}
+
+img {
+  width: 100%;
+  height: 80px;
+  max-height: 50vh;
+  object-fit: cover;
+  box-shadow: 4px 14px 14px #888888;
+  
+}
+
+.next {
+  font-family: "Poppins" !important;
+  font-weight: 800;
+  background: #007bff;
+  height: 30px;
+  width: 34%;
+  position: relative;
+  z-index: 2;
+  color: white;
+  margin-top: -20px;
+  border-radius: 5px;
+  left: 5%;
+  margin-bottom: 1%;
+  text-align: center;
+}
+
+
 }
 </style>

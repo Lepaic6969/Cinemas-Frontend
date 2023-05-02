@@ -40,9 +40,8 @@ export default {
     try {
       const data = await fetchData("/cinemas");
       this.cinemas = data.body;
-      console.log("cinemas", this.cinemas);
     } catch (error) {
-      console.error(error);
+      alert(error)
     }
 
     const showModal = localStorage.getItem("showModal");
