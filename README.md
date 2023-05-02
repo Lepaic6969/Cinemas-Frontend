@@ -1,5 +1,19 @@
-Proyecto de cine desarrollado con las tecnologías de Vue.js, Pinia, Naive UI y Bootstrap.
-El despliegue del proyecto está en : https://cinefront.netlify.app/
+# Proyecto De Cine - MartketMix
+## Desarrollado con las tecnologías:
+
+  - Vue.js 
+  - Pinia 
+  - Vue Router
+  - Axios
+  - JsDoc
+  - Naive UI
+  - Bootstrap
+
+
+El despliegue del proyecto está en:
+  
+  - Frontend: https://cinefront.netlify.app/
+  - Backend : https://movies-project-production-bb22.up.railway.app/api/v1/docs/
 
 Al iniciar el proyecto se encuentra esta primera interfaz donde podrá escoger el cine al que quiere ingresar.
 
