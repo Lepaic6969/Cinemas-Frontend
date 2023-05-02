@@ -273,7 +273,7 @@ async checkUser() {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
 }

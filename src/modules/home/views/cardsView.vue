@@ -101,6 +101,7 @@ export default {
         this.$router.push("/tickets");
       } else {
         this.showLoginModal = true;
+        this.show=false
       }
     },
     toggleModal(movie) {
