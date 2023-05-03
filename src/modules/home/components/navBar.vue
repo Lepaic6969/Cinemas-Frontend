@@ -59,12 +59,6 @@ import Swal from "sweetalert2";
 
 export default {
   name: "navbar",
-  // props: {
-  //   selectedCinema: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
   components: {
     PersonAddSharp,
     PersonCircle,
