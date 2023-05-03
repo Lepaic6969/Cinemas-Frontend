@@ -1,7 +1,11 @@
 <template>
   <Nav :selectedCinema="selectedCinema" />
-  <Select/>
-  <router-view class="p-5"></router-view>
+  <Select />
+  <router-view v-slot="{ Component, route }" class="p-5">
+    <keep-alive>
+      <component :is="Component" :key="route.name" />
+    </keep-alive>
+  </router-view>
 
   <Footer :selectedCinema="selectedCinema" />
 </template>
@@ -15,12 +19,10 @@ export default {
   components: {
     Nav,
     Footer,
-    Select
+    Select,
   },
   data() {
-    return {
-  
-    };
+    return {};
   },
 
   methods: {},
