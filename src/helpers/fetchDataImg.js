@@ -7,10 +7,13 @@ const fetchDataImg = async (
   data = {},
   headers = {
     "Content-Type": "multipart/form-data",
-    "x-access-token":  `${localStorage.getItem("token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImlhdCI6MTY4MjM5MzA4NywiZXhwIjoxNjgyMzk2Njg3fQ.gs_k09ZisV8zm8YPZ-JKGDwugamfiQ58HxWVZ8WRSdY"}`,
+    "x-access-token": `${
+      localStorage.getItem("token") ||
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImlhdCI6MTY4MjM5MzA4NywiZXhwIjoxNjgyMzk2Njg3fQ.gs_k09ZisV8zm8YPZ-JKGDwugamfiQ58HxWVZ8WRSdY"
+    }`,
   }
 ) => {
-  console.log("data: ", data)
+  "data: ", data;
   try {
     const response = await axios({
       method,
@@ -18,12 +21,11 @@ const fetchDataImg = async (
       data,
       headers,
     });
-    // console.log(headers);
-    console.log("response: ",response)
-    console.log("petición correcta");
+    // (headers);
+    ("response: ", response)("petición correcta");
     return response;
   } catch (error) {
-    console.log(error)
+    error;
     Swal.fire("Error", `${error}`, "error");
   }
 };

@@ -55,7 +55,7 @@ export default {
         });
       } else {
         deleteTickets(this.id);
-        console.log(ticketsBuy);
+        ticketsBuy;
       }
     },
   },

@@ -10,7 +10,7 @@ export const useTicketStore = defineStore("ticket", {
     roomSelected: null, //Este va a contener tanto la sala como el horario, se hace un doble filter y listo.
 
     // states-jasser
-    //Contiene un array de ids que son los que uso para la petición.
+    //Contiene toda la data que uso para la petición.
 
     ticketsBuy: {
       tickets: [],
@@ -55,7 +55,7 @@ export const useTicketStore = defineStore("ticket", {
     async getSeats(id) {
       const { data } = await fetchData(`/tickets/movieRoom/${id}`);
       this.seats = data;
-      // console.log(this.seats);
+      // (this.seats);
     },
 
     addTickets(ticket = {}) {
@@ -66,7 +66,7 @@ export const useTicketStore = defineStore("ticket", {
     },
 
     deleteTickets(id) {
-      // console.log(id);
+      // (id);
       const index = this.ticketsToBuy.findIndex((ticket) => ticket.id === id);
       const ticketBuy = this.ticketsBuy.tickets.findIndex((ticket) => ticket.id === id);
       this.total -= this.ticketsToBuy[index].price;
