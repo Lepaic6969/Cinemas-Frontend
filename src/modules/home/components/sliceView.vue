@@ -100,6 +100,7 @@ export default {
   left: 5%;
   margin-bottom: 1%;
   text-align: center;
+  letter-spacing: 8px;
 }
 
 
@@ -110,6 +111,9 @@ export default {
   .imgs{
     width: 40%;
     height: 100%;
+  }
+  .next{
+    letter-spacing: 0.1px;
   }
 }
 </style>

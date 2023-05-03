@@ -21,7 +21,7 @@
     <n-nav-item @click="openSelect"
       >Cinemas
       <n-icon>
-        <FilmOutline />
+        <FilmSharp />
       </n-icon>
     </n-nav-item>
 
@@ -59,7 +59,7 @@ import {
   PersonAddSharp,
   PersonCircle,
   Exit,
-  FilmOutline,
+  FilmSharp,
 } from "@vicons/ionicons5";
 import Swal from "sweetalert2";
 
@@ -70,7 +70,7 @@ export default {
     PersonCircle,
     Modal,
     Exit,
-    FilmOutline,
+    FilmSharp,
   },
   data() {
     return {
