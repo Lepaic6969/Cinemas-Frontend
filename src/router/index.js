@@ -6,6 +6,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: "home" },
+    },
+    {
       path: "/",
       name: "home",
       component: () => import("../modules/home/layout/HomeLayout.vue"),
@@ -20,6 +24,7 @@ const router = createRouter({
           name: "payment-steps",
           component: () => import("@/modules/payments/views/PaymentView.vue"),
           redirect: "/user/payment/step1",
+          beforeEnter: [isAuthGuard],
           children: [
             {
               path: "step1",
@@ -49,6 +54,7 @@ const router = createRouter({
         {
           path: "/user/billing",
           name: "billing",
+          beforeEnter: [isAuthGuard],
           component: () => import("../modules/billing/views/BillingView.vue"),
         },
       ],
@@ -58,6 +64,7 @@ const router = createRouter({
     {
       path: "/admin",
       name: "admin",
+      beforeEnter: [isAuthGuard],
       component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
       children: [
         {
