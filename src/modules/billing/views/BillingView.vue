@@ -1,9 +1,8 @@
 <template>
       
-      <div class="template-styles d-flex align-items-start mt-5">
-        <div class="container  container-styles">
-            <div class="row">
-                <div class="col-12">
+      <div class="template-styles d-flex align-items-start mt-5 row ">
+        
+        <div class="container  container-styles  mb-3" v-for="chair in chairsArr" :key="chair.id">
                     <h5>Cine Cimema SAS</h5>
                     <p>NIT: 1010887372-0</p>
                     
@@ -16,24 +15,20 @@
                     <div class="container-black">
                         {{ room }}
                     </div>
-                    <label>Asientos:</label>
+                    <label>Asiento:</label>
                     <div class="container-black">
-                        {{ chairs }}
+                        {{ chair.seatNumber}}
                     </div>
                     <br>
                     <label>Total:</label>
-                    <p>${{format( total )}}</p>
-                </div>
-                
-                <div class="col-12  container-QR">
-                    <QRComponent class="QR"/>
-                </div>
-               
-            </div>
-           
-           
+                    <p>${{format( chair.price)}}</p>
+                                 
+                <div class="container-QR">
+                    <!-- <QRComponent /> -->
+               </div> 
          </div>
-         <button class="btn btn-outline-dark ms-2" @click="handlePrint" id="btn-print">🖨️ <span class="d-none d-md-block">Imprimir</span> </button>
+         
+         <button class="btn btn-outline-dark ms-2 w-auto btn-print" @click="handlePrint" id="btn-print">🖨️ <span class="d-none d-md-block">Imprimir</span> </button>
     </div>
 
    
@@ -42,7 +37,7 @@
 
 <script setup>
     import QRComponent from '../components/QRComponent.vue';
-    import {ref,onMounted} from 'vue';
+    import {ref,onMounted,onBeforeMount} from 'vue';
     import {storeToRefs} from 'pinia';
     import {useTicketStore} from '../../../stores/tickets.js';
     import jsPDF from 'jspdf';
@@ -53,7 +48,7 @@
    const total=ref(0);
    const movie=ref('');
    const room=ref('');
-   const chairs=ref('');
+   const chairsArr=ref([{id:1},{id:2},{id:3},{id:4}]);
 
     const handlePrint=()=>{
         //Variable para generar el PDF
@@ -72,24 +67,25 @@
     return value.toLocaleString('es-ES',{style:'currency',currency:'COP',maximumFractionDigits: 0})
   }
     onMounted(()=>{
-
-        //Aquí lo de la factura para que sea dinámica...
-        const {ticketsToBuy,roomSelected}=storeToRefs(ticketStore);
+           
+    
+    });
+    onBeforeMount(()=>{
+         //Aquí lo de la factura para que sea dinámica...
+         const {ticketsToBuy,roomSelected}=storeToRefs(ticketStore);
 
         movie.value=roomSelected.value[0].movie.name.toUpperCase();
         room.value=roomSelected.value[0].Room.name.toUpperCase();
 
         //Esto es para el string de sillas.
-        const chairsArr=ticketsToBuy.value;
-        chairsArr.forEach(el=>{
-          chairs.value+=el.seatNumber+' ';
-        })
-        //Esto es para el total de la compra
+        chairsArr.value=ticketsToBuy.value;
+        console.log(chairsArr.value)
+
         ticketsToBuy.value.forEach(el=>{
-          total.value+=el.price;
+        total.value+=el.price;
         });
         localStorage.setItem("total",total.value);
-    });
+        });
 </script>
 
 <style scoped>
@@ -101,8 +97,10 @@
        border-radius: 10px;
        min-height: 77vh;
        height: auto;
-       width: 30%;
+       width: 28%;
        position: relative;
+       margin-left:0 !important;
+       margin-right:20px !important;
     }
     .container-styles-print{
        background-color: white;
@@ -126,9 +124,9 @@
        
     }
     .container-QR{
-        position: absolute;
+        /* position: absolute;
         right: -30%;
-        bottom: 0px;
+        bottom: 0px; */
     }
     .container-black{
         width: 100%;
@@ -138,10 +136,11 @@
         text-align: center;
         margin-top: 0;
     }
-    .btn-styles{
+    .btn-print{
         position:fixed;
-        top: 80%;
-        left: 37%;
+        top: 25%;
+        right: 5%;
+        padding: 0 10px !important;
     }
     
     @media(max-width: 992px){

@@ -14,7 +14,7 @@
           <option selected disabled>--Modo de pago--</option>
           <option value="card"><span>&#x1F4B3;</span> Tarjeta de crédito/debito</option>
           <option value="paypal"><span>&#x1F4B5;</span> Paypal</option>
-          <option value="QR"><span>📲</span> Generar Código QR</option>
+          <option value="QR"><span>📲</span> Nequi con QR</option>
         </select>
       </div>
       <div class="mb-5 mt-5" v-if="paymentMethod === 'paypal'">
