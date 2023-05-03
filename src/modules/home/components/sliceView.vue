@@ -1,12 +1,15 @@
 <template>
+
+
   <div class="sl mt-3">
-    <n-carousel autoplay full-width v-for="movie in sala" :key="movie.id">
+    <n-carousel autoplay>
+      <div v-for="movie in movies" :key="movie.id">
       <div v-if="new Date(movie.start_date) > oneWeekFromNow">
         <img
           :src="
             movie.movie.image
               ? movie.movie.image.secure_url
-              : 'https://www.pinterest.com.mx/pin/379428337337479179/'
+              : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
           "
           class="img-fluid imgs"
           :alt="movie.movie.name"
@@ -15,16 +18,17 @@
         <span
           class="date"
           v-text="
-            new Date(movie.end_date).toLocaleDateString('es-ES', {
+            new Date(movie.start_date).toLocaleDateString('es-ES', {
               month: 'long',
               day: 'numeric',
             })
           "
         ></span>
       </div>
+      </div>
     </n-carousel>
 
-    <div class="next">Proximamente</div>
+    <div v-show="ordersFilm.length > 0" class="next">Proximamente</div>
   </div>
 </template>
 
@@ -36,20 +40,31 @@ export default {
   components: {},
   data() {
     return {
+      movies: [],
       sala: [],
       oneWeekFromNow: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
     };
   },
-  methods: {},
+  methods: {
+    ordersFilm() {
+      this.sala.map((movie) => {
+        if (new Date(movie.start_date) > this.oneWeekFromNow) {
+          this.movies.push(movie);
+        }
+      });
+    },
+  },
   async mounted() {
     try {
       const datas = await fetchData("/movie-rooms");
+      console.log(datas);
       this.sala = datas.body;
-    } catch (error) {
-    }
+      this.ordersFilm()
+      console.log("sala", this.sala);
+    } catch (error) {}
   },
 
-  created(){}
+  created() {},
 };
 </script>
 <style scoped>
@@ -88,41 +103,38 @@ export default {
 }
 
 @media (max-width: 768px) {
-.sl {
-  border-radius: 8px;
-  width: 100%;
-  height: auto;
-  max-height: 50vh;
-  object-fit: cover;
-  box-shadow: 4px 14px 14px #888888;
-  margin-bottom: 4%;
-}
+  .sl {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    object-fit: cover;
+    box-shadow: 4px 14px 14px #888888;
+    margin-bottom: 4%;
+  }
 
-img {
-  width: 100%;
-  height: 80px;
-  max-height: 50vh;
-  object-fit: cover;
-  box-shadow: 4px 14px 14px #888888;
-  
-}
+  img {
+    width: 100%;
+    height: 80px;
+    max-height: 50vh;
+    object-fit: cover;
+    box-shadow: 4px 14px 14px #888888;
+  }
 
-.next {
-  font-family: "Poppins" !important;
-  font-weight: 800;
-  background: #007bff;
-  height: 30px;
-  width: 34%;
-  position: relative;
-  z-index: 2;
-  color: white;
-  margin-top: -20px;
-  border-radius: 5px;
-  left: 5%;
-  margin-bottom: 1%;
-  text-align: center;
-}
-
-
+  .next {
+    font-family: "Poppins" !important;
+    font-weight: 800;
+    background: #007bff;
+    height: 30px;
+    width: 34%;
+    position: relative;
+    z-index: 2;
+    color: white;
+    margin-top: -20px;
+    border-radius: 5px;
+    left: 5%;
+    margin-bottom: 1%;
+    text-align: center;
+  }
 }
 </style>

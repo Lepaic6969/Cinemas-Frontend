@@ -40,7 +40,7 @@
   </div>
 
   <div v-else>
-    <h3 class="text-center">No hay peliculas para mostrar</h3>
+    <h3 class="text-center mt-4">No hay peliculas para mostrar</h3>
   </div>
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>

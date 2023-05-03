@@ -130,11 +130,12 @@ const updateItem = () => {
 watch(title, () => {
   resetInputs();
   const index = elements.value.findIndex((obj) => obj.id === id.value); //El índice que debo alterar.
-  const item = elements.value[index](item);
+  const item = elements.value[index];
   if (item) {
     name.value = item.name;
     capacity.value = item.capacity;
-    status.value = item.status(name.value);
+    status.value = item.status;
+    
   } else {
     name.value = "";
   }

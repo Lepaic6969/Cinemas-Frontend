@@ -9,7 +9,7 @@ const fetchDataImg = async (
     "Content-Type": "multipart/form-data",
     "x-access-token": `${
       localStorage.getItem("token") ||
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluaXN0cmF0b3IiLCJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImlhdCI6MTY4MjM5MzA4NywiZXhwIjoxNjgyMzk2Njg3fQ.gs_k09ZisV8zm8YPZ-JKGDwugamfiQ58HxWVZ8WRSdY"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInJvbGUiOiJjbGllbnQiLCJlbWFpbCI6ImNhbWlsb0BnbWFpbC5jb20iLCJpYXQiOjE2ODMwNzgxMTMsImV4cCI6MTY4MzA4MTcxM30.0G2_o2i63Z4kT7Bgo6N2B_plmRLn91TXc-wt-1QlMNE"
     }`,
   }
 ) => {

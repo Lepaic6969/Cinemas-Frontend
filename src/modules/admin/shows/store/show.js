@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import Swal from "sweetalert2";
 //Importamos los helpers de las peticiones HTTP.
 import fetchData from "../../../../helpers/fetchData";
-const URL = "https://movies-project-production-bb22.up.railway.app/api/v1/cinemas";
+const URL = "https://movies-project-production-bb22.up.railway.app/api/v1/movie-rooms";
 const URL2 = "https://movies-project-production-bb22.up.railway.app/api/v1/movies";
 const URL3 = "https://movies-project-production-bb22.up.railway.app/api/v1/rooms";
 export const useShowStore = defineStore("shows", {
@@ -44,18 +44,16 @@ export const useShowStore = defineStore("shows", {
   actions: {
     async getElements(id) {
       //endpoint
-      /*
+      
             this.id=id//cinemaId
             try {
                 const data=await fetchData(URL);
                 
                 if(data){
                     this.elements = data
-                    this.elements = this.elements.filter(obj => obj.cinemaId == this.id)
+                    this.elements = this.elements.filter(obj => obj.cinema.id == this.id)
                     this.elements.reverse()
                 }
-                
-                
                 this.cargando=false
             } catch (error) {
                 (error)
@@ -65,7 +63,7 @@ export const useShowStore = defineStore("shows", {
             try{
                 const data2=await fetchData(URL2)//movies
                 this.generos=data2.body//movies 
-            }catch (error){
+              }catch (error){
                 (error)
                 this.cargando=false 
             }
@@ -73,35 +71,34 @@ export const useShowStore = defineStore("shows", {
             try{ 
                 const data3=await fetchData(URL3)//rooms
                 if(data3){
-                    this.rooms=data2//rooms
-                    this.rooms=this.rooms.filter(obj => obj.cinemaId === this.id)//filtrar por cinema
-
+                    this.rooms=data3//rooms
+                    this.rooms=this.rooms.filter(obj => obj.cinema.id === this.id)//filtrar por cinema
                 } 
             }catch (error){
                 (error)
                 this.cargando=false 
             }
-            //
-            */
+            
+            
       //localStorage
-      this.cargando = false;
-      this.id = id; //cinemaId
-      this.dataLs = JSON.parse(localStorage.getItem("shows"));
-      this.movies = JSON.parse(localStorage.getItem("movies")); //movies
-      this.rooms = JSON.parse(localStorage.getItem("rooms"))(
-        //rooms
-        this.rooms
-      );
-      this.rooms = this.rooms.filter((obj) => obj.cinemaId === this.id)(
-        //filtrados
-        this.dataLs
-      );
-      if (this.dataLs) {
-        this.elements = this.dataLs.filter((obj) => obj.cinemaId == this.id);
-        this.elements.reverse();
-      } else {
-        this.dataLs = [];
-      }
+      // this.cargando = false;
+      // this.id = id; //cinemaId
+      // this.dataLs = JSON.parse(localStorage.getItem("shows"));
+      // this.movies = JSON.parse(localStorage.getItem("movies")); //movies
+      // this.rooms = JSON.parse(localStorage.getItem("rooms"))(
+      //   //rooms
+      //   this.rooms
+      // );
+      // this.rooms = this.rooms.filter((obj) => obj.cinemaId === this.id)(
+      //   //filtrados
+      //   this.dataLs
+      // );
+      // if (this.dataLs) {
+      //   this.elements = this.dataLs.filter((obj) => obj.cinemaId == this.id);
+      //   this.elements.reverse();
+      // } else {
+      //   this.dataLs = [];
+      // }
     },
 
     getElementById(id) {
@@ -113,7 +110,7 @@ export const useShowStore = defineStore("shows", {
 
     async addElement(element) {
       //endpoint
-      /*
+      
             this.cargando= true
             const data={ 
                 cinemaId: this.id,
@@ -126,27 +123,27 @@ export const useShowStore = defineStore("shows", {
              await fetchData(URL,'post',data);
             this.alert("agregado")
             this.getElements() 
-            */
+            
       //localStorage/
-      const data = {
-        cinemaId: this.id,
-        room_id: element.room_id,
-        start_date: element.start_date,
-        end_date: element.end_date,
-        hour: element.hour,
-        movie_id: element.movie_id,
-      };
-      this.dataLs.push(data);
-      this.alert("agregado");
-      this.setData()(
-        //
-        "add: ",
-        data
-      );
+      // const data = {
+      //   cinemaId: this.id,
+      //   room_id: element.room_id,
+      //   start_date: element.start_date,
+      //   end_date: element.end_date,
+      //   hour: element.hour,
+      //   movie_id: element.movie_id,
+      // };
+      // this.dataLs.push(data);
+      // this.alert("agregado");
+      // this.setData()(
+      //   //
+      //   "add: ",
+      //   data
+      // );
     },
     async updateElement(id, newElement) {
       //endpoint
-      /* 
+      
             this.cargando= true
             const data={ 
                 cinemaId: this.id,
@@ -161,28 +158,28 @@ export const useShowStore = defineStore("shows", {
             this.alert("actualizado")
             this.getElements()
             
-            */
+            
       //localStorage
-      const index = this.dataLs.findIndex((obj) => obj.id === id); //El índice que debo alterar.
-      newElement.id = id;
-      this.dataLs[index] = newElement;
-      this.alert("actualizado");
-      this.setData();
+      // const index = this.dataLs.findIndex((obj) => obj.id === id); //El índice que debo alterar.
+      // newElement.id = id;
+      // this.dataLs[index] = newElement;
+      // this.alert("actualizado");
+      // this.setData();
     },
     async deleteElement(id) {
       //endPoint
-      /*
+      
             this.cargando= true
             const url=`${URL}/${id}`;
             await fetchData(url,'delete');
             this.alert("eliminado")
             this.getElements()
-            */
+            
       //localStoragee
-      const index = this.dataLs.findIndex((obj) => obj.id === id); //El índice que debo alterar.
-      this.dataLs.splice(index, 1);
-      this.alert("eliminado");
-      this.setData();
+      // const index = this.dataLs.findIndex((obj) => obj.id === id); //El índice que debo alterar.
+      // this.dataLs.splice(index, 1);
+      // this.alert("eliminado");
+      // this.setData();
     },
 
     setData() {

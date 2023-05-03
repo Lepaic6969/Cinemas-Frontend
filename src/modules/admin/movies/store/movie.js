@@ -54,11 +54,7 @@ export const useMovieStore = defineStore("movie", {
       }
 
       try {
-        const data2 = await fetchData(URL2)(
-          //generos
-          "Generos:",
-          data2.body
-        );
+        const data2 = await fetchData(URL2)
         if (data2) {
           this.generos = data2.body;
         }
@@ -89,32 +85,22 @@ export const useMovieStore = defineStore("movie", {
     async addElement(element) {
       //endpoint
       this.cargando = true;
-      const { name, duration, trailer, image, id_genres } = element;
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("duration", duration);
-      formData.append("trailer", trailer);
-      formData.append("image", image);
-      formData.append("id_genres", JSON.stringify(id_genres));
+      
+      const data = {
+        name: element.name,
+        duration: element.duration,
+        trailer: element.trailer,
+        image: element.image,
+        genres: element.genres,
+      };
 
-      try {
-        const response = await fetch(URL, {
-          method: "POST",
-          body: formData,
-        });
-        formData.id_genres;
-        const data = await response.json();
-        if (response.ok) {
-          this.alert("agregada");
-        } else {
-          throw new Error(data.message);
-        }
-      } catch (error) {
-        error.message;
-        this.alert(error.message);
-      } finally {
-        this.cargando = false;
+      const formData = new FormData();
+      
+      for (const key in data) {
+        formData.append(key, data[key]);
       }
+      await fetchDataImg(URL, "post", formData);
+      this.alert("agregado");
       this.getElements();
       //this.getElements()
       //localStorage
@@ -125,7 +111,7 @@ export const useMovieStore = defineStore("movie", {
                 duration:element.duration,
                 trailer: element.trailer,
                 image:element.image,
-                id_genres:element.id_genres
+                genres:element.genres
             }
             this.elements.push(data);
             this.alert("agregada")
@@ -136,13 +122,13 @@ export const useMovieStore = defineStore("movie", {
     async updateElement(id, newElement) {
       //endpoint
       this.cargando = true;
-      const { name, duration, trailer, image, id_genres } = newElement;
+      const { name, duration, trailer, image, genres } = newElement;
       const formData = new FormData();
       formData.append("name", name);
       formData.append("duration", duration);
       formData.append("trailer", trailer);
       formData.append("image", image);
-      formData.append("id_genres", JSON.stringify(id_genres));
+      formData.append("genres", JSON.stringify(genres));
       const url = `${URL}/${id}`;
       try {
         const response = await fetch(url, {

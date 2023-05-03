@@ -1,13 +1,12 @@
-import { defineStore } from "pinia";
+import {defineStore} from 'pinia';
 import Swal from "sweetalert2";
 //Importamos los helpers de las peticiones HTTP.
-import fetchData from "../../../../helpers/fetchData";
+import fetchData from  '../../../../helpers/fetchData' 
 
-const URL = "https://movies-project-production-bb22.up.railway.app/api/v1/rooms";
-export const useRoomStore = defineStore("rooms", {
-  state: () => ({
-    elements: [
-      /*
+const URL= 'https://movies-project-production-bb22.up.railway.app/api/v1/rooms';
+export const  useRoomStore=defineStore('rooms',{
+    state:()=>({
+        elements:[/*
             {   
                 id: 0,
                 name: "Sala 1",
@@ -37,30 +36,32 @@ export const useRoomStore = defineStore("rooms", {
                 cinemaId:2,
             },
             */
-    ],
-    cargando: true,
-    id: null, //cinemaId eliminar
-    dataLs: [], //eliminar
-  }),
-  actions: {
-    async getElements(id) {
-      //endpoint
-      this.cargando = true;
-      try {
-        const { data } = await fetchData(URL);
-        data;
-        this.id = id; //cinemaId
-        if (data) {
-          this.elements = data.filter((obj) => obj.cinema.id == this.id);
-          this.elements.reverse();
-        }
-        this.cargando = false;
-      } catch (error) {
-        error;
-        this.cargando = false;
-      }
-      //localStorage
-      /* 
+        ],
+        cargando:true,
+        id:null,//cinemaId eliminar
+        dataLs:[]//eliminar
+    }),
+    actions:{
+        async getElements(id){
+            //endpoint 
+            this.cargando= true
+            try {
+                const {data}=await fetchData(URL); 
+                this.id=id//cinemaId 
+                if(data){  
+                    this.elements= data.filter(obj => 
+                      obj.cinema.id == 
+                      this.id
+                      )  
+                    this.elements.reverse() 
+                } 
+                this.cargando= false
+            } catch (error) { 
+                console.log(error)
+                this.cargando= false
+            } 
+            //localStorage 
+            /* 
             this.cargando=false
             this.id=id//cinemaId
             this.dataLs = JSON.parse(localStorage.getItem('rooms'))  
@@ -71,30 +72,32 @@ export const useRoomStore = defineStore("rooms", {
                 this.dataLs=[]
             }  
             */
-    },
+            
+        },
+        
+        getElementById(id){
+            const index=this.elements.findIndex(obj => obj.id === id); //El índice que debo alterar.
+            console.log(id, this.elements[id])
+            //return this.elements[index]; 
+            return this.elements[id]; 
+        },
+        
+        async addElement(element){
+            //endpoint 
+            this.cargando= true
+            const data={
+                name: element.name,
+                capacity: element.capacity,
+                status: element.status,
+                cinemaId: element.cinemaId,
+                }
+             console.log(data)
+            await fetchData(URL,'post',data);
+            this.alert("agregada")
+            this.getElements(this.id) 
 
-    getElementById(id) {
-      const index = this.elements.findIndex((obj) => obj.id === id); //El índice que debo alterar.
-      id, this.elements[id];
-      //return this.elements[index];
-      return this.elements[id];
-    },
-
-    async addElement(element) {
-      //endpoint
-      this.cargando = true;
-      const data = {
-        name: element.name,
-        capacity: element.capacity,
-        status: element.status,
-        cinemaId: element.cinemaId,
-      }(data);
-      await fetchData(URL, "post", data);
-      this.alert("agregada");
-      this.getElements();
-
-      //localStorage
-      /*  
+            //localStorage 
+            /*  
             const data={ 
                 id:this.dataLs.length,
                 name: element.name,
@@ -105,62 +108,65 @@ export const useRoomStore = defineStore("rooms", {
             this.dataLs.push(data) 
             this.alert("agregada")
             this.setData()//
-            ("add: ", data) 
+            console.log("add: ", data) 
             */
-    },
-    async updateElement(id, newElement) {
-      //endpoint
-      this.cargando = true;
-      const url = `${URL}/${id}`;
-      const data = {
-        name: newElement.name,
-        capacity: newElement.capacity,
-        status: newElement.status,
-        cinemaId: newElement.cinemaId,
-      };
-      data;
-      await fetchData(url, "put", data); ///PUT
-      this.alert("actualizada");
-      this.getElements();
+        },
+        async updateElement(id,newElement){ 
+            //endpoint 
+            this.cargando= true
+            const url=`${URL}/${id}`;
+            const data={
+                name: newElement.name,
+                capacity: newElement.capacity,
+                status: newElement.status,
+                cinemaId: newElement.cinemaId,
+            } ;
+            console.log(data);
+            await fetchData(url,'put',data); ///PUT
+            this.alert("actualizada")
+            this.getElements(this.id)  
 
-      //localStorage
-      /* 
+            //localStorage 
+            /* 
             const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
             newElement.id=id
             this.dataLs[index]=newElement; 
             this.alert("actualizada")
             this.setData()  
             */
-    },
-    async deleteElement(id) {
-      //endPoint
-      this.cargando = true;
-      const url = `${URL}/${id}`;
-      await fetchData(url, "delete");
-      this.alert("eliminada");
-      this.getElements();
+        },
+        async deleteElement(id){ 
+            //endPoint 
+            this.cargando= true
+            const url=`${URL}/${id}`;
+            await fetchData(url,'delete');
+            this.alert("eliminada")
+            this.getElements(this.id) 
 
-      //localStoragee
-      /* 
+           //localStoragee 
+            /* 
            const index=this.dataLs.findIndex(obj => obj.id === id); //El índice que debo alterar.
            this.dataLs.splice(index,1); 
             this.alert("eliminada")
            this.setData() 
             */
-    },
+        }, 
+        
+        setData(){
+             
+            localStorage.setItem('rooms', JSON.stringify(this.dataLs))
+            this.getElements(this.id)
+        },
 
-    setData() {
-      localStorage.setItem("rooms", JSON.stringify(this.dataLs));
-      this.getElements(this.id);
-    },
+        alert(action){
+            Swal.fire({ 
+                icon: 'success',
+                title: 'Sala '+action,
+                showConfirmButton: false,
+                timer: 1500
+            }) 
+        }
 
-    alert(action) {
-      Swal.fire({
-        icon: "success",
-        title: "Sala " + action,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    },
-  },
+    }
+    
 });

@@ -174,7 +174,7 @@ const createItem = () => {
     duration: duration.value,
     trailer: trailer.value,
     image: image.value,
-    id_genres: Generos.value,
+    genres: Generos.value,
   };
 
   addElement(element);
@@ -188,7 +188,7 @@ const updateItem = () => {
     duration: duration.value,
     trailer: trailer.value,
     image: image.value,
-    id_genres: Generos.value, //agregar generos
+    genres: Generos.value, //agregar generos
   }(newElement);
   updateElement(id.value, newElement);
   resetInputs();
@@ -208,8 +208,8 @@ watch(title, () => {
     minutos.value = parseInt(partesHora[1]);
     trailer.value = item.trailer;
     image.value = item.image;
-    Generos.value = item.id_genres
-      ? item.id_genres
+    Generos.value = item.genres
+      ? item.genres
       : [](
           //Generos.value=item.gender ,//agregar generos
           Generos.value
