@@ -22,7 +22,6 @@
         },
         watch:{
             reactiveVariable(newReactiveVariable){
-            console.log(newReactiveVariable)
              this.$emit('input',newReactiveVariable)
            }
         }

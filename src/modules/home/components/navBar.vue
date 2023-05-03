@@ -1,33 +1,44 @@
 <template>
   <n-nav>
+    <n-avatar
+      v-if="selectedCinema"
+      :src="
+        selectedCinema.logo
+          ? selectedCinema.logo.secure_url
+          : './src/assets/a.png'
+      "
+      class="logo"
+      :alt="selectedCinema.name"
+      @click="handleLogoClick"
+    />
+    <n-avatar
+      v-else
+      src="./src/assets/a.png"
+      alt="Logo de mi sitio web"
+      class="logo"
+    />
 
-<n-avatar
-  v-if="selectedCinema"
-  :src="selectedCinema.logo ? selectedCinema.logo.secure_url : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'"
-  class="logo"
-  :alt="selectedCinema.name"
-  @click="handleLogoClick"
-/>
-<n-avatar
-  v-else
-  src="./src/assets/a.png"
-  alt="Logo de mi sitio web"
-  class="logo"
-/>
+    <n-nav-item @click="openSelect"
+      >Cinemas
+      <n-icon>
+        <FilmOutline />
+      </n-icon>
+    </n-nav-item>
+
     <n-nav-item v-if="!user" @click="toggleRegisterModal"
       >Registrarse
       <n-icon>
         <PersonAddSharp />
       </n-icon>
     </n-nav-item>
-        <n-nav-item v-else @click="handleExit"
-      class="ml-4">{{user.email}}
-      <n-icon >
-        <Exit/>
+    <n-nav-item v-else @click="handleExit" class="ml-4"
+      >{{ user.email }}
+      <n-icon>
+        <Exit />
       </n-icon>
     </n-nav-item>
 
-    <n-nav-item  v-if="!user" @click="toggleLoginModal"
+    <n-nav-item v-if="!user" @click="toggleLoginModal"
       >Iniciar sesión
       <n-icon>
         <PersonCircle />
@@ -35,44 +46,50 @@
     </n-nav-item>
   </n-nav>
 
-  
   <Modal title="Registrarse" v-if="showRegisterModal"> </Modal>
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
 
   <Modal title="Salir" v-if="showExit"> </Modal>
-
 </template>
 
 <script>
 import Modal from "./Modal.vue";
-import { PersonAddSharp, PersonCircle,Exit } from "@vicons/ionicons5";
+import {
+  PersonAddSharp,
+  PersonCircle,
+  Exit,
+  FilmOutline,
+} from "@vicons/ionicons5";
 import Swal from "sweetalert2";
 
 export default {
   name: "navbar",
-  // props: {
-  //   selectedCinema: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
   components: {
     PersonAddSharp,
     PersonCircle,
     Modal,
-    Exit
+    Exit,
+    FilmOutline,
   },
   data() {
     return {
       showRegisterModal: false,
       showLoginModal: false,
       user: JSON.parse(localStorage.getItem("user")),
-      selectedCinema: JSON.parse(localStorage.getItem("Sala"))
-
-  };
+      selectedCinema: JSON.parse(localStorage.getItem("Sala")),
+      showModal: JSON.parse(localStorage.getItem("showModal")),
+      aux: false,
+    };
+  },
+  created() {
+    this.aux = this.showModal = true;
   },
   methods: {
+    openSelect() {
+      localStorage.setItem("showModal", JSON.stringify(this.showModal));
+      location.reload()
+    },
     toggleRegisterModal() {
       this.showRegisterModal = !this.showRegisterModal;
     },
@@ -82,8 +99,8 @@ export default {
     handleLogoClick() {
       window.location.href = "../";
     },
-     handleExit() {
-   Swal.fire({
+    handleExit() {
+      Swal.fire({
         title: "¿Desea cerrar sesión?",
         icon: "question",
         showCancelButton: true,
@@ -95,11 +112,11 @@ export default {
         if (result.isConfirmed) {
           localStorage.removeItem("user");
           this.user = null;
-              window.location.reload();
-
+          window.location.reload();
+          this.showModal = true;
           Swal.fire({
-        title: "Gracias por visitarnos",
-          })
+            title: "Gracias por visitarnos",
+          });
         }
       });
     },

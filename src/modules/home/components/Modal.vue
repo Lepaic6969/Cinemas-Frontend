@@ -6,11 +6,16 @@
       </h2>
       <div class="modal-content">
         <div v-if="title === 'Registrarse' || isRegisterModal">
-          <n-avatar
-            src="./src/assets/logo.png"
-            alt="Logo de mi sitio web"
-            class="logo"
-          />
+           <n-avatar
+              v-if="selectedCinema"
+              :src="
+                selectedCinema.logo
+                  ? selectedCinema.logo.secure_url
+                  : './src/assets/logo.png'
+              "
+              class="logo"
+              :alt="selectedCinema.name"
+            />
           <n-form ref="formRegisterRef">
             <n-space vertical>
               <n-label>Nombre:</n-label>
@@ -43,7 +48,16 @@
           </n-form>
         </div>
         <div v-if="title === 'Iniciar sesión' && !isRegisterModal">
-          <n-avatar src="./src/assets/logo.png" alt="Logo" class="logo" />
+          <n-avatar
+              v-if="selectedCinema"
+              :src="
+                selectedCinema.logo
+                  ? selectedCinema.logo.secure_url
+                  : './src/assets/logo.png'
+              "
+              class="logo"
+              :alt="selectedCinema.name"
+            />
           <n-form ref="formLoginRef">
             <n-space vertical>
               <n-label>Correo:</n-label>
@@ -91,8 +105,9 @@ export default {
       phone: "",
       email: "",
       password: "",
-      role:"client",
+      role: "client",
       isRegisterModal: false,
+      selectedCinema: JSON.parse(localStorage.getItem("Sala")),
     };
   },
   methods: {
@@ -155,12 +170,11 @@ export default {
         email: this.email,
         password: this.password,
         phone: this.phone.toString(),
-        role:this.role
+        role: this.role,
       };
 
-      try {      
-       
-        const response = await fetchData("/users","post",data);
+      try {
+        const response = await fetchData("/users", "post", data);
         const result = response.data;
         Swal.fire({
           icon: "success",
@@ -174,8 +188,7 @@ export default {
       } catch (error) {
         Swal.fire({
           title: "Error",
-          text:
-            "Ha ocurrido un error, por favor intente de nuevo más tarde",
+          text: "Ha ocurrido un error, por favor intente de nuevo más tarde",
           icon: "error",
           confirmButtonColor: "#3085d6",
           confirmButtonText: "OK",
@@ -183,73 +196,69 @@ export default {
       }
     },
 
-async checkUser() {
-  if (
-    !this.email ||
-    !this.password 
-  ) {
-    Swal.fire({
-      title: "Campos incompletos",
-      text: "Por favor, ingrese todos los campos requeridos.",
-      icon: "warning",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "OK",
-    });
-    return;
-  }
-  try {
-    const response = await fetchData("/users/login", "post", {
-      email: this.email,
-      password: this.password,
-    });
-    const User = {
-      email: this.email,
-      password: this.password,
-    }
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", JSON.stringify(User));
-    setTimeout(() => {
-  if(this.email === "admin@email.com"){
-    this.$router.push("/admin");
-  } else {
-    window.location.reload();
-  }
-}, 1600); // Ejecutar después de 5 segundos
-
-    if(!response){
-      throw error
-    }
-    Swal.fire({
-      icon: "success",
-      title: "¡Bienvenido! " + this.email,
-      timer: 1500,
-      showConfirmButton: false,
-      showClass: {
-        popup: "animate__animated animate__fadeInDown",
-      },
-      hideClass: {
-        popup: "animate__animated animate__fadeOutUp",
-      },
-    });
-    this.show = false;
-  } catch (error) {
-    // If there was an error, show a message and give the option to register
-    Swal.fire({
-      title: "No estas registrado",
-      text: "¿Deseas registrarse?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.showRegisterModal();
+    async checkUser() {
+      if (!this.email || !this.password) {
+        Swal.fire({
+          title: "Campos incompletos",
+          text: "Por favor, ingrese todos los campos requeridos.",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
       }
-    });
-  }
-},
+      try {
+        const response = await fetchData("/users/login", "post", {
+          email: this.email,
+          password: this.password,
+        });
+        const User = {
+          email: this.email,
+          password: this.password,
+        };
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(User));
+        setTimeout(() => {
+          if (this.email === "admin@email.com") {
+            this.$router.push("/admin");
+          } else {
+            window.location.reload();
+          }
+        }, 1600); // Ejecutar después de 5 segundos
 
+        if (!response) {
+          throw error;
+        }
+        Swal.fire({
+          icon: "success",
+          title: "¡Bienvenido! " + this.email,
+          timer: 1500,
+          showConfirmButton: false,
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        this.show = false;
+      } catch (error) {
+        // If there was an error, show a message and give the option to register
+        Swal.fire({
+          title: "No estas registrado",
+          text: "¿Deseas registrarse?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.showRegisterModal();
+          }
+        });
+      }
+    },
 
     showRegisterModal() {
       this.isRegisterModal = true;
@@ -273,7 +282,7 @@ async checkUser() {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 6;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
 }

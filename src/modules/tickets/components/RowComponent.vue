@@ -73,7 +73,6 @@ export default {
   methods: {
     datoToSaveSeats(dataToSave) {
       addTickets({ ...dataToSave });
-      console.log(ticketsBuy);
     },
   },
 };

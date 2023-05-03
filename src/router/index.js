@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import isAuthGuard from "./auth-guard";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: "home" },
+    },
     {
       path: "/",
       name: "home",
@@ -18,6 +24,7 @@ const router = createRouter({
           name: "payment-steps",
           component: () => import("@/modules/payments/views/PaymentView.vue"),
           redirect: "/user/payment/step1",
+          beforeEnter: [isAuthGuard],
           children: [
             {
               path: "step1",
@@ -35,18 +42,19 @@ const router = createRouter({
               name: "step-3",
               component: () => import("@/modules/payments/components/Step4.vue"),
             },
-           
           ],
         },
         {
           path: "/tickets",
           name: "tickets",
           component: () => import("../modules/tickets/views/TicketsView.vue"),
+          beforeEnter: [isAuthGuard],
         },
-          //Tura de Facturación.
+        //Tura de Facturación.
         {
           path: "/user/billing",
           name: "billing",
+          beforeEnter: [isAuthGuard],
           component: () => import("../modules/billing/views/BillingView.vue"),
         },
       ],
@@ -56,6 +64,7 @@ const router = createRouter({
     {
       path: "/admin",
       name: "admin",
+      beforeEnter: [isAuthGuard],
       component: () => import("../modules/admin/main/layouts/AdminLayout.vue"),
       children: [
         {
@@ -85,8 +94,6 @@ const router = createRouter({
         },
       ],
     },
-
-  
   ],
 });
 

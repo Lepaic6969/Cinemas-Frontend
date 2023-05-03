@@ -31,7 +31,6 @@ onMounted(() => {
   urlPoster = image.secure_url;
   //Esto es para poner la imagen de fondo...
   const container = document.getElementById("container-poster");
-  console.log(`url(${urlPoster})`);
   container.style.backgroundImage = `url('${urlPoster}')`;
 });
 </script>

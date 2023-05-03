@@ -58,12 +58,6 @@ import { LogoInstagram, LogoFacebook, LogoTwitter } from "@vicons/ionicons5";
 
 export default {
   name: "footer",
-  // props: {
-  //   selectedCinema: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
   components: {
     LogoInstagram,
     LogoFacebook,

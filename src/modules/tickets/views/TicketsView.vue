@@ -37,10 +37,8 @@ const changeSize = ref("box-summary");
 
 onMounted(async () => {
   const { id } = JSON.parse(localStorage.getItem("MovieSelector"));
-  console.log("id que mando en la pet: " + id);
   const { body } = await fetchData(`/movie-rooms/movie/${id}`); //Estas son las salas disponibles para esa película
   setData(body);
-  console.log(data.value);
 });
 
 watch(seats, (newSeats) => {
