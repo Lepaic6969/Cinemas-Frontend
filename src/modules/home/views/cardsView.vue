@@ -2,18 +2,17 @@
   <Slices />
   <div v-if="movi.length > 0">
     <n-row>
-      <n-col v-for="movie in movi" :key="movie.id" :span="5">
+      <n-col v-for="movie in mov" :key="movie.id" :span="5">
         <n-card
           class="text-center"
           v-if="new Date(movie.start_date) < oneWeekFromNow"
         >
           <div class="card-image">
             <img
-              :src="
-                movie.movie.image
-                  ? movie.movie.image.secure_url
-                  : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-              "
+               :src="
+            movie.movie.image?.secure_url ||
+            'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+          "
               class="card-img-top"
               :alt="movie.movie.name"
             />
@@ -40,7 +39,7 @@
   </div>
 
   <div v-else>
-    <h3 class="text-center mt-4">No hay peliculas para mostrar</h3>
+    <h3 class="text-center">No hay peliculas para mostrar</h3>
   </div>
 
   <Modal title="Iniciar sesión" v-if="showLoginModal"> </Modal>
@@ -77,9 +76,9 @@ export default {
   data() {
     return {
       movi: [],
-      cine: [],
       movies: [],
       Rooms: [],
+      mov:[],
       sala: [],
       film: {},
       showLoginModal: false,
@@ -101,13 +100,22 @@ export default {
         this.$router.push("/tickets");
       } else {
         this.showLoginModal = true;
-        this.show=false
       }
     },
     toggleModal(movie) {
       this.film = movie;
       this.show = !this.show;
     },
+
+    ordersFilm() {
+      this.sala.map((movie) => {
+        if (new Date(movie.start_date) < this.oneWeekFromNow) {
+          this.mov.push(movie);
+          console.log(this.movies)
+        }
+      });
+    },
+
   },
   async mounted() {
     try {
@@ -132,15 +140,17 @@ export default {
       this.sala.map((salaId) => {
         if (salaId.Room.cinemaId === aux) {
           this.movi.push(salaId);
-          localStorage.setItem("SalaId", this.movi);
+        localStorage.setItem("SalaId",this.movi)
         }
       });
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
-
+this.ordersFilm()
     const cinemaId = this.rooms.find((room) => room.id === room.id).cinema_id;
   },
+  
+
 };
 </script>
 
@@ -243,12 +253,5 @@ h4 {
   100% {
     transform: translateY(0);
   }
-}
-
-@media (max-width: 768px) {
-.n-card {
-  width:300px;
-  border-radius: 8px;
-}
 }
 </style>
