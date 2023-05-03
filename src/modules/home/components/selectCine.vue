@@ -2,7 +2,7 @@
       <div class="modal" v-show="showModal">
     <div class="modal-content">
       <h1>Cinemas</h1>
-      <select class="form-select" v-model="selectedCinema">
+      <select class="form-select" v-model="selectedCinema" >
         <option disabled selected value="">Selecciona un cinema</option>
         <option v-for="cinema in cinemas" :key="cinema.id" :value="cinema">
           {{ cinema.name }}

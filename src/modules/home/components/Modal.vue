@@ -282,7 +282,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 6;
   font-family: "Poppins", sans-serif !important;
   font-weight: 800;
 }
