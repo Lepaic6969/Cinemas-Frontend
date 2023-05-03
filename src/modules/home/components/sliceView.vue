@@ -1,6 +1,6 @@
 <template>
   <div class="sl mt-3">
-    <n-carousel autoplay >
+    <n-carousel show-arrow autoplay>
       
       <div v-for="movie in movies" :key="movie.id">
       <div v-if="new Date(movie.start_date) > oneWeekFromNow">
@@ -75,14 +75,14 @@ export default {
 .n-carousel {
   width: 100% !important;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #949494;
   height: 60vh;
 }
 
 .date {
   font-family: "Poppins" !important;
   font-weight: 800;
-  font-size: 170%;
+  font-size: 290%;
   margin-left: 3%;
 }
 
