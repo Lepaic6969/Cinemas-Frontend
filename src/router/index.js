@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import isAuthGuard from "./auth-guard";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,15 +37,15 @@ const router = createRouter({
               name: "step-3",
               component: () => import("@/modules/payments/components/Step4.vue"),
             },
-           
           ],
         },
         {
           path: "/tickets",
           name: "tickets",
           component: () => import("../modules/tickets/views/TicketsView.vue"),
+          beforeEnter: [isAuthGuard],
         },
-          //Tura de Facturación.
+        //Tura de Facturación.
         {
           path: "/user/billing",
           name: "billing",
@@ -85,8 +87,6 @@ const router = createRouter({
         },
       ],
     },
-
-  
   ],
 });
 
