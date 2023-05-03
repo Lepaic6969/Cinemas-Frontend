@@ -3,7 +3,7 @@
 
 <n-avatar
   v-if="selectedCinema"
-  :src="selectedCinema.logo ? selectedCinema.logo.secure_url : 'https://tradebharat.in/assets/catalogue/img/no-product-found.png'"
+  :src="selectedCinema.logo ? selectedCinema.logo.secure_url : './src/assets/a.png'"
   class="logo"
   :alt="selectedCinema.name"
   @click="handleLogoClick"
@@ -14,6 +14,14 @@
   alt="Logo de mi sitio web"
   class="logo"
 />
+
+ <n-nav-item v-if="!user" @click="openSelect"
+      >Cinemas
+      <n-icon>
+        <FilmOutline />
+      </n-icon>
+    </n-nav-item>
+
     <n-nav-item v-if="!user" @click="toggleRegisterModal"
       >Registrarse
       <n-icon>
@@ -46,7 +54,7 @@
 
 <script>
 import Modal from "./Modal.vue";
-import { PersonAddSharp, PersonCircle,Exit } from "@vicons/ionicons5";
+import { PersonAddSharp, PersonCircle,Exit,FilmOutline } from "@vicons/ionicons5";
 import Swal from "sweetalert2";
 
 export default {
@@ -61,7 +69,8 @@ export default {
     PersonAddSharp,
     PersonCircle,
     Modal,
-    Exit
+    Exit,
+    FilmOutline
   },
   data() {
     return {
@@ -73,6 +82,10 @@ export default {
   };
   },
   methods: {
+    openSelect(){
+      location.reload()
+    }
+    ,
     toggleRegisterModal() {
       this.showRegisterModal = !this.showRegisterModal;
     },
