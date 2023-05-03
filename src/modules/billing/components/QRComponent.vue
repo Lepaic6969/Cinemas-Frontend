@@ -20,12 +20,13 @@
 </script>
 
 <style scoped>
+
 .containerQR{
     display: flex;
     justify-content: center;
     padding: 30px 0;
     padding-top: 0;
-    /* border:1px solid black; */
+    border:1px solid black;
     height: 115px;
   }
 </style>

@@ -82,7 +82,7 @@ export default {
         const {email}=JSON.parse(localStorage.getItem("user"));
         if(email==="seller@email.com"){
           this.$router.push('/user/billing');
-          // await fetchData('/tickets','put',ticketsBuy.value);
+          await fetchData('/tickets','put',ticketsBuy.value);
         }else{
           this.$router.push('/user/payment');
         }
