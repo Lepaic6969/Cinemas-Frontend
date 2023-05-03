@@ -69,13 +69,14 @@ export default {
 <style scoped>
 .imgs {
   width: 40%;
-  height: 80vh;
+  height: 60vh;
 }
 
 .n-carousel {
   width: 100% !important;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.1);
+  height: 60vh;
 }
 
 .date {
@@ -99,5 +100,16 @@ export default {
   left: 5%;
   margin-bottom: 1%;
   text-align: center;
+}
+
+
+@media (max-width: 768px) {
+  .n-carousel {
+    height: 40vh;
+  }
+  .imgs{
+    width: 40%;
+    height: 100%;
+  }
 }
 </style>

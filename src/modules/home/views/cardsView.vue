@@ -9,10 +9,10 @@
         >
           <div class="card-image">
             <img
-               :src="
-            movie.movie.image?.secure_url ||
-            'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
-          "
+              :src="
+                movie.movie.image?.secure_url ||
+                'https://tradebharat.in/assets/catalogue/img/no-product-found.png'
+              "
               class="card-img-top"
               :alt="movie.movie.name"
             />
@@ -78,7 +78,7 @@ export default {
       movi: [],
       movies: [],
       Rooms: [],
-      mov:[],
+      mov: [],
       sala: [],
       film: {},
       showLoginModal: false,
@@ -111,11 +111,10 @@ export default {
       this.sala.map((movie) => {
         if (new Date(movie.start_date) < this.oneWeekFromNow) {
           this.mov.push(movie);
-          console.log(this.movies)
+          console.log(this.movies);
         }
       });
     },
-
   },
   async mounted() {
     try {
@@ -140,17 +139,15 @@ export default {
       this.sala.map((salaId) => {
         if (salaId.Room.cinemaId === aux) {
           this.movi.push(salaId);
-        localStorage.setItem("SalaId",this.movi)
+          localStorage.setItem("SalaId", this.movi);
         }
       });
     } catch (error) {
       console.error(error);
     }
-this.ordersFilm()
+    this.ordersFilm();
     const cinemaId = this.rooms.find((room) => room.id === room.id).cinema_id;
   },
-  
-
 };
 </script>
 
@@ -241,6 +238,12 @@ h4 {
   border: none;
   background: #039be5;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .n-card {
+    width: 300px;
+  }
 }
 
 @keyframes moveUpDown {
